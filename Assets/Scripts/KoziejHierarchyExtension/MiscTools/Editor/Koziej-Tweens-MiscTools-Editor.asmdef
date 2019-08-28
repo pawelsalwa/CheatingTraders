@@ -1,0 +1,12 @@
+{
+    "name": "Koziej-Tweens-MiscTools-Editor",
+    "references": [
+        "Koziej-Tweens-MiscTools"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}
