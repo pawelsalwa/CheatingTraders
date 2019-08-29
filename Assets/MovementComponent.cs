@@ -49,7 +49,8 @@ public class MovementComponent : MonoBehaviour, Initable {
 			moveDir += cameraRot.right;
 		}
 
-		Move(moveDir);
+		if (moveDir != Vector3.zero)
+			Move(moveDir);
 
 		animator.SetBool("movingForward", Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S));
 	}

@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ca0f5ce5-e030-4256-aa25-6fd1e2c107cd" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Assets/AttackComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AttackComponent.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/MedievalTownExteriors/Scenes/Demo.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MedievalTownExteriors/Scenes/Demo.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/MovementComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MovementComponent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Toon_RTS_demo/KnightAnimController.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Toon_RTS_demo/KnightAnimController.controller" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Toon_RTS_demo/animations/WK_heavy_infantry_08_attack_B.FBX.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Toon_RTS_demo/animations/WK_heavy_infantry_08_attack_B.FBX.meta" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,20 +25,29 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/MovementComponent.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="14" selection-start-line="14" selection-end-line="16" selection-end-column="102" />
+            <state relative-caret-position="358">
+              <caret line="51" column="35" selection-start-line="51" selection-start-column="35" selection-end-line="51" selection-end-column="35" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9AA731BE-504E-47EB-8794-52D4CD6F508F/8c/3d89b26b/Transform.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="290">
+              <caret line="143" column="19" selection-start-line="143" selection-start-column="19" selection-end-line="143" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/AttackComponent.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="6" column="30" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="30" />
+            <state relative-caret-position="133">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
             </state>
           </provider>
         </entry>
@@ -84,8 +95,8 @@
         <option value="$PROJECT_DIR$/Assets/CameraOrbit.cs" />
         <option value="$PROJECT_DIR$/Assets/GameMenu.cs" />
         <option value="$PROJECT_DIR$/Assets/GM.cs" />
-        <option value="$PROJECT_DIR$/Assets/MovementComponent.cs" />
         <option value="$PROJECT_DIR$/Assets/AttackComponent.cs" />
+        <option value="$PROJECT_DIR$/Assets/MovementComponent.cs" />
       </list>
     </option>
   </component>
@@ -152,12 +163,12 @@
       <option name="presentableId" value="Default" />
       <updated>1566992712971</updated>
       <workItem from="1566992714283" duration="838000" />
-      <workItem from="1567022854490" duration="17823000" />
+      <workItem from="1567022854490" duration="19422000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18661000" />
+    <option name="totallyTimeSpent" value="20260000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -291,20 +302,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9AA731BE-504E-47EB-8794-52D4CD6F508F/8c/3d89b26b/Transform.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="518">
-          <caret line="143" column="19" selection-start-line="143" selection-start-column="19" selection-end-line="143" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/MovementComponent.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" selection-start-line="14" selection-end-line="16" selection-end-column="102" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/FF246790-73D7-4D81-84F4-AD5E9CE5D368/77/fb147b57/Animator.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="290">
@@ -314,8 +311,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/AttackComponent.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="30" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="30" />
+        <state relative-caret-position="133">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9AA731BE-504E-47EB-8794-52D4CD6F508F/8c/3d89b26b/Transform.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="143" column="19" selection-start-line="143" selection-start-column="19" selection-end-line="143" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/MovementComponent.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="358">
+          <caret line="51" column="35" selection-start-line="51" selection-start-column="35" selection-end-line="51" selection-end-column="35" />
         </state>
       </provider>
     </entry>

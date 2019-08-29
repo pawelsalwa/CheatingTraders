@@ -10,8 +10,6 @@ public class AttackComponent : MonoBehaviour {
 
 
 	private void Update() {
-		animator.SetBool("attacking", Input.GetKey(KeyCode.Mouse1) || Input.GetKey(KeyCode.Mouse2) || Input.GetKey(KeyCode.Mouse0) || Input.GetKey(KeyCode.Space));
-//		animator.SetBool("attacking", Input.GetKeyDown(KeyCode.Mouse0));
-//		animator.SetBool("attacking", Input.GetKeyDown(KeyCode.Mouse2));
+		animator.SetBool("attacking", Input.GetKey(KeyCode.Mouse0));
 	}
 }
