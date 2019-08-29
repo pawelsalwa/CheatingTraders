@@ -35,29 +35,29 @@ public class MovementComponent : MonoBehaviour, Initable {
 
 		if (Input.GetKey(KeyCode.W)) {
 			moveDir += cameraRot.forward;
-			Move(moveDir);
 		}
-		
+
 		if (Input.GetKey(KeyCode.S)) {
 			moveDir += cameraRot.forward * -1;
-			Move(moveDir);
 		}
-		
+
 		if (Input.GetKey(KeyCode.A)) {
 			moveDir += cameraRot.right * -1;
-			Move(moveDir);
 		}
-		
+
 		if (Input.GetKey(KeyCode.D)) {
 			moveDir += cameraRot.right;
-			Move(moveDir);
 		}
+
+		Move(moveDir);
 
 		animator.SetBool("movingForward", Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S));
 	}
 
 	private void Move(Vector3 dir) {
+		Debug.Log("<color=white>" + dir + "</color>");
 		dir = Vector3.Normalize(new Vector3(dir.x, 0f, dir.z));
+		Debug.Log(dir);
 		transform.TransformDirection(dir);
 		charController.Move(dir * moveSpeed);
 		transform.rotation = Quaternion.LookRotation(dir);
