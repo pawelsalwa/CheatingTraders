@@ -18,6 +18,10 @@ public class MovementComponent : MonoBehaviour, Initable {
 
 	public CameraOrbit cameraOrbit;
 
+	private Transform cameraRot => GM.instance.camera.gameObject.transform;
+
+	private Vector3 moveDir = new Vector3();
+
 	public void Init() { }
 
 	private void RotateCharacter(Quaternion rotation) {
@@ -27,34 +31,35 @@ public class MovementComponent : MonoBehaviour, Initable {
 	}
 
 	private void Update() {
+		moveDir = Vector3.zero;
+
 		if (Input.GetKey(KeyCode.W)) {
-			var moveDir = new Vector3(0, 0, 1);
-			transform.TransformDirection(moveDir);
-			charController.Move(moveDir * moveSpeed);
+			moveDir += cameraRot.forward;
+			Move(moveDir);
 		}
-
-		animator.SetBool("movingForward", Input.GetKey(KeyCode.W));
-
+		
 		if (Input.GetKey(KeyCode.S)) {
-			var moveDir = new Vector3(0, 0, -1);
-			transform.TransformDirection(moveDir);
-			charController.Move(moveDir * moveSpeed);
+			moveDir += cameraRot.forward * -1;
+			Move(moveDir);
 		}
-
-		animator.SetBool("movingBackward", Input.GetKey(KeyCode.S));
-
-		if (Input.GetKey(KeyCode.D)) {
-			var moveDir = new Vector3(1, 0, 0);
-			transform.TransformDirection(moveDir);
-			charController.Move(moveDir * moveSpeed);
-		}
-
+		
 		if (Input.GetKey(KeyCode.A)) {
-			var moveDir = new Vector3(-1, 0, 0);
-			transform.TransformDirection(moveDir);
-			charController.Move(moveDir * moveSpeed);
+			moveDir += cameraRot.right * -1;
+			Move(moveDir);
+		}
+		
+		if (Input.GetKey(KeyCode.D)) {
+			moveDir += cameraRot.right;
+			Move(moveDir);
 		}
 
-		transform.rotation = GM.instance.cinemachineFreeLook.gameObject.transform.rotation;
+		animator.SetBool("movingForward", Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S));
+	}
+
+	private void Move(Vector3 dir) {
+		dir = Vector3.Normalize(new Vector3(dir.x, 0f, dir.z));
+		transform.TransformDirection(dir);
+		charController.Move(dir * moveSpeed);
+		transform.rotation = Quaternion.LookRotation(dir);
 	}
 }

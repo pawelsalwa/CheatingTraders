@@ -11,13 +11,14 @@ public class GM : MonoBehaviour {
 
 	public GameMenu gameMenu;
 	public CinemachineFreeLook cinemachineFreeLook;
+	public Camera camera;
 
 	public bool isMenuOpened => gameMenu.isOpened;
 
-	private void Awake() {
+	[RuntimeInitializeOnLoadMethod]
+	private static void Hujwdupe() {
 		foreach (var rootObject in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects()) {
-			var asd = rootObject.GetComponentsInChildren<Initable>(true);
-			foreach (var xd in asd) {
+			foreach (var xd in rootObject.GetComponentsInChildren<Initable>(true)) {
 				xd.Init();
 			}
 		}
