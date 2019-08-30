@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class MovementComponent : MonoBehaviour, Initable {
+public class MovementComponent : MonoBehaviour {
 
 	[SerializeField]
 	private float moveSpeed;
+	
+	[SerializeField, Range(0f,2f)]
+	private float _rotationSmoothFactor = 0.6f;
 
 	private CharacterController _charController;
 
@@ -20,15 +23,7 @@ public class MovementComponent : MonoBehaviour, Initable {
 
 	private Transform cameraRot => GM.instance.camera.gameObject.transform;
 
-	private Vector3 moveDir = new Vector3();
-
-	public void Init() { }
-
-	private void RotateCharacter(Quaternion rotation) {
-
-//		Vector3 newRotat = rotation.eulerAngles;
-//		transform.rotation = Quaternion.Euler(newRotat.x, newRotat.y, newRotat.z);
-	}
+	private Vector3 moveDir;
 
 	private void Update() {
 		moveDir = Vector3.zero;
@@ -56,11 +51,10 @@ public class MovementComponent : MonoBehaviour, Initable {
 	}
 
 	private void Move(Vector3 dir) {
-		Debug.Log("<color=white>" + dir + "</color>");
 		dir = Vector3.Normalize(new Vector3(dir.x, 0f, dir.z));
-		Debug.Log(dir);
 		transform.TransformDirection(dir);
 		charController.Move(dir * moveSpeed);
-		transform.rotation = Quaternion.LookRotation(dir);
+		var targetRot = Quaternion.LookRotation(dir);
+		transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, _rotationSmoothFactor);
 	}
 }
