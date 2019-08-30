@@ -27,14 +27,12 @@ public class AttackComponent : MonoBehaviour {
 		animator.SetBool("attacking", false);
 	}
 
-	///<summary>idzcie do animacji i tam szukajcie xD</summary>
-	private void SwordHitTargetByAnim() {
-		// Debug.Log("SwordHitTargetByAnim");
+	///<summary>idzcie do animacji i tam szukajcie wywolania xD</summary>
+	private void SwordHitTargetByAnim() {		
 		animCanDealDamage = true;
 	}
 
-	private void SwordPassedThroughTargetByAnim() {
-		// Debug.Log("SwordPassedThroughTargetByAnim");
+	private void SwordPassedThroughTargetByAnim() {		
 		animCanDealDamage = false;
 	}
 }
