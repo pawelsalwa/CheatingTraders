@@ -5,9 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class MovementComponent : MonoBehaviour {
 
-	public ControlledBy controlledBy = ControlledBy.Player;
-
-	[SerializeField]
+	[SerializeField, Range(0f, 0.5f)]
 	private float moveSpeed;
 
 	[SerializeField, Range(0f, 2f)]
@@ -21,41 +19,11 @@ public class MovementComponent : MonoBehaviour {
 
 	private Animator animator => _animator == null ? _animator = GetComponent<Animator>() : _animator;
 
-	public CameraOrbit cameraOrbit;
-
-	private Transform cameraRot => GM.instance.camera.gameObject.transform;
-
-	private Vector3 moveDir;
-
-	private void Update() {
-		if (controlledBy == ControlledBy.AI)
+	public void Move(Vector3 dir) {
+		animator.SetBool("movingForward", dir != Vector3.zero);
+		if(dir == Vector3.zero)
 			return;
-
-		moveDir = Vector3.zero;
-
-		if (Input.GetKey(KeyCode.W)) {
-			moveDir += cameraRot.forward;
-		}
-
-		if (Input.GetKey(KeyCode.S)) {
-			moveDir += cameraRot.forward * -1;
-		}
-
-		if (Input.GetKey(KeyCode.A)) {
-			moveDir += cameraRot.right * -1;
-		}
-
-		if (Input.GetKey(KeyCode.D)) {
-			moveDir += cameraRot.right;
-		}
-
-		if (moveDir != Vector3.zero)
-			Move(moveDir);
-
-		animator.SetBool("movingForward", Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S));
-	}
-
-	private void Move(Vector3 dir) {
+		
 		dir = Vector3.Normalize(new Vector3(dir.x, 0f, dir.z));
 		transform.TransformDirection(dir);
 		charController.Move(dir * moveSpeed);

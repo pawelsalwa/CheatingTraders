@@ -12,10 +12,10 @@ public class HealthComponent : MonoBehaviour {
 		
 //		if (controlledBy == other.contro) return;
 		
-		var sword = other.gameObject.GetComponent<SwordCollider>();
-		if (sword == null)
-			return;
+// 		var sword = other.gameObject.GetComponent<SwordCollider>();
+// 		if (sword == null)
+// 			return;
 
-		Debug.Log("TakeDamage" + gameObject.name);
+		// Debug.Log("TakeDamage" + gameObject.name);
 	}
 }
