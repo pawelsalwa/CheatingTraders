@@ -16,7 +16,7 @@ public class GM : MonoBehaviour {
 	public bool isMenuOpened => gameMenu.isOpened;
 
 	[RuntimeInitializeOnLoadMethod]
-	private static void Hujwdupe() {
+	private static void InitAllInitables() {
 		foreach (var rootObject in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects()) {
 			foreach (var xd in rootObject.GetComponentsInChildren<Initable>(true)) {
 				xd.Init();

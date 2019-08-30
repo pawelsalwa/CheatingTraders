@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UserInputHandler : MonoBehaviour
-{
+///<summary> Acts as layer of abstraction between user input and referenced components </summary>
+public class UserInputHandler : MonoBehaviour {
     public MovementComponent movement;
     public AttackComponent attack;
 

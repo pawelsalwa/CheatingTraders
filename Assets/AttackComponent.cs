@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+///<summary> gets events from animation and orders weapon to deal damage </summary>
 public class AttackComponent : MonoBehaviour {
 
 	public Weapon weapon;
@@ -11,12 +12,15 @@ public class AttackComponent : MonoBehaviour {
 
 	private bool animCanDealDamage = false;
 
-	///<summary>plays attack animation allowing hit event from it</summary>
+	///<summary> plays attack animation allowing hit event from it. Should be called on update for anim to work</summary>
 	public void ContinueToAttack() {
 		animator.SetBool("attacking", true);
 
 		if (animCanDealDamage)
 			weapon.DealDamageIfFoundTarget();
+		else {
+			weapon.StopDealingDamage();
+		}
 	}
 
 	public void StopAttacking() {
