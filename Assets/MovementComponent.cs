@@ -5,10 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class MovementComponent : MonoBehaviour {
 
+	public ControlledBy controlledBy = ControlledBy.Player;
+
 	[SerializeField]
 	private float moveSpeed;
-	
-	[SerializeField, Range(0f,2f)]
+
+	[SerializeField, Range(0f, 2f)]
 	private float _rotationSmoothFactor = 0.6f;
 
 	private CharacterController _charController;
@@ -26,6 +28,9 @@ public class MovementComponent : MonoBehaviour {
 	private Vector3 moveDir;
 
 	private void Update() {
+		if (controlledBy == ControlledBy.AI)
+			return;
+
 		moveDir = Vector3.zero;
 
 		if (Input.GetKey(KeyCode.W)) {
