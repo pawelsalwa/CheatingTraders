@@ -1069,6 +1069,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 398f593b488765d49b8fda8b94881694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageTakingMaterial: {fileID: 2100000, guid: b3ae2273451ef0143a935a5ad49faf7a,
+    type: 2}
+  meshRenderer: {fileID: 1564253461707868197}
+  materialchangeMiliseconds: 100
 --- !u!1 &3646504501085031496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1130,6 +1134,7 @@ MonoBehaviour:
   damage: 10
   ignoredAttackTargets:
   - {fileID: 7581574680759952653}
+  attTarget: {fileID: 0}
 --- !u!1 &5565389519608211199
 GameObject:
   m_ObjectHideFlags: 0
