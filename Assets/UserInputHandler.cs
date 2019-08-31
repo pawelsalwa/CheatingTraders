@@ -22,10 +22,18 @@ public class UserInputHandler : MonoBehaviour {
     }
 
     private void HandleAttack() {
+        if (Input.GetKey(KeyCode.Mouse1)) {
+            attack.StopAttacking();
+            attack.ContinueToBlock();
+            return;
+        } else 
+            attack.StopBlocking();
+        
         if (Input.GetKey(KeyCode.Mouse0))
             attack.ContinueToAttack();
         else 
             attack.StopAttacking();
+        
     }
 
     private void HandleMovement() {

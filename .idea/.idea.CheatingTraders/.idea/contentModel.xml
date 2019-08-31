@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\Maciek\.Rider2018.3\config\scratches" t="IncludeRecursive" />
-    <e p="C:\Users\Maciek\.Rider2018.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\Maciek\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_CheatingTraders.-1329205435.00" t="ExcludeRecursive" />
-    <e p="C:\Users\Maciek\Desktop\Projects\CheatingTraders\CheatingTraders" t="IncludeRecursive">
+    <e p="C:\Users\salveiro\.Rider2019.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\salveiro\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_CheatingTraders.1358860424.00" t="ExcludeRecursive" />
+    <e p="D:\Projects\CheatingTraders" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="AttackComponent.cs" t="Include" />
+        <e p="AttackTarget.cs" t="Include" />
+        <e p="BasicUnit.cs" t="Include" />
         <e p="CameraOrbit.cs" t="Include" />
         <e p="Cinemachine" t="Include">
           <e p="Base" t="Include">
@@ -139,6 +140,7 @@
             </e>
           </e>
         </e>
+        <e p="CollisionDebugger.cs" t="Include" />
         <e p="Fantasy Lands" t="Include">
           <e p="Demo" t="Include">
             <e p="Scripts" t="Include">
@@ -319,6 +321,7 @@
         </e>
         <e p="GameMenu.cs" t="Include" />
         <e p="GM.cs" t="Include" />
+        <e p="HealthComponent.cs" t="Include" />
         <e p="Initable.cs" t="Include" />
         <e p="MedievalTownExteriors" t="Include">
           <e p="readme.txt" t="Include" />
@@ -433,16 +436,16 @@
             </e>
           </e>
         </e>
+        <e p="Sword.cs" t="Include" />
+        <e p="UserInputHandler.cs" t="Include" />
+        <e p="Weapon.cs" t="Include" />
       </e>
       <e p="CheatingTraders.sln" t="IncludeFlat" />
       <e p="Koziej-Tweens-MiscTools-Editor.csproj" t="IncludeRecursive" />
       <e p="Koziej-Tweens-MiscTools.csproj" t="IncludeRecursive" />
-      <e p="Library" t="ExcludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
-      <e p="Temp" t="ExcludeRecursive">
-        <e p="bin" t="ExcludeRecursive" />
-      </e>
+      <e p="Temp\bin" t="ExcludeRecursive" />
     </e>
   </component>
 </project>
