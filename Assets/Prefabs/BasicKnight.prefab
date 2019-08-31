@@ -1008,7 +1008,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: {fileID: 7278028305238215328}
+  attTarget: {fileID: 7581574680759952653}
   animDieKey: die
+  deadBodyTimeout: 2000
 --- !u!1 &2657292109224698753
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,7 +1089,8 @@ MonoBehaviour:
   damageTakingMaterial: {fileID: 2100000, guid: b3ae2273451ef0143a935a5ad49faf7a,
     type: 2}
   meshRenderer: {fileID: 1564253461707868197}
-  materialchangeMiliseconds: 100
+  isTargettable: 1
+  materialchangeMiliseconds: 80
 --- !u!1 &3646504501085031496
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,8 @@ public enum ControlledBy
 public class BasicUnit : MonoBehaviour, Initable
 {
     public HealthComponent hp;
+    public AttackTarget attTarget;
+    
     public string animDieKey;
     public int deadBodyTimeout = 2000;
 
@@ -29,7 +31,10 @@ public class BasicUnit : MonoBehaviour, Initable
 
     private void Die()
     {
+        if (!isAlive) // only shadows die twice 
+            return;
         isAlive = false;
+        attTarget.isTargettable = false;
         animator.SetBool(animDieKey, true);
         foreach (var childCollider in GetComponentsInChildren<Collider>())
             childCollider.enabled = false;

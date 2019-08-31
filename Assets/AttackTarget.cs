@@ -13,14 +13,16 @@ public class AttackTarget : MonoBehaviour {
     public Material damageTakingMaterial;
 
     public SkinnedMeshRenderer meshRenderer;
+    public bool isTargettable = true;
 
     [Range(0 , 500)]
     public int materialchangeMiliseconds = 80;
 
     public void TakeDamage(int damage) {
-        Debug.Log("damage taken " + damage, gameObject);
-        AnimateMaterialColorAsync();
+        if (!isTargettable) return;
+//        Debug.Log("damage taken " + damage, gameObject);
         OnDamageTaken(damage);
+        AnimateMaterialColorAsync();
     }
 
     private async void AnimateMaterialColorAsync() {
