@@ -11,10 +11,12 @@ public class MovementComponent : MonoBehaviour {
 	[SerializeField, Range(0f, 2f)]
 	private float _rotationSmoothFactor = 0.6f;
 
-	public string strafeKeywordAnimController = "strafe";
-
-	public string walkForwardAnimKeyword = "walkForward";
-
+	[Header("Animator keys")]
+	public string strafeLeftKey = "strafeLeft";
+	public string strafeRightKey = "strafeRight";
+	public string walkForwardKey = "walkForward";
+	public string walkBackwardKey = "walkBackward";
+	
 	private CharacterController _charController;
 
 	private CharacterController charController => _charController == null ? _charController = GetComponent<CharacterController>() : _charController;
@@ -26,25 +28,34 @@ public class MovementComponent : MonoBehaviour {
 	private Transform cameraRot => GM.instance.camera.gameObject.transform;
 
 	public void NoMove() {
-		animator.SetBool(walkForwardAnimKeyword, false);
+		animator.SetBool(walkForwardKey, false);
+		animator.SetBool(walkBackwardKey, false);
+		animator.SetBool(strafeLeftKey, false);
+		animator.SetBool(strafeRightKey, false);
 	}
 
 	public void WalkForward() {
 		Vector3 dir = transform.forward;
-		animator.SetBool(walkForwardAnimKeyword, true);
+		animator.SetBool(walkForwardKey, true);
+//		charController.Move(dir * moveSpeed);
+	}
+	
+	public void WalkBackWard() {
+		Vector3 dir = transform.forward;
+		animator.SetBool(walkBackwardKey, true);
 //		charController.Move(dir * moveSpeed);
 	}
 
 	public void StrafeLeft() {
-		Vector3 dir = cameraRot.right * -1;
-		animator.SetBool(strafeKeywordAnimController, true);
-		dir = Vector3.Normalize(new Vector3(dir.x, 0f, dir.z));
-//		transform.TransformDirection(dir);
-		charController.Move(dir * moveSpeed);
+		animator.SetBool(strafeLeftKey, true);
+	}
+	
+	public void StrafeRight() {
+		animator.SetBool(strafeRightKey, true);
 	}
 	
 	public void Move(Vector3 dir) {
-		animator.SetBool(walkForwardAnimKeyword, dir != Vector3.zero);
+		animator.SetBool(walkForwardKey, dir != Vector3.zero);
 		if(dir == Vector3.zero)
 			return;
 		

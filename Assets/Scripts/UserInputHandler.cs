@@ -36,29 +36,18 @@ public class UserInputHandler : MonoBehaviour
             attack.ContinueToAttack();
         else 
             attack.StopAttacking();
-        
     }
 
     private void HandleMovement() {
-//        moveDir = Vector3.zero;
-//
         if (Input.GetKey(KeyCode.W))
             movement.WalkForward();
-        else 
-            movement.NoMove();
-//
-//        if (Input.GetKey(KeyCode.S))
-//            moveDir += cameraRot.forward * -1;
-
-        if (Input.GetKey(KeyCode.A))
-        {
-//            moveDir += cameraRot.right * -1;
+        else if (Input.GetKey(KeyCode.S))
+            movement.WalkBackWard();
+        else if (Input.GetKey(KeyCode.A))
             movement.StrafeLeft();
-        }
-
-//        if (Input.GetKey(KeyCode.D))
-//            moveDir += cameraRot.right;
-
-//        movement.Move(moveDir);
+        else if (Input.GetKey(KeyCode.D))
+            movement.StrafeRight();
+        else
+            movement.NoMove();
     }
 }
