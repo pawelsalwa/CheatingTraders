@@ -2342,6 +2342,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
+  attackingAnimatorKey: attacking
+  shieldBlockingAnimatorKey: shieldBlock
 --- !u!4 &447375866 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400050, guid: ba24e610e0a338545b447ff44a3cf1cc,
