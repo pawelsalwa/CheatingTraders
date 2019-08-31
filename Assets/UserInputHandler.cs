@@ -11,6 +11,11 @@ public class UserInputHandler : MonoBehaviour {
 
     private Vector3 moveDir;
 
+    private void Awake() {
+        GM.instance.gameMenu.OnOpened += () => enabled = false;
+        GM.instance.gameMenu.OnClosed += () => enabled = true;
+    }
+
     private void Update() {
         HandleMovement();
         HandleAttack();

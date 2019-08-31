@@ -1,9 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameMenu : MonoBehaviour, Initable {
+
+	public event Action OnOpened = () => { };
+	public event Action OnClosed = () => { };
 
 	public Button closeBtn;
 	public GameObject container;
@@ -38,11 +42,13 @@ public class GameMenu : MonoBehaviour, Initable {
 		isOpened = true;
 		container.SetActive(true);
 		Cursor.lockState = CursorLockMode.Confined;
+		OnOpened();
 	}
 
 	private void Close() {
 		isOpened = false;
 		container.SetActive(false);
 		Cursor.lockState = CursorLockMode.Locked;
+		OnClosed();
 	}
 }
