@@ -8,7 +8,7 @@ public class AttackComponent : MonoBehaviour {
 	public Weapon weapon;
 
 
-	public string attackingAnimatorKey = "attacking";
+	public string attackingAnimatorKey = "attack";
 	public string shieldBlockingAnimatorKey = "shieldBlock";
 	
 	private Animator _animator;

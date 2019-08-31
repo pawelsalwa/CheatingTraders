@@ -1550,7 +1550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 7249774914644250898}
-  attackingAnimatorKey: attacking
+  attackingAnimatorKey: attack
   shieldBlockingAnimatorKey: shieldBlock
 --- !u!114 &850056353978476861
 MonoBehaviour:
@@ -1566,8 +1566,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 0.1
   _rotationSmoothFactor: 0.3
-  strafeKeywordAnimController: strafe
-  walkForwardAnimKeyword: walkForward
+  strafeLeftKey: strafeLeft
+  strafeRightKey: strafeRight
+  walkForwardKey: walkForward
+  walkBackwardKey: walkBackward
 --- !u!114 &8175364216511365597
 MonoBehaviour:
   m_ObjectHideFlags: 0
