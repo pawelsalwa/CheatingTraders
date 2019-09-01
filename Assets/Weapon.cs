@@ -43,12 +43,7 @@ public class Weapon : MonoBehaviour {
     }
 
     public void StopDealingDamage() {
-        var asd = new List<AttackTarget>();
-        foreach (var target in targetToHasTakenDamage) 
-            asd.Add(target.Key);
-            
-        for (int i = 0; i < targetToHasTakenDamage.Count; i++)
-            targetToHasTakenDamage[asd[i]] = false;
+        ResetAllTargets();
     }
 	
 	private void OnTriggerEnter(Collider other) {
@@ -69,4 +64,13 @@ public class Weapon : MonoBehaviour {
         if (attTargets.Contains(lastCollider))
             attTargets.Remove(lastCollider);
 	}
+
+    private void ResetAllTargets() {
+        var asd = new List<AttackTarget>();
+        foreach (var target in targetToHasTakenDamage) 
+            asd.Add(target.Key);
+            
+        for (int i = 0; i < targetToHasTakenDamage.Count; i++)
+            targetToHasTakenDamage[asd[i]] = false;
+    }
 }

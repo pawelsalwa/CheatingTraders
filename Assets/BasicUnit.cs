@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEditor;
 using UnityEngine;
 
 public enum ControlledBy
@@ -45,6 +46,9 @@ public class BasicUnit : MonoBehaviour, Initable
     private async void RemoveLoosersBody()
     {
         await Task.Delay(deadBodyTimeout);
-        Destroy(gameObject);
+        #if UNITY_EDITOR
+        if(EditorApplication.isPlaying)
+        #endif
+            Destroy(gameObject); // async code doesnt stop on play mode exit
     }
 }

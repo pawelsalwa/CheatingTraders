@@ -11,6 +11,7 @@
         <e p="AttackTarget.cs" t="Include" />
         <e p="BasicUnit.cs" t="Include" />
         <e p="CameraOrbit.cs" t="Include" />
+        <e p="CharacterRotationComponent.cs" t="Include" />
         <e p="Cinemachine" t="Include">
           <e p="Base" t="Include">
             <e p="Editor" t="Include">
@@ -141,6 +142,7 @@
           </e>
         </e>
         <e p="CollisionDebugger.cs" t="Include" />
+        <e p="DebugAnimHelper.cs" t="Include" />
         <e p="Fantasy Lands" t="Include">
           <e p="Demo" t="Include">
             <e p="Scripts" t="Include">
