@@ -323,13 +323,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1147260103684136373}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.71829313, y: 0.108955584, z: -0.08653729, w: 0.6816854}
+  m_LocalPosition: {x: 0.10685908, y: -0.031109536, z: 0.439207}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5119360101714781696}
+  m_Father: {fileID: 5588678119825671827}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 93.479004, y: -23.533997, z: -39.432007}
 --- !u!136 &7084498686211744847
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -341,7 +341,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.05
-  m_Height: 1
+  m_Height: 0.78
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7249774914644250898
@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02938a9485249574a857cfb73d1d8d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 60
+  damage: 19
   ignoredAttackTargets:
   - {fileID: 4223944957583840344}
   attTarget: {fileID: 0}
@@ -1256,7 +1256,8 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.079892136, y: -0.028230647, z: -0.006267043}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 3088270836755192484}
   m_Father: {fileID: 5718223538098772555}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1601,7 +1602,7 @@ MonoBehaviour:
   hp: {fileID: 3541681670772282599}
   attTarget: {fileID: 4223944957583840344}
   animDieKey: die
-  deadBodyTimeout: 2000
+  deadBodyTimeout: 20000
 --- !u!114 &3563680950124960620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2071,7 +2072,7 @@ CapsuleCollider:
   m_Radius: 0.55
   m_Height: 1.64
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.89, z: 0}
 --- !u!54 &2310447732194969236
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2100,11 +2101,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 398f593b488765d49b8fda8b94881694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageTakingMaterial: {fileID: 2100000, guid: b3ae2273451ef0143a935a5ad49faf7a,
+  damageTakingMaterial: {fileID: 2100000, guid: e7b62c9396f569d4d93515b989713c00,
     type: 2}
-  meshRenderer: {fileID: 5489009376532180288}
+  meshRenderer:
+  - {fileID: 5489009376532180288}
+  - {fileID: 7073023866054621860}
+  - {fileID: 5553818011615616608}
+  - {fileID: 4223258910485458618}
   isTargettable: 1
-  materialchangeMiliseconds: 80
+  animateMaterial: 1
+  animateColorOnly: 0
+  materialchangeMiliseconds: 120
 --- !u!1 &6070196084012408780
 GameObject:
   m_ObjectHideFlags: 0
@@ -2778,8 +2785,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 3088270836755192484}
+  m_Children: []
   m_Father: {fileID: 621528572779877709}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

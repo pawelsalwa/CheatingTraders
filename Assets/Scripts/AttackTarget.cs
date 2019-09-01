@@ -12,22 +12,40 @@ public class AttackTarget : MonoBehaviour {
 
     public Material damageTakingMaterial;
 
-    public SkinnedMeshRenderer meshRenderer;
+    public SkinnedMeshRenderer[] meshRenderer;
     public bool isTargettable = true;
+
+    public bool animateMaterial = true;
+    public bool animateColorOnly = false;
 
     [Range(0 , 500)]
     public int materialchangeMiliseconds = 80;
 
     public void TakeDamage(int damage) {
         if (!isTargettable) return;
-//        Debug.Log("damage taken " + damage, gameObject);
+        Debug.Log("damage taken " + damage, gameObject);
         OnDamageTaken(damage);
-        AnimateMaterialColorAsync();
+        if (animateMaterial)
+            AnimateMaterialAsync();
+        
+        if (animateColorOnly)
+            AnimateMaterialColorAsync();
     }
 
     private async void AnimateMaterialColorAsync() {
-        meshRenderer.material.color = Color.red;
+        foreach (var xd in meshRenderer)
+            xd.material.color = Color.red;
         await Task.Delay(materialchangeMiliseconds);
-        meshRenderer.material.color = Color.white;
+        foreach (var xd in meshRenderer)
+            xd.material.color = Color.white;
+    }
+    
+    private async void AnimateMaterialAsync() {
+        var tmp = meshRenderer[0].material;
+        foreach (var xd in meshRenderer)
+            xd.material = damageTakingMaterial;
+        await Task.Delay(materialchangeMiliseconds);
+        foreach (var xd in meshRenderer)
+            xd.material = tmp;
     }
 }
