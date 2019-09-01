@@ -984,7 +984,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 0.1
   _rotationSmoothFactor: 0.3
-  noMove: 
   W: W
   S: S
   A: A
@@ -1177,7 +1176,7 @@ MonoBehaviour:
   damage: 60
   ignoredAttackTargets:
   - {fileID: 7581574680759952653}
-  attTarget: {fileID: 0}
+  attTargets: []
 --- !u!1 &5565389519608211199
 GameObject:
   m_ObjectHideFlags: 0

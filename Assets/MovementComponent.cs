@@ -66,7 +66,7 @@ public class MovementComponent : MonoBehaviour {
 	}
 	
 	public void MoveSD() {
-		SetSingleAnimKey(WD);
+		SetSingleAnimKey(SD);
 		charController.Move(Vector3.Normalize(transform.right + -transform.forward) * moveSpeed);
 	}
 	
