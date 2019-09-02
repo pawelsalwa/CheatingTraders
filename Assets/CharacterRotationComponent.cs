@@ -14,7 +14,7 @@ public class CharacterRotationComponent : MonoBehaviour {
     public float maxRotSpeed = 5f;
     public float minRotSpeed = -5f;
     
-    public float multiplier; // wspolczynniki rownania jak przekształacamy rotacje z [-5,5] do [0,1] -> ax + b = y => a=0.1, b=0.5
+    public float animBlendTreeRotationMultiplier; // wspolczynniki rownania jak przekształacamy rotacje z [-5,5] do [0,1] -> ax + b = y => a=0.1, b=0.5
     public float addon;
 	
     private Animator _animator;
@@ -26,7 +26,8 @@ public class CharacterRotationComponent : MonoBehaviour {
         animator.SetFloat(rotationAnimKey, 0.5f);
     }
     
-    private void Update() {
+    private void FixedUpdate() {
+//        StateMachineBehaviour
 //        Vector3 prevRot = transform.rotation.eulerAngles;
         
         var targetRot = Quaternion.LookRotation(Vector3.Normalize(new Vector3(cameraRot.forward.x, 0f, cameraRot.forward.z)));
@@ -39,7 +40,7 @@ public class CharacterRotationComponent : MonoBehaviour {
 //        Debug.Log(rotationSpeed);
 
 //        animator.SetFloat(rotationAnimKey, rotationSpeed * multiplier, 0.1f, Time.deltaTime);
-        animator.SetFloat(rotationAnimKey, rotationSpeed * multiplier + addon, _rotationAnimationSmoothFactor, Time.deltaTime);
+        animator.SetFloat(rotationAnimKey, rotationSpeed * animBlendTreeRotationMultiplier + addon, _rotationAnimationSmoothFactor, Time.deltaTime);
 
 //        head.transform.rotation = targetRot; jak ogarne fbxy to sie zrobi
     }

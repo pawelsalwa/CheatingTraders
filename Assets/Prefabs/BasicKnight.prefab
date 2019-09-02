@@ -1035,13 +1035,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationSmoothFactor: 0.3
-  _rotationAnimationSmoothFactor: 0.4
+  _rotationAnimationSmoothFactor: 0.1
   head: {fileID: 1564253461696141569}
   rotationSpeed: 0
   rotationAnimKey: rotationFactor
   maxRotSpeed: 5
   minRotSpeed: -5
-  multiplier: 0.1
+  animBlendTreeRotationMultiplier: 0.01
   addon: 0.5
 --- !u!1 &2657292109224698753
 GameObject:
