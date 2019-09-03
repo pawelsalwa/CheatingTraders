@@ -890,6 +890,7 @@ GameObject:
   - component: {fileID: 7439631042915170079}
   - component: {fileID: 2036131077303213700}
   - component: {fileID: 1537876270}
+  - component: {fileID: 39532043410761939}
   m_Layer: 0
   m_Name: BasicKnight
   m_TagString: Untagged
@@ -1006,6 +1007,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: {fileID: 4866097812400902558}
   attack: {fileID: 3427392319552801460}
+  rotatation: {fileID: 1537876270}
 --- !u!114 &2036131077303213700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1036,13 +1038,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rotationSmoothFactor: 0.3
   _rotationAnimationSmoothFactor: 0.1
-  head: {fileID: 1564253461696141569}
   rotationSpeed: 0
   rotationAnimKey: rotationFactor
-  maxRotSpeed: 5
-  minRotSpeed: -5
   animBlendTreeRotationMultiplier: 0.01
   addon: 0.5
+--- !u!114 &39532043410761939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1564253461696300375}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a55e82fdd4f0b04ca72e3bdbb923b1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movement: {fileID: 4866097812400902558}
+  attack: {fileID: 3427392319552801460}
+  rotatation: {fileID: 1537876270}
+  player: {fileID: 0}
 --- !u!1 &2657292109224698753
 GameObject:
   m_ObjectHideFlags: 0

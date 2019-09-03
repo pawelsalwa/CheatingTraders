@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,31 +7,21 @@ using UnityEngine;
 public class UserInputHandler : MonoBehaviour {
     public MovementComponent movement;
     public AttackComponent attack;
+    public CharacterRotationComponent rotatation;
 
     private Transform cameraRot => GM.instance.camera.gameObject.transform;
 
-    private enum MoveDir {
-        none,
-        W,
-        S,
-        A,
-        D,
-        WA,
-        WD,
-        SA,
-        SD
-    }
+    private enum MoveDir {none,W,S,A,D,WA,WD,SA,SD}
 
     private MoveDir moveDir;
-
-    private void Awake() {
-        GM.instance.gameMenu.OnOpened += () => enabled = false;
-        GM.instance.gameMenu.OnClosed += () => enabled = true;
-    }
 
     private void Update() {
         HandleMovement();
         HandleAttack();
+    }
+    
+    private void FixedUpdate() {
+        HandleRotation();
     }
 
     private void HandleAttack() {
@@ -38,14 +29,15 @@ public class UserInputHandler : MonoBehaviour {
             attack.StopAttacking();
             attack.ContinueToBlock();
             return;
-        } else 
+        }
+        else {
             attack.StopBlocking();
+        }
         
         if (Input.GetKey(KeyCode.Mouse0))
             attack.ContinueToAttack();
         else 
             attack.StopAttacking();
-        
     }
 
     private void HandleMovement() {
@@ -78,5 +70,10 @@ public class UserInputHandler : MonoBehaviour {
         if (Input.GetKey(KeyCode.S)) {moveDir = MoveDir.S; return;}
         if (Input.GetKey(KeyCode.A)) {moveDir = MoveDir.A; return;}
         if (Input.GetKey(KeyCode.D)) {moveDir = MoveDir.D; return;}
+    }
+
+    private void HandleRotation() {
+        rotatation.LookAt(new Vector3(cameraRot.forward.x, 0f, cameraRot.forward.z));
+        rotatation.AnimateRotation(Input.GetAxis("Horizontal"));
     }
 }
