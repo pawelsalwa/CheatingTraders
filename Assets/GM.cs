@@ -12,16 +12,16 @@ public class GM : MonoBehaviour {
 	public GameMenu gameMenu;
 	public CinemachineFreeLook cinemachineFreeLook;
 	public Camera camera;
+	public BasicUnit _player;
+	public static BasicUnit player => instance._player;
 
 	public bool isMenuOpened => gameMenu.isOpened;
 
 	[RuntimeInitializeOnLoadMethod]
 	private static void InitAllInitables() {
-		foreach (var rootObject in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects()) {
-			foreach (var xd in rootObject.GetComponentsInChildren<Initable>(true)) {
+		foreach (var rootObject in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects()) 
+			foreach (var xd in rootObject.GetComponentsInChildren<Initable>(true)) 
 				xd.Init();
-			}
-		}
 	}
 
 	public static void EnableCamera(bool enabled) {

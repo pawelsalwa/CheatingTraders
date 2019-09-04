@@ -31,7 +31,7 @@ public class AttackComponent : MonoBehaviour {
 		animator.SetBool(attackingAnimatorKey, false);
 	}
 	
-	///<summary> plays attack animation allowing hit event from it. Should be called on update for anim to work</summary>
+	///<summary> plays block animation. Should be called on update for anim to work</summary>
 	public void ContinueToBlock() {
 		animator.SetBool(shieldBlockingAnimatorKey, true);
 
