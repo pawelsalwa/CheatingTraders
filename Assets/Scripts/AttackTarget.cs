@@ -26,8 +26,8 @@ public class AttackTarget : MonoBehaviour {
     }
 
     private async void AnimateMaterialColorAsync() {
-        meshRenderer.sharedMaterial.color = Color.red;
+        meshRenderer.material.color = Color.red;
         await Task.Delay(materialchangeMiliseconds);
-        meshRenderer.sharedMaterial.color = Color.white;
+        meshRenderer.material.color = Color.white;
     }
 }
