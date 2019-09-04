@@ -16,7 +16,7 @@ public class CharacterRotationComponent : MonoBehaviour {
     private Animator _animator;
     private Animator animator => _animator == null ? _animator = GetComponent<Animator>() : _animator;
 
-    private Transform cameraRot => GM.instance.camera.gameObject.transform;
+    private Transform cameraRot => GM.instance.mainCamera.gameObject.transform;
 
     private void Awake() {
         animator.SetFloat(rotationAnimKey, 0.5f);

@@ -8,19 +8,14 @@ public class UserInputHandler : MonoBehaviour {
     public MovementComponent movement;
     public AttackComponent attack;
     public CharacterRotationComponent rotatation;
+    public Transform cameraFollow;
     public Transform cameraOrbit;
 
-    private Transform cameraRot => GM.instance.camera.gameObject.transform;
+    private Transform cameraRot => GM.instance.mainCamera.gameObject.transform;
 
     private enum MoveDir {none,W,S,A,D,WA,WD,SA,SD}
 
     private MoveDir moveDir;
-
-    private void Start() {
-        foreach (var go in GetComponentsInChildren<Transform>()) go.tag = "Player";
-        GM.instance.cinemachineFreeLook.m_Follow = cameraOrbit;
-        GM.instance.cinemachineFreeLook.m_LookAt = cameraOrbit;
-    }
 
     private void Update() {
         HandleMovement();

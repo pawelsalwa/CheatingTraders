@@ -1,35 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &959840778924174112
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1080123379527540534}
-  m_Layer: 0
-  m_Name: CameraOrbitCenter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1080123379527540534
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 959840778924174112}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1564253461696141623}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1564253461696300321
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,7 +11,7 @@ GameObject:
   - component: {fileID: 1564253461696141569}
   m_Layer: 9
   m_Name: Bip001 Head
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,7 +42,7 @@ GameObject:
   - component: {fileID: 1564253461696141571}
   m_Layer: 9
   m_Name: Bip001 HeadNub
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,7 +72,7 @@ GameObject:
   - component: {fileID: 1564253461696141573}
   m_Layer: 9
   m_Name: Bip001
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,7 +104,7 @@ GameObject:
   - component: {fileID: 1564253461696141575}
   m_Layer: 9
   m_Name: Bip001 Footsteps
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -164,7 +134,7 @@ GameObject:
   - component: {fileID: 1564253461696141577}
   m_Layer: 9
   m_Name: Bip001 L Foot
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -195,7 +165,7 @@ GameObject:
   - component: {fileID: 1564253461696141579}
   m_Layer: 9
   m_Name: Bip001 L Forearm
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -227,7 +197,7 @@ GameObject:
   - component: {fileID: 1564253461696141581}
   m_Layer: 9
   m_Name: Bip001 L Calf
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -258,7 +228,7 @@ GameObject:
   - component: {fileID: 1564253461696141583}
   m_Layer: 9
   m_Name: Bip001 L Clavicle
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -289,7 +259,7 @@ GameObject:
   - component: {fileID: 1564253461696141585}
   m_Layer: 9
   m_Name: Bip001 L Toe0
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -320,7 +290,7 @@ GameObject:
   - component: {fileID: 1564253461696141587}
   m_Layer: 9
   m_Name: Bip001 L Toe0Nub
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -350,7 +320,7 @@ GameObject:
   - component: {fileID: 1564253461696141589}
   m_Layer: 9
   m_Name: Bip001 L Hand
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -380,7 +350,7 @@ GameObject:
   - component: {fileID: 1564253461696141591}
   m_Layer: 9
   m_Name: Bip001 L Thigh
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -411,7 +381,7 @@ GameObject:
   - component: {fileID: 1564253461696141593}
   m_Layer: 9
   m_Name: Bip001 Pelvis
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -444,7 +414,7 @@ GameObject:
   - component: {fileID: 1564253461696141595}
   m_Layer: 9
   m_Name: Bip001 R Calf
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -475,7 +445,7 @@ GameObject:
   - component: {fileID: 1564253461696141597}
   m_Layer: 9
   m_Name: Bip001 L UpperArm
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -506,7 +476,7 @@ GameObject:
   - component: {fileID: 1564253461696141599}
   m_Layer: 9
   m_Name: Bip001 Neck
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -537,7 +507,7 @@ GameObject:
   - component: {fileID: 1564253461696141601}
   m_Layer: 9
   m_Name: Bip001 R Forearm
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -568,7 +538,7 @@ GameObject:
   - component: {fileID: 1564253461696141603}
   m_Layer: 9
   m_Name: Bip001 R Hand
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -599,7 +569,7 @@ GameObject:
   - component: {fileID: 1564253461696141605}
   m_Layer: 9
   m_Name: Bip001 R Clavicle
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -630,7 +600,7 @@ GameObject:
   - component: {fileID: 1564253461696141607}
   m_Layer: 9
   m_Name: Bip001 R Foot
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -661,7 +631,7 @@ GameObject:
   - component: {fileID: 1564253461696141609}
   m_Layer: 9
   m_Name: Bip001 R Toe0Nub
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -691,7 +661,7 @@ GameObject:
   - component: {fileID: 1564253461696141611}
   m_Layer: 9
   m_Name: Bip001 R UpperArm
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -722,7 +692,7 @@ GameObject:
   - component: {fileID: 1564253461696141613}
   m_Layer: 9
   m_Name: Bip001 R Thigh
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -753,7 +723,7 @@ GameObject:
   - component: {fileID: 1564253461696141615}
   m_Layer: 9
   m_Name: Bip001 R Toe0
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -785,7 +755,7 @@ GameObject:
   - component: {fileID: 1564253461707868197}
   m_Layer: 0
   m_Name: WK_HeavyIntantry
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -882,7 +852,7 @@ GameObject:
   - component: {fileID: 1564253461696141621}
   m_Layer: 9
   m_Name: Bip001 Spine
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -923,7 +893,7 @@ GameObject:
   - component: {fileID: 39532043410761939}
   m_Layer: 0
   m_Name: BasicKnight
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -946,7 +916,6 @@ Transform:
   - {fileID: 5561384731807584725}
   - {fileID: 3423554097007266804}
   - {fileID: 1207783142017479083}
-  - {fileID: 1080123379527540534}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1031,7 +1000,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1564253461696300375}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b536f0099503d6240ba321077478f3cf, type: 3}
   m_Name: 
@@ -1039,7 +1008,8 @@ MonoBehaviour:
   movement: {fileID: 4866097812400902558}
   attack: {fileID: 3427392319552801460}
   rotatation: {fileID: 1537876270}
-  cameraOrbit: {fileID: 1080123379527540534}
+  cameraFollow: {fileID: 8640631685897387814}
+  cameraOrbit: {fileID: 5085911358754118236}
 --- !u!114 &2036131077303213700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1091,8 +1061,10 @@ MonoBehaviour:
   attack: {fileID: 3427392319552801460}
   rotatation: {fileID: 1537876270}
   currentTarget: {fileID: 0}
-  distanceToTarget: 0
-  strafeDistance: 4
+  combatStartDistance: 5
+  combatQuitDistance: 8
+  timeBetweenAiActionChange: 1
+  enemyDetectionDistance: 14
 --- !u!1 &2657292109224698753
 GameObject:
   m_ObjectHideFlags: 0
@@ -1107,7 +1079,7 @@ GameObject:
   - component: {fileID: 7581574680759952653}
   m_Layer: 9
   m_Name: AttackTarget
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1186,7 +1158,7 @@ GameObject:
   - component: {fileID: 1846347863798710084}
   m_Layer: 8
   m_Name: SwordCollider
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1248,7 +1220,7 @@ GameObject:
   - component: {fileID: 1540452048852321940}
   m_Layer: 0
   m_Name: Canvas
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1327,7 +1299,7 @@ GameObject:
   - component: {fileID: 7278028305238215328}
   m_Layer: 0
   m_Name: HealthComponent
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1371,7 +1343,7 @@ GameObject:
   - component: {fileID: 8640631685897387814}
   m_Layer: 0
   m_Name: CameraFollowTransform
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1401,7 +1373,7 @@ GameObject:
   - component: {fileID: 5085911358754118236}
   m_Layer: 0
   m_Name: CameraOrbitCenter
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
