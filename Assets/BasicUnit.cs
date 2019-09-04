@@ -5,75 +5,46 @@ using Mirror;
 using UnityEditor;
 using UnityEngine;
 
-public enum ControlledBy {
-	Player,
-	AI
-}
 
 [RequireComponent(typeof(Animator))]
-public class BasicUnit : NetworkBehaviour, Initable {
-	public HealthComponent hp;
-	public AttackTarget attTarget;
+public class BasicUnit : MonoBehaviour, Initable {
+    public HealthComponent hp;
+    public AttackTarget attTarget;
 
-	public string animDieKey;
-	public int deadBodyTimeout = 2000;
+    public string animDieKey;
+    public int deadBodyTimeout = 2000;
 
-	public Transform cameraOrbit;
+    public bool isAlive = true;
 
-	private bool isAlive = true;
+    private Animator _animator;
 
-	private Animator _animator;
+    private Animator animator => _animator == null ? _animator = GetComponent<Animator>() : _animator;
 
-	private Animator animator => _animator == null ? _animator = GetComponent<Animator>() : _animator;
+    private UserInputHandler _userInputHandler;
 
-	private UserInputHandler _userInputHandler;
+    public UserInputHandler userInputHandler => _userInputHandler == null ? _userInputHandler = GetComponent<UserInputHandler>() : _userInputHandler;
 
-	public UserInputHandler userInputHandler => _userInputHandler == null ? _userInputHandler = GetComponent<UserInputHandler>() : _userInputHandler;
-
-	public void Init() {
-		hp.OnHpDropBelowZero += Die;
-	}
-
-	public void Start() {
-		userInputHandler.enabled = isLocalPlayer;
-		if (isLocalPlayer) {
-			GM.instance.cinemachineFreeLook.m_Follow = cameraOrbit;
-//			GM.instance.cinemachineFreeLook.m_Orbits[0] = cameraOrbit;
-		}
-	}
-
-	private void Update() {
-		if(isLocalPlayer)
-			CmdSetPosition(transform.position);
-	}
+    public void Init() {
+        hp.OnHpDropBelowZero += Die;
+    }
 	
-	[Command]
-	private void CmdSetPosition(Vector3 asd) {
-		RpcSetPosition(asd);
-	}
+    private void Die() {
+        if (!isAlive) // only shadows die twice 
+            return;
+        isAlive = false;
+        attTarget.isTargettable = false;
+        animator.SetBool(animDieKey, true);
+        foreach (var childCollider in GetComponentsInChildren<Collider>())
+            childCollider.enabled = false;
 
-	[ClientRpc]
-	private void RpcSetPosition(Vector3 asd) {
-		transform.position = asd;
-	}
-	
-	private void Die() {
-		if (!isAlive) // only shadows die twice 
-			return;
-		isAlive = false;
-		attTarget.isTargettable = false;
-		animator.SetBool(animDieKey, true);
-		foreach (var childCollider in GetComponentsInChildren<Collider>())
-			childCollider.enabled = false;
+        RemoveLoosersBody();
+    }
 
-		RemoveLoosersBody();
-	}
-
-	private async void RemoveLoosersBody() {
-		await Task.Delay(deadBodyTimeout);
+    private async void RemoveLoosersBody() {
+        await Task.Delay(deadBodyTimeout);
 #if UNITY_EDITOR
-		if (EditorApplication.isPlaying)
+        if (EditorApplication.isPlaying)
 #endif
-			Destroy(gameObject); // async code doesnt stop on play mode exit
-	}
+            Destroy(gameObject); // async code doesnt stop on play mode exit
+    }
 }

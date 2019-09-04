@@ -24,7 +24,7 @@ public class GameMenu : MonoBehaviour, Initable {
 
 	public void Init() {
 		closeBtn.onClick.AddListener(Close);
-//		Cursor.lockState = CursorLockMode.Locked;
+		Cursor.lockState = CursorLockMode.Locked;
 		Close();
 	}
 
@@ -41,14 +41,14 @@ public class GameMenu : MonoBehaviour, Initable {
 	private void Open() {
 		isOpened = true;
 		container.SetActive(true);
-//		Cursor.lockState = CursorLockMode.Confined;
+		Cursor.lockState = CursorLockMode.Confined;
 		OnOpened();
 	}
 
 	private void Close() {
 		isOpened = false;
 		container.SetActive(false);
-//		Cursor.lockState = CursorLockMode.Locked;
+		Cursor.lockState = CursorLockMode.Locked;
 		OnClosed();
 	}
 }
