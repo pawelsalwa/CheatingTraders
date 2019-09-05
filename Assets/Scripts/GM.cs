@@ -53,13 +53,14 @@ public class GM : MonoBehaviour {
 		cinemachineFreeLook.m_LookAt = _player.userInputHandler.cameraOrbit;
 		
         foreach (var go in _player.GetComponentsInChildren<Transform>()) go.tag = "Player";
+//        foreach (var go in _player.GetComponentsInChildren<Transform>()) go.gameObject.layer = 1 >> 9;
 	}
 
 	public void SpawnEnemy() {
 		var newEnemy = Instantiate(basicUnitPrefab);
 		newEnemy.userInputHandler.enabled = false;
 		newEnemy.GetComponent<BotController>().enabled = true;
-		newEnemy.transform.position = Vector3.up + new Vector3(Random.Range(0, 4), Random.Range(0,4), Random.Range(0, 4));
-		foreach (var go in newEnemy.GetComponentsInChildren<Transform>()) go.tag = "Untagged";
+		newEnemy.transform.position = Vector3.up + new Vector3(Random.Range(0, 6), Random.Range(0,6), Random.Range(0, 6));
+		foreach (var go in newEnemy.GetComponentsInChildren<Transform>()) go.tag = "Enemy";
 	}
 }

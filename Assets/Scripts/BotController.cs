@@ -39,6 +39,7 @@ public class BotController : MonoBehaviour {
 	
 	public float timeBetweenAiActionChange = 1f;
 	public float enemyDetectionDistance = 14f;
+	public LayerMask Mask;
 	
 	private float attackRange = 1.3f;
 	
@@ -80,8 +81,9 @@ public class BotController : MonoBehaviour {
 		targetDir = targetPos - thisPos;
 
 		Debug.DrawRay(thisPos, targetDir, Color.white, Time.deltaTime, true);
+		int attackableBodyLayer = 9; 
 
-		if (!Physics.Raycast(thisPos, targetDir, out var hitInfo)) return;
+		if (!Physics.Raycast(thisPos, targetDir, out var hitInfo, Mask)) return;
 		if (!hitInfo.transform.CompareTag("Player")) {currentTarget = null; return;}
 		if ((distanceToTarget = hitInfo.distance) > enemyDetectionDistance) {currentTarget = null; return;}
 		
@@ -91,17 +93,11 @@ public class BotController : MonoBehaviour {
 
 
 	private void Chase() {
-//		movement.MoveW();
 		combatState = CombatState.MoveW;
 	}
 
 	private void Strafe() {
 		movement.MoveD();
-	}
-
-	private void AttackIfInRange() {
-		if (distanceToTarget < attackRange) attack.ContinueToAttack();
-		else attack.StopAttacking();
 	}
 
 	private void LookAtTarget() {
@@ -144,5 +140,10 @@ public class BotController : MonoBehaviour {
 				timeBetweenAiActionChange = 1f;
 				break;
 		}
+	}
+
+	private void AttackIfInRange() {
+		if (distanceToTarget < attackRange) attack.ContinueToAttack();
+		else attack.StopAttacking();
 	}
 }
