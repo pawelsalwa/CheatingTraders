@@ -16,6 +16,8 @@ public class GM : MonoBehaviour {
 	public Camera mainCamera;
 	public BasicUnit basicUnitPrefab;
 
+	public bool isNetworkDevxD = false;
+
 	private BasicUnit _player;
 	public static BasicUnit player => instance._player;
 
@@ -33,7 +35,11 @@ public class GM : MonoBehaviour {
 	}
 
 	private void Start() {
-		StartGame();
+		if (!isNetworkDevxD) {
+			StartGame();
+			Debug.Log("NIE MA NETA");
+		} else 
+			Debug.Log("Networkujemy");
 	}
 
 	private void StartGame() {

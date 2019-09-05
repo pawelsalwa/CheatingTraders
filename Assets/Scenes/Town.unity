@@ -650,6 +650,7 @@ MonoBehaviour:
   mainCamera: {fileID: 567418452}
   basicUnitPrefab: {fileID: 2036131077303213700, guid: d6a26d76fcf8e514797fd03cbff8f4db,
     type: 3}
+  isNetworkDevxD: 0
 --- !u!4 &112516931
 Transform:
   m_ObjectHideFlags: 0

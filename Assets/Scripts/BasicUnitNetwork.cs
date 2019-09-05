@@ -33,12 +33,14 @@ public class BasicUnitNetwork : NetworkBehaviour, Initable {
 	public void Start() {
 		userInputHandler.enabled = isLocalPlayer;
 		if (isLocalPlayer) {
-			GM.instance.cinemachineFreeLook.m_Follow = cameraOrbit;
-//			GM.instance.cinemachineFreeLook.m_Orbits[0] = cameraOrbit;
+			GetComponent<BotController>().enabled = false;
+			GM.instance.cinemachineFreeLook.m_Follow = userInputHandler.cameraFollow;
+			GM.instance.cinemachineFreeLook.m_LookAt = userInputHandler.cameraOrbit;
+			foreach (var go in GetComponentsInChildren<Transform>()) go.tag = "Player";
 		}
 	}
 
-	private void Update() {
+	private void LateUpdate() {
 		if(isLocalPlayer)
 			CmdSetPosition(transform.position);
 	}
