@@ -21,7 +21,7 @@ public class UserInputHandler : NetworkBehaviour {
         HandleAttack();
     }
     
-    private void FixedUpdate() {
+    private void LateUpdate() {
         HandleRotation();
     }
 
@@ -74,6 +74,6 @@ public class UserInputHandler : NetworkBehaviour {
 
     private void HandleRotation() {
         rotatation.LookAt(new Vector3(cameraRot.forward.x, 0f, cameraRot.forward.z));
-        rotatation.AnimateRotation(Input.GetAxis("Horizontal"));
+//        rotatation.AnimateRotation(Input.GetAxis("Horizontal"));
     }
 }
