@@ -1405,34 +1405,34 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 498154147189539005}
-    m_Position: {x: 420, y: -40, z: 0}
+    m_Position: {x: 640, y: 260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2125379964720417146}
-    m_Position: {x: 420, y: -140, z: 0}
+    m_Position: {x: 640, y: 160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2787568976383899041}
-    m_Position: {x: 420, y: 130, z: 0}
+    m_Position: {x: 640, y: 430, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6506366349934055826}
     m_Position: {x: -70, y: 60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6196239842823461213}
-    m_Position: {x: 720, y: -40, z: 0}
+    m_Position: {x: 940, y: 260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8273397768593283806}
-    m_Position: {x: 700, y: -140, z: 0}
+    m_Position: {x: 920, y: 160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -735927532446360236}
-    m_Position: {x: 170, y: 130, z: 0}
+    m_Position: {x: 390, y: 430, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1928264439237626065}
-    m_Position: {x: 150, y: -40, z: 0}
+    m_Position: {x: 370, y: 260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8960744088293251942}
-    m_Position: {x: 150, y: -140, z: 0}
+    m_Position: {x: 370, y: 160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6375461705737975964}
-    m_Position: {x: 720, y: 120, z: 0}
+    m_Position: {x: 940, y: 420, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3316755145580409836}
     m_Position: {x: 480, y: -230, z: 0}
@@ -1549,7 +1549,7 @@ BlendTree:
       type: 3}
     m_Threshold: 135
     m_Position: {x: 0, y: 0}
-    m_TimeScale: -1.6
+    m_TimeScale: 1.6
     m_CycleOffset: 0
     m_DirectBlendParameter: rotationFactor
     m_Mirror: 0
@@ -1693,7 +1693,7 @@ AnimatorStateTransition:
   m_ExitTime: 0.8026316
   m_HasExitTime: 0
   m_HasFixedDuration: 1
-  m_InterruptionSource: 0
+  m_InterruptionSource: 2
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
 --- !u!206 &8917593366507614172

@@ -8,12 +8,16 @@ public class MovementComponentNetwork : MovementComponent {
 
 	private Vector3 lastPos;
 
-	protected override void OnMoveRequested() {
+//	protected override void OnMoveRequested() {
+//		SendTransformToServer();
+//	}
+
+	protected override void OnMoveComputed() {
 		SendTransformToServer();
 	}
-	
+
 	private void SendTransformToServer() {
-		if(isLocalPlayer)
+		if (isLocalPlayer)
 			CmdSentTransformToServer(transform.position);
 	}
 
@@ -26,13 +30,22 @@ public class MovementComponentNetwork : MovementComponent {
 	private void RpcSetPosition(Vector3 fromServPos) {
 		if (isLocalPlayer) return;
 
+		// ogarniamy animacje:
 		lastPos = transform.position;
-		
-		
+		Vector3 lastForward = transform.forward;
+		float angle = Vector3.SignedAngle(lastForward, fromServPos - lastPos, Vector3.up);
+
 		transform.position = fromServPos;
+
+		if ((lastPos - fromServPos).magnitude < 0.01f) {
+			animator.SetBool("moving", false);
+		} else {
+			animator.SetBool("moving", true);
+			animator.SetFloat("movingAngle", angle);
+		}
 	}
 
-	
+
 // 	private void Update() {
 //		if(isLocalPlayer)
 //			CmdSetPosition(transform.position);
@@ -48,7 +61,7 @@ public class MovementComponentNetwork : MovementComponent {
 //		if (!isLocalPlayer)
 //			transform.position = asd;
 //	}
-	
+
 
 //	public void MoveRight(Vector3 dir) {
 //		animator.SetBool("strafeD", dir != Vector3.zero);

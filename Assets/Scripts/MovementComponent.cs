@@ -18,7 +18,7 @@ public class MovementComponent : NetworkBehaviour {
 
 	private Animator _animator;
 
-	private Animator animator => _animator == null ? _animator = GetComponent<Animator>() : _animator;
+	protected Animator animator => _animator == null ? _animator = GetComponent<Animator>() : _animator;
 
 	[Header("AnimatorKeys")]
 //	public string noMove;
@@ -48,15 +48,16 @@ public class MovementComponent : NetworkBehaviour {
 
 	public void MoveSD() { MoveDir(Vector3.Normalize(transform.right + -transform.forward) * moveSpeed); }
 
-	public void DontMove() { animator.SetBool("moving", false); }
+	public void DontMove() { MoveDir(Vector3.zero); }
 
 	private void MoveDir(Vector3 dir) {
-		animator.SetBool("moving", true);
+		OnMoveRequested();
+		animator.SetBool("moving", dir != Vector3.zero);
 		Vector3 lastPos = transform.position;
 		charController.Move(dir);
-		animator.SetFloat("movingAngle", Vector3.SignedAngle(transform.forward, transform.position - lastPos, Vector3.up), 0.1f, Time.deltaTime);
-		Debug.Log("angle: " + Vector3.SignedAngle(transform.forward, transform.position - lastPos, Vector3.up));
-		OnMoveRequested();
+		float angle = Vector3.SignedAngle(transform.forward, transform.position - lastPos, Vector3.up);
+		animator.SetFloat("movingAngle", angle, 0.1f, Time.deltaTime);
+		OnMoveComputed();
 	}
 
 	private void SetSingleAnimKey(string key) {
@@ -66,6 +67,8 @@ public class MovementComponent : NetworkBehaviour {
 //  ---Networking---
 
 	protected virtual void OnMoveRequested() { }
+	
+	protected virtual void OnMoveComputed() { }
 
 //	public void MoveRight(Vector3 dir) {
 //		animator.SetBool("strafeD", dir != Vector3.zero);
