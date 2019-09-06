@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class MovementComponent : MonoBehaviour {
+public class MovementComponent : NetworkBehaviour { 
 
 	[SerializeField, Range(0f, 0.5f)]
 	private float moveSpeed;
@@ -33,51 +34,62 @@ public class MovementComponent : MonoBehaviour {
 	public void MoveW() {
 		SetSingleAnimKey(W);
 		charController.Move(transform.forward * moveSpeed);
+		OnMoveRequested();
 	}
 	
 	public void MoveS() {
 		SetSingleAnimKey(S);
 		charController.Move(-transform.forward * moveSpeed);
+		OnMoveRequested();
 	}
 	
 	public void MoveA() {
 		SetSingleAnimKey(A);
 		charController.Move(-transform.right * moveSpeed);
+		OnMoveRequested();
 	}
 	
 	public void MoveD() {
 		SetSingleAnimKey(D);
 		charController.Move(transform.right * moveSpeed);
+		OnMoveRequested();
 	}
 	
 	public void MoveWA() {
 		SetSingleAnimKey(WA);
 		charController.Move(Vector3.Normalize(-transform.right + transform.forward) * moveSpeed);
+		OnMoveRequested();
 	}
 	
 	public void MoveWD() {
 		SetSingleAnimKey(WD);
 		charController.Move(Vector3.Normalize(transform.right + transform.forward) * moveSpeed);
+		OnMoveRequested();
 	}
 	
 	public void MoveSA() {
 		SetSingleAnimKey(SA);
 		charController.Move(Vector3.Normalize(-transform.right + -transform.forward) * moveSpeed);
+		OnMoveRequested();
 	}
 	
 	public void MoveSD() {
 		SetSingleAnimKey(SD);
 		charController.Move(Vector3.Normalize(transform.right + -transform.forward) * moveSpeed);
+		OnMoveRequested();
 	}
 	
 	public void DontMove() {
 		SetSingleAnimKey(null);
-//		charController.Move(Vector3.Normalize(transform.right + transform.forward) * moveSpeed);
 	}
 
 	private void SetSingleAnimKey(string key) {
 		foreach (var xd in new List<string> {W,A,S,D,WA,WD,SA,SD}) animator.SetBool(xd, xd == key); // slychac bol dupy lamusow
 	}
+	
+//  ---Networking---
+
+	protected virtual void OnMoveRequested() { }
 
 //	public void MoveRight(Vector3 dir) {
 //		animator.SetBool("strafeD", dir != Vector3.zero);

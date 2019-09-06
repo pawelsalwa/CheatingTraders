@@ -11,7 +11,7 @@ public enum ControlledBy {
 }
 
 [RequireComponent(typeof(Animator))]
-public class BasicUnitNetwork : NetworkBehaviour, Initable {
+public class BasicUnit : NetworkBehaviour, Initable {
 	public HealthComponent hp;
 	public AttackTarget attTarget;
 
@@ -19,6 +19,7 @@ public class BasicUnitNetwork : NetworkBehaviour, Initable {
 	public int deadBodyTimeout = 2000;
 
 	public Transform cameraOrbit;
+	public Transform cameraFollow;
 
 	private bool isAlive = true;
 
@@ -36,25 +37,9 @@ public class BasicUnitNetwork : NetworkBehaviour, Initable {
 	public void Start() {
 		userInputHandler.enabled = isLocalPlayer;
 		if (isLocalPlayer) {
-			GM.instance.cinemachineFreeLook.m_Follow = cameraOrbit;
+			GM.instance.cinemachineFreeLook.m_Follow = cameraFollow;
 			GM.instance.cinemachineFreeLook.m_LookAt = cameraOrbit;
 		}
-	}
-
-	private void Update() {
-		if(isLocalPlayer)
-			CmdSetPosition(transform.position);
-	}
-	
-	[Command]
-	private void CmdSetPosition(Vector3 asd) {
-		RpcSetPosition(asd);
-	}
-
-	[ClientRpc]
-	private void RpcSetPosition(Vector3 asd) {
-		if (!isLocalPlayer)
-			transform.position = asd;
 	}
 	
 	private void Die() {
