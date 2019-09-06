@@ -12,8 +12,8 @@ public class GM : MonoBehaviour {
 	public GameMenu gameMenu;
 	public CinemachineFreeLook cinemachineFreeLook;
 	public Camera camera;
-	public BasicUnit _player;
-	public static BasicUnit player => instance._player;
+	public BasicUnitNetwork _player;
+	public static BasicUnitNetwork player => instance._player;
 
 	public bool isMenuOpened => gameMenu.isOpened;
 

@@ -22,7 +22,7 @@ public class BotController : MonoBehaviour {
 	public AttackComponent attack;
 	public CharacterRotationComponent rotatation;
 
-	public BasicUnit currentTarget;
+	public BasicUnitNetwork currentTarget;
 	public float distanceToTarget;
 	public float strafeDistance = 5f;
 	private float timeBetweenActions = 2f;
@@ -60,7 +60,7 @@ public class BotController : MonoBehaviour {
 		Debug.DrawRay(thisPos, targetDir, Color.white, Time.deltaTime, true);
 		Physics.Raycast(thisPos, targetDir, out var hitInfo);
 		if (hitInfo.transform.CompareTag("Player")) {
-			currentTarget = hitInfo.transform.GetComponentInParent<BasicUnit>(); //TODO: legitny system łapania targetu (moze nawet bez tagow)
+			currentTarget = hitInfo.transform.GetComponentInParent<BasicUnitNetwork>(); //TODO: legitny system łapania targetu (moze nawet bez tagow)
 			distanceToTarget = hitInfo.distance;
 		}
 	}

@@ -11,7 +11,7 @@ public enum ControlledBy {
 }
 
 [RequireComponent(typeof(Animator))]
-public class BasicUnit : NetworkBehaviour, Initable {
+public class BasicUnitNetwork : NetworkBehaviour, Initable {
 	public HealthComponent hp;
 	public AttackTarget attTarget;
 
@@ -27,7 +27,6 @@ public class BasicUnit : NetworkBehaviour, Initable {
 	private Animator animator => _animator == null ? _animator = GetComponent<Animator>() : _animator;
 
 	private UserInputHandler _userInputHandler;
-
 	public UserInputHandler userInputHandler => _userInputHandler == null ? _userInputHandler = GetComponent<UserInputHandler>() : _userInputHandler;
 
 	public void Init() {
@@ -38,7 +37,7 @@ public class BasicUnit : NetworkBehaviour, Initable {
 		userInputHandler.enabled = isLocalPlayer;
 		if (isLocalPlayer) {
 			GM.instance.cinemachineFreeLook.m_Follow = cameraOrbit;
-//			GM.instance.cinemachineFreeLook.m_Orbits[0] = cameraOrbit;
+			GM.instance.cinemachineFreeLook.m_LookAt = cameraOrbit;
 		}
 	}
 
