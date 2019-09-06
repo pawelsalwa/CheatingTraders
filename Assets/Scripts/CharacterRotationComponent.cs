@@ -16,7 +16,7 @@ public class CharacterRotationComponent : NetworkBehaviour {
     public float rotationSpeed;
 	
     private Animator _animator;
-    private Animator animator => _animator == null ? _animator = GetComponent<Animator>() : _animator;
+    protected Animator animator => _animator == null ? _animator = GetComponent<Animator>() : _animator;
 
     private Transform cameraRot => GM.instance.camera.gameObject.transform;
 
@@ -27,10 +27,15 @@ public class CharacterRotationComponent : NetworkBehaviour {
         Vector3 newRot = transform.rotation.eulerAngles;
 
         rotationSpeed = lastRot.y - newRot.y;
-        AnimateRotation(Mathf.Clamp(rotationSpeed, -4f,4f));
+        AnimateRotation(rotationSpeed);
     }
 
-    public void AnimateRotation(float speed) {
+    protected void AnimateRotation(float speed) {
+        speed = Mathf.Clamp(speed, -4f, 4f);
         animator.SetFloat(rotationAnimKey, speed, _rotationAnimationSmoothFactor, Time.deltaTime);
     }
+
+    protected virtual void OnRotateRequested() { }
+    
+    
 }

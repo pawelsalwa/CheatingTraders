@@ -889,7 +889,7 @@ GameObject:
   - component: {fileID: 8407146673255271437}
   - component: {fileID: 7439631042915170079}
   - component: {fileID: 2036131077303213700}
-  - component: {fileID: 1537876270}
+  - component: {fileID: -8028986997546158741}
   - component: {fileID: 39532043410761939}
   - component: {fileID: -3826738508489503866}
   m_Layer: 0
@@ -1013,7 +1013,7 @@ MonoBehaviour:
   syncInterval: 0.1
   movement: {fileID: 8407146673255271437}
   attack: {fileID: 3427392319552801460}
-  rotatation: {fileID: 1537876270}
+  rotatation: {fileID: -8028986997546158741}
 --- !u!114 &2036131077303213700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1034,7 +1034,7 @@ MonoBehaviour:
   deadBodyTimeout: 2000
   cameraOrbit: {fileID: 5085911358754118236}
   cameraFollow: {fileID: 3747067848639096968}
---- !u!114 &1537876270
+--- !u!114 &-8028986997546158741
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1043,15 +1043,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1564253461696300375}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a512a232e2c7d204f8f09d8ad5a54cf5, type: 3}
+  m_Script: {fileID: 11500000, guid: 6167d5983babcf84e88165f867d27220, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSmoothFactor: 0.3
-  _rotationAnimationSmoothFactor: 0.1
-  rotationSpeed: 0
+  syncMode: 0
+  syncInterval: 0.1
+  _rotationSmoothFactor: 0.4
+  _rotationAnimationSmoothFactor: 0.2
   rotationAnimKey: rotationFactor
   animBlendTreeRotationMultiplier: 0.01
-  addon: 0.5
+  addon: 0.4
+  rotationSpeed: 0
 --- !u!114 &39532043410761939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1066,7 +1068,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: {fileID: 0}
   attack: {fileID: 3427392319552801460}
-  rotatation: {fileID: 1537876270}
+  rotatation: {fileID: 0}
   currentTarget: {fileID: 0}
   distanceToTarget: 0
   strafeDistance: 4
@@ -1085,7 +1087,7 @@ MonoBehaviour:
   serverOnly: 0
   localPlayerAuthority: 1
   m_AssetId: 
-  m_SceneId: 638992399
+  m_SceneId: 528594315
 --- !u!1 &2657292109224698753
 GameObject:
   m_ObjectHideFlags: 0
