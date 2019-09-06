@@ -56,8 +56,10 @@ public class MovementComponent : NetworkBehaviour {
 		Vector3 lastPos = transform.position;
 		charController.Move(dir);
 		float angle = Vector3.SignedAngle(transform.forward, transform.position - lastPos, Vector3.up);
-		animator.SetFloat("movingAngle", angle, 0.1f, Time.deltaTime);
-		OnMoveComputed();
+		
+		// angle = 0 moves forward, angle = 90 moves right angle = -90 moves left
+		animator.SetFloat("movingAngle", angle, 0.1f, Time.deltaTime);  
+		OnMoveRequested();
 	}
 
 	private void SetSingleAnimKey(string key) {
@@ -67,27 +69,4 @@ public class MovementComponent : NetworkBehaviour {
 //  ---Networking---
 
 	protected virtual void OnMoveRequested() { }
-	
-	protected virtual void OnMoveComputed() { }
-
-//	public void MoveRight(Vector3 dir) {
-//		animator.SetBool("strafeD", dir != Vector3.zero);
-//		if(dir == Vector3.zero)
-//			return;
-//		
-//		dir = Vector3.Normalize(new Vector3(dir.x, 0f, dir.z));
-//		charController.Move(dir * moveSpeed);
-//	}
-//
-//	public void Move(Vector3 dir) {
-//		animator.SetBool("movingForward", dir != Vector3.zero);
-//		if(dir == Vector3.zero)
-//			return;
-//		
-//		dir = Vector3.Normalize(new Vector3(dir.x, 0f, dir.z));
-//		transform.TransformDirection(dir);
-//		charController.Move(dir * moveSpeed);
-//		var targetRot = Quaternion.LookRotation(dir);
-//		transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, _rotationSmoothFactor);
-//	}
 }
