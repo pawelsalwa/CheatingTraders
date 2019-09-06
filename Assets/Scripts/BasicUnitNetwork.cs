@@ -53,7 +53,8 @@ public class BasicUnitNetwork : NetworkBehaviour, Initable {
 
 	[ClientRpc]
 	private void RpcSetPosition(Vector3 asd) {
-		transform.position = asd;
+		if (!isLocalPlayer)
+			transform.position = asd;
 	}
 	
 	private void Die() {
