@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class MovementComponentNetwork : MovementComponent {
 
+	private Vector3 lastPos;
+
 	protected override void OnMoveRequested() {
 		SendTransformToServer();
 	}
@@ -22,8 +24,12 @@ public class MovementComponentNetwork : MovementComponent {
 
 	[ClientRpc]
 	private void RpcSetPosition(Vector3 fromServPos) {
-		if (!isLocalPlayer)
-			transform.position = fromServPos;
+		if (isLocalPlayer) return;
+
+		lastPos = transform.position;
+		
+		
+		transform.position = fromServPos;
 	}
 
 	
