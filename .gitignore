@@ -24,3 +24,4 @@ sysinfo.txt
 !*.*.meta
 .vscode
 /.idea/
+Assets/Plugins/Editor/JetBrains/
