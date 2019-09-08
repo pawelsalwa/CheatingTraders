@@ -35,8 +35,8 @@ public class BasicUnit : NetworkBehaviour, Initable {
 	}
 
 	public void Start() {
-		userInputHandler.enabled = isLocalPlayer;
 		if (isLocalPlayer) {
+			userInputHandler.enabled = true;
 			GM.instance.cinemachineFreeLook.m_Follow = cameraFollow;
 			GM.instance.cinemachineFreeLook.m_LookAt = cameraOrbit;
 		}

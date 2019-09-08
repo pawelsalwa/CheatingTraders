@@ -18,7 +18,7 @@ public class CharacterRotationComponent : NetworkBehaviour {
     private Animator _animator;
     protected Animator animator => _animator == null ? _animator = GetComponent<Animator>() : _animator;
 
-    private Transform cameraRot => GM.instance.camera.gameObject.transform;
+//    private Transform cameraRot => GM.instance.mainCamera.gameObject.transform;
 
     public void LookAt(Vector3 targetRot) {
         Vector3 lastRot = transform.rotation.eulerAngles;

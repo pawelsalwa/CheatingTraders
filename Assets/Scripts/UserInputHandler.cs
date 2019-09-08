@@ -10,7 +10,7 @@ public class UserInputHandler : NetworkBehaviour {
     public AttackComponent attack;
     public CharacterRotationComponent rotatation;
 
-    private Transform cameraRot => GM.instance.camera.gameObject.transform;
+    private Transform cameraRot => GM.instance.mainCamera.gameObject.transform;
 
     private enum MoveDir {none,W,S,A,D,WA,WD,SA,SD}
 

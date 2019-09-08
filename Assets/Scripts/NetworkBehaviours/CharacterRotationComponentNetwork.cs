@@ -17,7 +17,6 @@ public class CharacterRotationComponentNetwork : CharacterRotationComponent {
 
 	private void SendTransformToServer() {
 		if (isLocalPlayer) {
-			Debug.Log("sending transform.rot: " + transform.rotation.eulerAngles);
 			CmdSentTransformToServer(transform.rotation);
 		}
 	}
@@ -30,8 +29,6 @@ public class CharacterRotationComponentNetwork : CharacterRotationComponent {
 	[ClientRpc]
 	private void RpcSetPosition(Quaternion clientRot) {
 		if (isLocalPlayer) return;
-		
-		Debug.Log($"<color>gettin rot: {transform.rotation.eulerAngles}</color>");
 
 		// ogarniamy animacje:
 		lastRot = transform.rotation.eulerAngles;
@@ -40,7 +37,5 @@ public class CharacterRotationComponentNetwork : CharacterRotationComponent {
 
 		AnimateRotation(clientRotationSpeed);
 		transform.rotation = clientRot;
-		
-		Debug.Log($"<color>settin rot: {transform.rotation.eulerAngles}</color>");
 	}
 }

@@ -59,9 +59,12 @@ public class BotController : MonoBehaviour {
 
 		Debug.DrawRay(thisPos, targetDir, Color.white, Time.deltaTime, true);
 		Physics.Raycast(thisPos, targetDir, out var hitInfo);
-		if (hitInfo.transform.CompareTag("Player")) {
+		if (hitInfo.transform != null && hitInfo.transform.CompareTag("Player")) {
 			currentTarget = hitInfo.transform.GetComponentInParent<BasicUnit>(); //TODO: legitny system łapania targetu (moze nawet bez tagow)
 			distanceToTarget = hitInfo.distance;
+		} else {
+			currentTarget = null;
+			distanceToTarget = float.PositiveInfinity;
 		}
 	}
 

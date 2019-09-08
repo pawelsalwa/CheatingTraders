@@ -892,7 +892,6 @@ GameObject:
   - component: {fileID: 1537876270}
   - component: {fileID: 39532043410761939}
   - component: {fileID: -3826738508489503866}
-  - component: {fileID: -3702775023978451560}
   m_Layer: 0
   m_Name: BasicKnight
   m_TagString: Player
@@ -985,6 +984,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e918ae94d8452489461cba0a9cd03c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   moveSpeed: 0.1
   _rotationSmoothFactor: 0.3
   W: W
@@ -1002,11 +1003,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1564253461696300375}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b536f0099503d6240ba321077478f3cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   movement: {fileID: 4866097812400902558}
   attack: {fileID: 3427392319552801460}
   rotatation: {fileID: 1537876270}
@@ -1042,12 +1045,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a512a232e2c7d204f8f09d8ad5a54cf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   _rotationSmoothFactor: 0.3
   _rotationAnimationSmoothFactor: 0.1
-  rotationSpeed: 0
   rotationAnimKey: rotationFactor
   animBlendTreeRotationMultiplier: 0.01
   addon: 0.5
+  rotationSpeed: 0
 --- !u!114 &39532043410761939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1080,23 +1085,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serverOnly: 0
   localPlayerAuthority: 1
-  m_AssetId: d6a26d76fcf8e514797fd03cbff8f4db
-  m_SceneId: 0
---- !u!114 &-3702775023978451560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564253461696300375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  compressRotation: 1
+  m_AssetId: 
+  m_SceneId: 2297103044
 --- !u!1 &2657292109224698753
 GameObject:
   m_ObjectHideFlags: 0
