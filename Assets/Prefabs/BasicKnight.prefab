@@ -1069,8 +1069,13 @@ MonoBehaviour:
   attack: {fileID: 3427392319552801460}
   rotatation: {fileID: 1537876270}
   currentTarget: {fileID: 0}
-  distanceToTarget: 0
-  strafeDistance: 4
+  combatStartDistance: 5
+  combatQuitDistance: 8
+  timeBetweenAiActionChange: 1
+  enemyDetectionDistance: 14
+  Mask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &-3826738508489503866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1085,8 +1090,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serverOnly: 0
   localPlayerAuthority: 1
-  m_AssetId: 
-  m_SceneId: 2297103044
+  m_AssetId: d6a26d76fcf8e514797fd03cbff8f4db
+  m_SceneId: 0
 --- !u!1 &2657292109224698753
 GameObject:
   m_ObjectHideFlags: 0
@@ -1225,7 +1230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02938a9485249574a857cfb73d1d8d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 24
+  damage: 52
   ignoredAttackTargets:
   - {fileID: 7581574680759952653}
   attTargets: []

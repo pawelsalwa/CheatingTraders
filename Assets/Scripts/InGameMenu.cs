@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameMenu : MonoBehaviour, Initable {
+public class InGameMenu : MonoBehaviour, Initable {
 
 	public event Action OnOpened = () => { };
 	public event Action OnClosed = () => { };
 
-	public Button closeBtn;
-	public GameObject container;
+	public Button ResumeGameBtn;
+	public Button backToMainMenuBtn;
+	
+	public MainGameMenu mainGameMenu;
 
 	private bool _isOpened;
 
@@ -23,8 +25,11 @@ public class GameMenu : MonoBehaviour, Initable {
 	}
 
 	public void Init() {
-		closeBtn.onClick.AddListener(Close);
-		Cursor.lockState = CursorLockMode.Locked;
+		ResumeGameBtn.onClick.AddListener(Close);
+		backToMainMenuBtn.onClick.AddListener(() => {
+			Close();
+			mainGameMenu.Open();
+		});
 		Close();
 	}
 
@@ -40,15 +45,14 @@ public class GameMenu : MonoBehaviour, Initable {
 
 	private void Open() {
 		isOpened = true;
-		container.SetActive(true);
-		Cursor.lockState = CursorLockMode.Confined;
+		gameObject.SetActive(true);
+//		Cursor.lockState = CursorLockMode.Confined;
 		OnOpened();
 	}
 
 	private void Close() {
 		isOpened = false;
-		container.SetActive(false);
-		Cursor.lockState = CursorLockMode.Locked;
-		OnClosed();
+		gameObject.SetActive(false);
+//		Cursor.lockState = CursorLockMode.Locked;
 	}
 }

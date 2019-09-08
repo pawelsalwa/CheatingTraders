@@ -5,7 +5,7 @@ using Mirror;
 using UnityEditor;
 using UnityEngine;
 
-public class BasicUnitNetwork : BasicUnit, Initable {
+public class BasicUnitNetwork : BasicUnit {
 	
 	
 }

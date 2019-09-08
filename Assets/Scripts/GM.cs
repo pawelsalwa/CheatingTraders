@@ -11,17 +11,17 @@ public class GM : MonoBehaviour, Initable {
 	private static GM _instance;
 	public static GM instance => _instance == null ? _instance = FindObjectOfType<GM>() : _instance;
 
-	public GameMenu gameMenu;
+	public InGameMenu inGameMenu;
 	public CinemachineFreeLook cinemachineFreeLook;
 	public Camera mainCamera;
 	public BasicUnit basicUnitPrefab;
-	public StartGameMenu startGameMenu;
+	public MainGameMenu mainGameMenu;
 	public MultiplayerMenu multiplayerMenu;
 
 	private BasicUnit _player;
 	public static BasicUnit player => instance._player;
 
-	public bool isMenuOpened => gameMenu.isOpened;
+	public bool isMenuOpened => inGameMenu.isOpened;
 
 	[RuntimeInitializeOnLoadMethod]
 	private static void InitAllInitables() {
@@ -31,7 +31,7 @@ public class GM : MonoBehaviour, Initable {
 	}
 
 	public void Init() {
-		startGameMenu.Open();
+		mainGameMenu.Open();
 		multiplayerMenu.Close();
 	}
 
@@ -42,6 +42,7 @@ public class GM : MonoBehaviour, Initable {
 	public void StartSinglePlayerGame() {
 		SpawnPlayer();
 		SpawnEnemy();
+//		Cursor.lockState = CursorLockMode.Confined;
 	}
 
 	public void SpawnPlayer() {

@@ -7,8 +7,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
+//[RequireComponent(typeof()),RequireComponent(typeof()),RequireComponent(typeof())]
 public class BotController : MonoBehaviour {
-	
 	private enum CombatState {
 		StrafeA,
 		StrafeD,
@@ -16,100 +16,136 @@ public class BotController : MonoBehaviour {
 		MoveS
 	}
 
-	private CombatState combatState;
+	private CombatState _combatState;
+	private CombatState combatState {
+		get => _combatState;
+		set {
+			if(_combatState == value)
+				return;
+			Debug.Log(_combatState.ToString());
+			_combatState = value;
+		}
+	}
 
 	public MovementComponent movement;
 	public AttackComponent attack;
+	
 	public CharacterRotationComponent rotatation;
-
 	public BasicUnit currentTarget;
-	public float distanceToTarget;
-	public float strafeDistance = 5f;
-	private float timeBetweenActions = 2f;
-	private float cTimeBetweenActions = 0f;
-	private int action;
-
-	private Transform player => GM.player.transform;
-
+	
+	[Header("AI Config")]
+	public float combatStartDistance = 5f;
+	public float combatQuitDistance = 8f;
+	
+	public float timeBetweenAiActionChange = 1f;
+	public float enemyDetectionDistance = 14f;
+	public LayerMask Mask;
+	
+	private float attackRange = 1.3f;
+	
+	private float currentTimeBetweenActions = 0f;
+	private float distanceToTarget;
+	
+	private bool inCombatMode = false;
+	private bool isInCombatDist =>  distanceToTarget < combatQuitDistance && inCombatMode;
+	
+	private Transform player => GM.player?.transform;
 	private Vector3 thisPos;
 	private Vector3 targetPos;
 	private Vector3 targetDir;
 
-	private bool isInCombatDist => Mathf.Abs(distanceToTarget - strafeDistance) < 0.4f;
 
 	private void Update() {
 		SeekTarget();
-		
-		if (currentTarget == null)
+
+		if (currentTarget == null) {
+			movement.DontMove();	
 			return;
+		}
 
 		LookAtTarget();
+		UpdateIfInCombatMode();
 
-		if (isInCombatDist) {
+		if (inCombatMode)
 			SetRandomCombatAction();
-		}
-		
+		else
+			Chase();
+
+		ExecuteCombatAction();
 		AttackIfInRange();
 	}
 
 	private void SeekTarget() {
+		if (player == null) return;
+		
 		thisPos = transform.position + Vector3.up;
 		targetPos = player.position + Vector3.up;
 		targetDir = targetPos - thisPos;
 
 		Debug.DrawRay(thisPos, targetDir, Color.white, Time.deltaTime, true);
-		Physics.Raycast(thisPos, targetDir, out var hitInfo);
-		if (hitInfo.transform != null && hitInfo.transform.CompareTag("Player")) {
-			currentTarget = hitInfo.transform.GetComponentInParent<BasicUnit>(); //TODO: legitny system łapania targetu (moze nawet bez tagow)
-			distanceToTarget = hitInfo.distance;
-		} else {
-			currentTarget = null;
-			distanceToTarget = float.PositiveInfinity;
-		}
+		int attackableBodyLayer = 9; 
+
+		if (!Physics.Raycast(thisPos, targetDir, out var hitInfo, Mask)) return;
+		if (!hitInfo.transform.CompareTag("Player")) {currentTarget = null; return;}
+		if ((distanceToTarget = hitInfo.distance) > enemyDetectionDistance) {currentTarget = null; return;}
+		
+		currentTarget = hitInfo.transform.GetComponentInParent<BasicUnit>(); //TODO: legitny system łapania targetu (moze nawet bez tagow)
+//		currentTarget = currentTarget.isAlive ? currentTarget : null;
 	}
 
 
 	private void Chase() {
-		if (Mathf.Approximately(cTimeBetweenActions, timeBetweenActions)) {
-			action = Random.Range(0, 1000) % 2;
-			cTimeBetweenActions = 0f;
-		}
-
-		(action == 0 && isInCombatDist ? (Action) movement.MoveW : movement.MoveS)();
+		combatState = CombatState.MoveW;
 	}
 
 	private void Strafe() {
-		if (Mathf.Approximately(cTimeBetweenActions, timeBetweenActions)) {
-			action = Random.Range(0, 1000) % 2;
-			cTimeBetweenActions = 0f;
-		}
-
-		(action == 0 ? (Action) movement.MoveA : movement.MoveD)();
-	}
-
-	private void AttackIfInRange() {
-		if (distanceToTarget < 1.3f) attack.ContinueToAttack();
+		movement.MoveD();
 	}
 
 	private void LookAtTarget() {
 		rotatation.LookAt(player.position - transform.position);
 	}
 
+	private void UpdateIfInCombatMode() { //simple hysteresis
+		if (distanceToTarget < combatStartDistance) inCombatMode = true;
+		if (distanceToTarget > combatQuitDistance) inCombatMode = false;
+	}
+
 	private void SetRandomCombatAction() {
-		cTimeBetweenActions += Time.deltaTime;
-		cTimeBetweenActions = Mathf.Clamp(cTimeBetweenActions, 0f, timeBetweenActions);
+		currentTimeBetweenActions += Time.deltaTime;
+		currentTimeBetweenActions = Mathf.Clamp(currentTimeBetweenActions, 0f, timeBetweenAiActionChange);
 
-		if (!Mathf.Approximately(cTimeBetweenActions, timeBetweenActions)) 
+		if (!Mathf.Approximately(currentTimeBetweenActions, timeBetweenAiActionChange))
 			return;
-		
-		action = Random.Range(0, 1000) % 2;
-		cTimeBetweenActions = 0f;
+
+		currentTimeBetweenActions = 0f;
+		combatState = (CombatState) (Random.Range(0, 1000) % 4);
 	}
 
-	public enum BotState {
-		Idle,
-		Chase
+	private void ExecuteCombatAction() {
+		switch (combatState) {
+			case CombatState.MoveW:
+				if (distanceToTarget >= attackRange)
+					movement.MoveW();
+				timeBetweenAiActionChange = 1f;
+				break;
+			case CombatState.MoveS:
+				movement.MoveS();
+				timeBetweenAiActionChange = 1f;
+				break;
+			case CombatState.StrafeA:
+				movement.MoveA();
+				timeBetweenAiActionChange = 1f;
+				break;
+			case CombatState.StrafeD:
+				movement.MoveD();
+				timeBetweenAiActionChange = 1f;
+				break;
+		}
 	}
 
-	
+	private void AttackIfInRange() {
+		if (distanceToTarget < attackRange) attack.ContinueToAttack();
+		else attack.StopAttacking();
+	}
 }

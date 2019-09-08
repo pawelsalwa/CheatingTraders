@@ -4,7 +4,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StartGameMenu : MonoBehaviour, Initable, IGameMenu {
+public class MainGameMenu : MonoBehaviour, Initable, IGameMenu {
 
 	public MultiplayerMenu multiplayerMenu;
 

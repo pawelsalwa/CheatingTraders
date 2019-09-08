@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MultiplayerMenu : MonoBehaviour, Initable, IGameMenu {
 
-	public StartGameMenu startGameMenu;
+	public MainGameMenu mainGameMenu;
 	public NetworkManager manager;
 
 	public Button hostLanBtn;
@@ -28,7 +28,7 @@ public class MultiplayerMenu : MonoBehaviour, Initable, IGameMenu {
 			manager.StartServer();
 		});
 		backBtn.onClick.AddListener(() => {
-			startGameMenu.Open();
+			mainGameMenu.Open();
 			Close();
 		});
 	}

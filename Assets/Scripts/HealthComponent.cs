@@ -12,13 +12,13 @@ public class HealthComponent : MonoBehaviour {
 	public int hp = 100;
 
 	public void Awake() {
-		attTarget.OnDamageTaken += TakeDamage;
+		attTarget.OnDamageTaken += (damage) => TakeDamage(damage);
 	}
 
 	private void TakeDamage(int damage) {
 		hp -= damage;
-		
-		if (hp <= 0)
+
+		if (hp <= 0) 
 			OnHpDropBelowZero();
 	}
 }
