@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
 ///<summary> Acts as layer of abstraction between user input and referenced components </summary>
-public class UserInputHandler : MonoBehaviour {
+public class UserInputHandler : NetworkBehaviour {
     public MovementComponent movement;
     public AttackComponent attack;
     public CharacterRotationComponent rotatation;
@@ -22,7 +23,7 @@ public class UserInputHandler : MonoBehaviour {
         HandleAttack();
     }
     
-    private void FixedUpdate() {
+    private void LateUpdate() {
         HandleRotation();
     }
 
@@ -43,7 +44,6 @@ public class UserInputHandler : MonoBehaviour {
     }
 
     private void HandleMovement() {
-
         SetMoveDir();
 
         switch (moveDir) {
@@ -76,6 +76,6 @@ public class UserInputHandler : MonoBehaviour {
 
     private void HandleRotation() {
         rotatation.LookAt(new Vector3(cameraRot.forward.x, 0f, cameraRot.forward.z));
-        rotatation.AnimateRotation(Input.GetAxis("Horizontal"));
+//        rotatation.AnimateRotation(Input.GetAxis("Horizontal"));
     }
 }
