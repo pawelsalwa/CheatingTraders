@@ -20,17 +20,10 @@ public class MovementComponent : NetworkBehaviour {
 
 	protected Animator animator => _animator == null ? _animator = GetComponent<Animator>() : _animator;
 
-	[Header("AnimatorKeys")]
-//	public string noMove;
-	public string W;
+	private float angle;
 
-	public string S;
-	public string A;
-	public string D;
-	public string WA;
-	public string WD;
-	public string SA;
-	public string SD;
+//	[Header("AnimatorKeys")]
+//	public string W, S, A, D, WA, WD, SA, SD;
 
 	public void MoveW() { MoveDir(transform.forward * moveSpeed); }
 
@@ -55,16 +48,16 @@ public class MovementComponent : NetworkBehaviour {
 		animator.SetBool("moving", dir != Vector3.zero);
 		Vector3 lastPos = transform.position;
 		charController.Move(dir);
-		float angle = Vector3.SignedAngle(transform.forward, transform.position - lastPos, Vector3.up);
-		
+		float newAngle = Vector3.SignedAngle(transform.forward, transform.position - lastPos, Vector3.up);
+		angle = Mathf.LerpAngle(angle , newAngle, 0.5f);
 		// angle = 0 moves forward, angle = 90 moves right angle = -90 moves left
-		animator.SetFloat("movingAngle", angle, 0.1f, Time.deltaTime);  
+		animator.SetFloat("movingAngle", angle);
 		OnMoveRequested();
 	}
 
-	private void SetSingleAnimKey(string key) {
-		foreach (var xd in new List<string> {W, A, S, D, WA, WD, SA, SD}) animator.SetBool(xd, xd == key); // slychac bol dupy lamusow
-	}
+//	private void SetSingleAnimKey(string key) {
+//		foreach (var xd in new List<string> {W, A, S, D, WA, WD, SA, SD}) animator.SetBool(xd, xd == key); // slychac bol dupy lamusow
+//	}
 
 //  ---Networking---
 

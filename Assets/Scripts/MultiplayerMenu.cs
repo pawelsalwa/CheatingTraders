@@ -4,7 +4,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MultiplayerMenu : MonoBehaviour, Initable, IGameMenu {
+public class MultiplayerMenu : UIMenuPanelBase {
 
 	public MainGameMenu mainGameMenu;
 	public NetworkManager manager;
@@ -14,7 +14,7 @@ public class MultiplayerMenu : MonoBehaviour, Initable, IGameMenu {
 	public Button startServerBtn;
 	public Button backBtn;
 
-	public void Init() {
+	protected override void Inited() {
 		hostLanBtn.onClick.AddListener(() => {
 			Close();
 			manager.StartHost();
@@ -32,13 +32,4 @@ public class MultiplayerMenu : MonoBehaviour, Initable, IGameMenu {
 			Close();
 		});
 	}
-
-	public void Open() {
-		gameObject.SetActive(true);
-	}
-
-	public void Close() {
-		gameObject.SetActive(false);
-	}
-
 }

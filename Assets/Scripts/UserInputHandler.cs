@@ -17,8 +17,10 @@ public class UserInputHandler : NetworkBehaviour {
     private MoveDir moveDir;
 
     private void Update() {
+        if (GM.isGamePaused) return;
         HandleMovement();
         HandleAttack();
+        HandleMisc();
     }
     
     private void LateUpdate() {
@@ -75,5 +77,11 @@ public class UserInputHandler : NetworkBehaviour {
     private void HandleRotation() {
         rotatation.LookAt(new Vector3(cameraRot.forward.x, 0f, cameraRot.forward.z));
 //        rotatation.AnimateRotation(Input.GetAxis("Horizontal"));
+    }
+
+    private void HandleMisc() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            GM.OpenInGameMenu();
+        }
     }
 }

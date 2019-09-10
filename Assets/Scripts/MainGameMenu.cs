@@ -4,7 +4,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainGameMenu : MonoBehaviour, Initable, IGameMenu {
+public class MainGameMenu : UIMenuPanelBase {
 
 	public MultiplayerMenu multiplayerMenu;
 
@@ -12,7 +12,7 @@ public class MainGameMenu : MonoBehaviour, Initable, IGameMenu {
 	public Button singlePlayerBtn;
 	public Button quitBtn;
 
-	public void Init() {
+	protected override void Inited() {
 		goMultiplayerBtn.onClick.AddListener(() => {
 			Close();
 			multiplayerMenu.Open();
@@ -24,14 +24,5 @@ public class MainGameMenu : MonoBehaviour, Initable, IGameMenu {
 		});
 
 		quitBtn.onClick.AddListener(Application.Quit);
-
-	}
-
-	public void Open() {
-		gameObject.SetActive(true);
-	}
-
-	public void Close() {
-		gameObject.SetActive(false);
 	}
 }
