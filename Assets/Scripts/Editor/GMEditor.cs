@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-#if UNITY_EDITOR
 [CustomEditor(typeof(GM))]
 public class GMEditor : Editor {
 
@@ -21,4 +20,3 @@ public class GMEditor : Editor {
 		
     }
 }
-#endif

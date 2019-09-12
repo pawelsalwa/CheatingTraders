@@ -68,14 +68,14 @@ public class GM : NetworkBehaviour {
 	}
 
 	public void StartSinglePlayerGame() {
-		GM.isMultiplayer = false;
+		isMultiplayer = false;
 		SpawnPlayer();
 		SpawnEnemy();
 	}
 
 	public void EndGame() {
 		DestroyBots();
-		if (GM.isMultiplayer) {
+		if (isMultiplayer) {
 			multiplayerMenu.StopMultiplayer();
 		} else {
 			if (player != null && player.isAlive)

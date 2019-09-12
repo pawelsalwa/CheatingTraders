@@ -59,7 +59,10 @@ public class BotController : MonoBehaviour {
 
 
 	private void Update() {
-		if (!thisUnit.isAlive || GM.isGamePaused) return;
+		if (!IsValid()) {
+			attack.StopAttacking();
+			return;
+		}
 			
 		SeekTarget();
 
@@ -78,6 +81,12 @@ public class BotController : MonoBehaviour {
 
 		ExecuteCombatAction();
 		AttackIfInRange();
+	}
+
+	private bool IsValid() {
+		if (GM.isGamePaused) return false;
+		if (!thisUnit.isAlive) return false;
+		return true;
 	}
 
 	private void SeekTarget() {
