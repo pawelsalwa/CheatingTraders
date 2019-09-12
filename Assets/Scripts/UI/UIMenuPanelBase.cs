@@ -21,7 +21,6 @@ public class UIMenuPanelBase : MonoBehaviour, Initable {
 	public void Open() {
 		isOpened = true;
 		gameObject.SetActive(true);
-//		Cursor.lockState = CursorLockMode.Confined;
 		Opened();
 		OnOpened();
 		OnAnyPanelOpened();
@@ -30,7 +29,6 @@ public class UIMenuPanelBase : MonoBehaviour, Initable {
 	public void Close() {
 		isOpened = false;
 		gameObject.SetActive(false);
-//		Cursor.lockState = CursorLockMode.Locked;
 		Closed();
 		OnClosed();
 		OnAnyPanelClosed();

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Mirror;
 using UnityEditor;
 using UnityEngine;
+using System;
 
 public enum ControlledBy {
 	Player,
@@ -12,6 +13,9 @@ public enum ControlledBy {
 
 [RequireComponent(typeof(Animator))]
 public class BasicUnit : NetworkBehaviour {
+
+	public event Action OnDeath = () => { };
+	
 	public HealthComponent hp;
 	public AttackTarget attTarget;
 
@@ -21,32 +25,37 @@ public class BasicUnit : NetworkBehaviour {
 	public Transform cameraOrbit;
 	public Transform cameraFollow;
 
-	private bool isAlive = true;
+	private bool _isAlive = true;
+	public bool isAlive => _isAlive;
 
 	private Animator _animator;
-
 	private Animator animator => _animator == null ? _animator = GetComponent<Animator>() : _animator;
 
 	private UserInputHandler _userInputHandler;
 	public UserInputHandler userInputHandler => _userInputHandler == null ? _userInputHandler = GetComponent<UserInputHandler>() : _userInputHandler;
 
-	public void Awake() {
+	protected virtual void Start() {
 		hp.OnHpDropBelowZero += Die;
 	}
 
-	public void Start() {
-		if (isLocalPlayer) {
-			userInputHandler.enabled = true;
-			GM.instance.cinemachineFreeLook.m_Follow = cameraFollow;
-			GM.instance.cinemachineFreeLook.m_LookAt = cameraOrbit;
-		}
+	public virtual void InitAsPlayer() {
+		userInputHandler.enabled = true;
+		GetComponent<BotController>().enabled = false;
+		GM.instance.cinemachineFreeLook.m_Follow = cameraFollow;
+		GM.instance.cinemachineFreeLook.m_LookAt = cameraOrbit;
+	}
+	
+	public void InitAsBot() {
+		userInputHandler.enabled = false;
+		GetComponent<BotController>().enabled = true;
 	}
 	
 	private void Die() {
-		if (!isAlive) // only shadows die twice 
+		if (!_isAlive) // only shadows die twice 
 			return;
 		
-		isAlive = false;
+		OnDeath();
+		_isAlive = false;
 		attTarget.isTargettable = false;
 		animator.SetBool(animDieKey, true);
 		foreach (var childCollider in GetComponentsInChildren<Collider>())
@@ -59,7 +68,9 @@ public class BasicUnit : NetworkBehaviour {
 		await Task.Delay(deadBodyTimeout);
 #if UNITY_EDITOR
 		if (EditorApplication.isPlaying)
-#endif
+#endif 
+		{
 			Destroy(gameObject); // async code doesnt stop on play mode exit
+		}
 	}
 }

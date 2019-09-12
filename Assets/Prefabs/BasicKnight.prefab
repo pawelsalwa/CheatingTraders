@@ -988,14 +988,7 @@ MonoBehaviour:
   syncInterval: 0.1
   moveSpeed: 0.1
   _rotationSmoothFactor: 0.3
-  W: W
-  S: S
-  A: A
-  D: D
-  WA: WA
-  WD: WD
-  SA: SA
-  SD: SD
+  animSensitivity: 0.4
 --- !u!114 &7439631042915170079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1230,7 +1223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02938a9485249574a857cfb73d1d8d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 52
+  damage: 49
   ignoredAttackTargets:
   - {fileID: 7581574680759952653}
   attTargets: []

@@ -18,9 +18,9 @@ public class UserInputHandler : NetworkBehaviour {
 
     private void Update() {
         if (GM.isGamePaused) return;
+        HandleMisc();
         HandleMovement();
         HandleAttack();
-        HandleMisc();
     }
     
     private void LateUpdate() {

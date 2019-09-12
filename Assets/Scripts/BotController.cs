@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-//[RequireComponent(typeof()),RequireComponent(typeof()),RequireComponent(typeof())]
+[RequireComponent(typeof(BasicUnit))]
 public class BotController : MonoBehaviour {
 	private enum CombatState {
 		StrafeA,
@@ -53,9 +53,14 @@ public class BotController : MonoBehaviour {
 	private Vector3 thisPos;
 	private Vector3 targetPos;
 	private Vector3 targetDir;
+	
+	private BasicUnit _thisUnit;
+	private BasicUnit thisUnit => _thisUnit == null ? _thisUnit = GetComponent<BasicUnit>() : _thisUnit;
 
 
 	private void Update() {
+		if (!thisUnit.isAlive || GM.isGamePaused) return;
+			
 		SeekTarget();
 
 		if (currentTarget == null) {
@@ -103,6 +108,7 @@ public class BotController : MonoBehaviour {
 	}
 
 	private void LookAtTarget() {
+		if (!currentTarget.isAlive) return;
 		rotatation.LookAt(player.position - transform.position);
 	}
 

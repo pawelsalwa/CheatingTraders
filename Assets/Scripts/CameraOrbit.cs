@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
+[Obsolete("Stary kod ;(")]
 public class CameraOrbit : MonoBehaviour {
 
 	public event Action<Quaternion> OnOrbit = newGlobalPosition => { };
@@ -19,7 +20,7 @@ public class CameraOrbit : MonoBehaviour {
 	}
 
 	void LateUpdate() {
-		if (GM.instance.isMenuOpened) return;
+		if (GM.isAnyMenuOpened) return;
 		offset = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * turnSpeed, Vector3.up) * offset;
 		offset = Quaternion.AngleAxis(Input.GetAxis("Mouse Y") * turnSpeed, Vector3.left) * offset;
 

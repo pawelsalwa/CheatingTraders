@@ -13,7 +13,11 @@ public class InGameMenu : UIMenuPanelBase {
 
 	protected override void Inited() {
 		ResumeGameBtn.onClick.AddListener(ReturnToGame);
-		backToMainMenuBtn.onClick.AddListener(() => { Close(); mainGameMenu.Open(); });
+		backToMainMenuBtn.onClick.AddListener(() => { 
+			Close();
+			GM.instance.EndGame();
+			mainGameMenu.Open(); 
+		});
 	}
 
 	public void Update() {
@@ -21,12 +25,7 @@ public class InGameMenu : UIMenuPanelBase {
 			ReturnToGame();
 	}
 
-	protected override void Opened() {
-		GM.isGamePaused = true;
-	}
-
 	private void ReturnToGame() {
 		Close(); 
-		GM.isGamePaused = false;
 	}
 }

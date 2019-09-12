@@ -20,14 +20,14 @@ public class MovementComponent : NetworkBehaviour {
 
 	protected Animator animator => _animator == null ? _animator = GetComponent<Animator>() : _animator;
 
-	private float angle;
+	public float animSensitivity = 0.4f;
 
-//	[Header("AnimatorKeys")]
-//	public string W, S, A, D, WA, WD, SA, SD;
+	private float oldAngle;
+	private float newAngle;
 
 	public void MoveW() { MoveDir(transform.forward * moveSpeed); }
 
-	public void MoveS() { MoveDir(-1.01f * transform.forward * moveSpeed); }
+	public void MoveS() { MoveDir(-transform.forward * moveSpeed); }
 
 	public void MoveA() { MoveDir(-transform.right * moveSpeed); }
 
@@ -46,18 +46,19 @@ public class MovementComponent : NetworkBehaviour {
 	private void MoveDir(Vector3 dir) {
 		OnMoveRequested();
 		animator.SetBool("moving", dir != Vector3.zero);
+
 		Vector3 lastPos = transform.position;
 		charController.Move(dir);
-		float newAngle = Vector3.SignedAngle(transform.forward, transform.position - lastPos, Vector3.up);
-		angle = Mathf.LerpAngle(angle , newAngle, 0.5f);
+
+		newAngle = Vector3.SignedAngle(transform.forward, transform.position - lastPos, Vector3.up);
+		newAngle = Mathf.Repeat(Mathf.LerpAngle(oldAngle + 180f, newAngle + 180f, animSensitivity), 360f) - 180f;
+
 		// angle = 0 moves forward, angle = 90 moves right angle = -90 moves left
-		animator.SetFloat("movingAngle", angle);
+		animator.SetFloat("movingAngle", newAngle); //, 0.1f, Time.deltaTime);
+
+		oldAngle = newAngle;
 		OnMoveRequested();
 	}
-
-//	private void SetSingleAnimKey(string key) {
-//		foreach (var xd in new List<string> {W, A, S, D, WA, WD, SA, SD}) animator.SetBool(xd, xd == key); // slychac bol dupy lamusow
-//	}
 
 //  ---Networking---
 
