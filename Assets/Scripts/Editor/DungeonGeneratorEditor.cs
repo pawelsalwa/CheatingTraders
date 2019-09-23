@@ -18,5 +18,8 @@ public class DungeonGeneratorEditor : Editor {
 		if (GUILayout.Button("Generate")) 
 			_target.Generate();
 		
+		if (GUILayout.Button("Deregenerate")) 
+			_target.Deregenerate();
+		
 	}
 }

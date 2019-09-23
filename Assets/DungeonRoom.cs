@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class DungeonRoom : MonoBehaviour {
 
-public class DungeonTile : MonoBehaviour {
-
-	public int x, z;
+	public int minx, minz, widthx, heightz;
 
 }
