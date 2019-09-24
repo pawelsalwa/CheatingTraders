@@ -67,16 +67,16 @@ public class DungeonGenerator : MonoBehaviour {
 	private void GenerateRoom(int xmin, int zmin, int xwidth, int zheight) {
 		for (int x = xmin; x < xmin + xwidth; x++)
 			for (int z = zmin; z < zmin + zheight; z++)
-				GenerateTile(x, z);
+				GenerateTile(x, z, DungeonMap.SingleDungeonTile.TileType.Room);
 	}
 
-	private void GenerateTile(int x, int z) {
+	private void GenerateTile(int x, int z, DungeonMap.SingleDungeonTile.TileType tileType) {
 		if (map.DoesMapContainTile(x, z)) {
 			Debug.LogWarning("Trying to create tile on existing tile.");
 			return;
 		}
 
-		map.AddTile(x, z);
+		map.AddTile(x, z, tileType);
 
 		var go = Instantiate(tilePrefab, transform);
 		go.transform.position = new Vector3(xTileSize * x, 0, zTileSize * z);
@@ -106,60 +106,15 @@ public class DungeonGenerator : MonoBehaviour {
 
 		void GenerateVerticalPart() {
 			for (int i = xd1.y; i != xd2.y; i += xd1.y < xd2.y ? 1 : -1) {
-				GenerateTile(currentTile.x, i);
+				GenerateTile(currentTile.x, i, DungeonMap.SingleDungeonTile.TileType.Corridor);
 				currentTile.y = i;
 			}
 		}
 
 		void GenerateHorizontalPart() {
 			for (int i = xd1.x; i != xd2.x; i += xd1.x < xd2.x ? 1 : -1) {
-				GenerateTile(i, currentTile.y);
+				GenerateTile(i, currentTile.y, DungeonMap.SingleDungeonTile.TileType.Corridor);
 				currentTile.x = i;
-			}
-		}
-	}
-
-	private void GenerateCorridorTile(int x, int z, Direction dir) {
-		if (map.DoesMapContainTile(x, z)) {
-			Debug.LogError("Trying to create tile on existing tile.");
-			return;
-		}
-
-		map.AddTile(x, z);
-
-		var go = Instantiate(corridorPrefab, transform);
-		go.transform.position = new Vector3(xTileSize * x, 0, zTileSize * z);
-	}
-
-	private void GenerateRandomCorridors() {
-		int corridorsCount = Random.Range(5, 23);
-		int x = 0;
-		int z = 0;
-		for (int i = 0; i < corridorsCount; i++) {
-			int corridorLength = Random.Range(10, 30);
-			Direction corridorDir = (Direction) Random.Range(0, 4);
-			GenerateStraightCorridor(corridorLength, x, z, corridorDir);
-			var xd = map.GetRandomTileIdx();
-			x = xd.x;
-			z = xd.z;
-		}
-	}
-
-	private void GenerateStraightCorridor(int length, int fromx, int fromz, Direction dir) {
-		for (int i = 0; i < length; i++) {
-			switch (dir) {
-				case Direction.RIGHT:
-					GenerateCorridorTile(fromx + i, fromz, dir);
-					break;
-				case Direction.LEFT:
-					GenerateCorridorTile(fromx - i, fromz, dir);
-					break;
-				case Direction.UP:
-					GenerateCorridorTile(fromx, fromz + i, dir);
-					break;
-				case Direction.DOWN:
-					GenerateCorridorTile(fromx, fromz - i, dir);
-					break;
 			}
 		}
 	}
@@ -179,6 +134,7 @@ public class DungeonGenerator : MonoBehaviour {
 
 	public class RoomSetup {
 		public bool isConnected = false;
+
 		public int minx, minz, widthx, heightz;
 		public int maxx => minx + widthx;
 		public int maxz => minz + heightz;

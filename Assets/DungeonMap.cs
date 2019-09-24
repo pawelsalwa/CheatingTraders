@@ -11,8 +11,8 @@ public class DungeonMap {
 		return dgTiles.Any(a => a.x == x && a.z == z);
 	}
 
-	public void AddTile(int nx, int nz) {
-		dgTiles.Add(new SingleDungeonTile {x = nx, z = nz});
+	public void AddTile(int nx, int nz, SingleDungeonTile.TileType tileType) {
+		dgTiles.Add(new SingleDungeonTile {x = nx, z = nz, tileType = tileType});
 	}
 
 	public SingleDungeonTile GetRandomTileIdx() {
@@ -20,6 +20,11 @@ public class DungeonMap {
 	}
 
 	public class SingleDungeonTile {
+
+		public enum TileType { Room, Corridor }
+
+		public TileType tileType;
+
 		public int x, z;
 	}
 }
