@@ -19,8 +19,19 @@ public class DungeonGenerator : MonoBehaviour {
 
 	public void Generate() {
 		Deregenerate();
-		GenerateRandomRooms();
-		GenerateCorridors();
+//		GenerateRandomRooms();
+//		GenerateCorridors();
+		for (int i = 0; i < maxRoomNum; i++) {
+			GenerateRandomRoomAndConnectIt();
+		}
+		map.CreateAllWalls();
+	}
+
+	public Vector3 GetPlayerStartingPosition() {
+		var xd = map.GetDungeonTile(roomsList[0].GetMiddlePoint().x, roomsList[0].GetMiddlePoint().y);
+		Debug.Log("asdasd", xd.gameObject);
+		Debug.Log(xd.transform.position);
+		return xd.transform.position + Vector3.up;
 	}
 
 	public void GenerateRandomRoomAndConnectIt() {
@@ -48,6 +59,7 @@ public class DungeonGenerator : MonoBehaviour {
 		}
 
 		EditorUtility.ClearProgressBar();
+		map.ReregenerateWalls();
 	}
 
 	private void GenerateRandomRooms() {
