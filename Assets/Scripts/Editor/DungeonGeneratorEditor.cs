@@ -21,5 +21,8 @@ public class DungeonGeneratorEditor : Editor {
 		if (GUILayout.Button("Deregenerate")) 
 			_target.Deregenerate();
 		
+		if (GUILayout.Button("GenerateRandomRoom")) 
+			_target.GenerateRandomRoomAndConnectIt();
+		
 	}
 }
