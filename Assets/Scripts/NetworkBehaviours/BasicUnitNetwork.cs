@@ -18,7 +18,7 @@ public class BasicUnitNetwork : BasicUnit {
 			userInputHandler.enabled = true;
 			GetComponent<BotController>().enabled = false;
 
-			base.OnDeath += GM.instance.youDiedMenu.Open;
+			base.OnDeath += UIManager.instance.youDiedMenu.Open;
 		} else {
 			userInputHandler.enabled = false;
 			GetComponent<BotController>().enabled = false;

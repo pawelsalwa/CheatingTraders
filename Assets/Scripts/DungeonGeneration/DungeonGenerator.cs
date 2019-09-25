@@ -14,7 +14,7 @@ public class DungeonGenerator : MonoBehaviour {
 
 	private DungeonMap _map;
 	private DungeonMap map => _map == null ? _map = GetComponent<DungeonMap>() : _map;
-	
+
 	private List<RoomSetup> roomsList = new List<RoomSetup>();
 
 	public void Generate() {
@@ -24,13 +24,12 @@ public class DungeonGenerator : MonoBehaviour {
 		for (int i = 0; i < maxRoomNum; i++) {
 			GenerateRandomRoomAndConnectIt();
 		}
+
 		map.CreateAllWalls();
 	}
 
 	public Vector3 GetPlayerStartingPosition() {
 		var xd = map.GetDungeonTile(roomsList[0].GetMiddlePoint().x, roomsList[0].GetMiddlePoint().y);
-		Debug.Log("asdasd", xd.gameObject);
-		Debug.Log(xd.transform.position);
 		return xd.transform.position + Vector3.up;
 	}
 
@@ -52,7 +51,7 @@ public class DungeonGenerator : MonoBehaviour {
 				continue;
 
 			roomsList.Add(newRoom);
-			GenerateRoom(newRoom.minx, newRoom.minz, newRoom.widthx, newRoom.heightz);
+			GenerateRoom(newRoom.minx, newRoom.minz, newRoom.widthx, newRoom.heightz, roomsList.Count - 1);
 			if (roomsList.Count > 0)
 				GenerateCorridor(newRoom, newRoom.GetClosestRoom(roomsList));
 			break;
@@ -85,21 +84,21 @@ public class DungeonGenerator : MonoBehaviour {
 				continue;
 
 			roomsList.Add(newRoom);
-			GenerateRoom(newRoom.minx, newRoom.minz, newRoom.widthx, newRoom.heightz);
+			GenerateRoom(newRoom.minx, newRoom.minz, newRoom.widthx, newRoom.heightz, roomNum);
 			roomNum++;
 		}
 
 		EditorUtility.ClearProgressBar();
 	}
 
-	private void GenerateRoom(int xmin, int zmin, int xwidth, int zheight) {
+	private void GenerateRoom(int xmin, int zmin, int xwidth, int zheight, int roomIndex) {
 		for (int x = xmin; x < xmin + xwidth; x++)
 			for (int z = zmin; z < zmin + zheight; z++)
-				GenerateTile(x, z, DungeonTile.TileType.Room);
+				GenerateTile(x, z, DungeonTile.TileType.Room, roomIndex);
 	}
 
-	private void GenerateTile(int x, int z, DungeonTile.TileType tileType) {
-		map.AddTile(x, z, tileType);
+	private void GenerateTile(int x, int z, DungeonTile.TileType tileType, int roomIndex) {
+		map.AddTile(x, z, tileType, roomIndex);
 	}
 
 	private void GenerateCorridors() {
@@ -126,21 +125,21 @@ public class DungeonGenerator : MonoBehaviour {
 
 		void GenerateVerticalPart() {
 			for (int i = xd1.y; i != xd2.y; i += xd1.y < xd2.y ? 1 : -1) {
-				GenerateTile(currentTile.x, i, DungeonTile.TileType.Corridor);
+				GenerateTile(currentTile.x, i, DungeonTile.TileType.Corridor, 0);
 				currentTile.y = i;
 			}
 		}
 
 		void GenerateHorizontalPart() {
 			for (int i = xd1.x; i != xd2.x; i += xd1.x < xd2.x ? 1 : -1) {
-				GenerateTile(i, currentTile.y, DungeonTile.TileType.Corridor);
+				GenerateTile(i, currentTile.y, DungeonTile.TileType.Corridor, 0);
 				currentTile.x = i;
 			}
 		}
 	}
 
 
-	public void Deregenerate() { 
+	public void Deregenerate() {
 		map.ClearMap();
 		roomsList.Clear();
 	}

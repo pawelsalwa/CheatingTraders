@@ -7,4 +7,8 @@ public class DungeonTile : MonoBehaviour {
 	public TileType tileType;
 
 	public int x, z;
+	public class DungeonWall {
+		
+	}
+	
 }

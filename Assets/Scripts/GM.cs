@@ -2,35 +2,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Cinemachine;
 using Mirror;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
-///<summary> Game Manager and singleton </summary>
+///<summary> Game Manager singleton </summary>
 public class GM : NetworkBehaviour {
 
 	private static GM _instance;
 	public static GM instance => _instance == null ? _instance = FindObjectOfType<GM>() : _instance;
 
-	public static bool isAnyMenuOpened => instance.allMenus.Any(x => x.isOpened);
 	public static bool isMultiplayer = false;
 
 	public CinemachineFreeLook cinemachineFreeLook;
 	public Camera mainCamera;
 	public BasicUnit basicUnitPrefab;
 
-	public InGameMenu inGameMenu;
-	public MainGameMenu mainGameMenu;
-	public MultiplayerMenu multiplayerMenu;
-	public YouDiedMenu youDiedMenu;
-
-	private List<UIMenuPanelBase> allMenus => new List<UIMenuPanelBase> {inGameMenu, mainGameMenu, multiplayerMenu, youDiedMenu};
+	public DungeonGenerator dungeonGenerator;
 
 	public BasicUnit _player;
 	public static BasicUnit player => instance._player.isAlive ? instance._player : null;
 
 	private static bool _isGamePaused;
+
 	public static bool isGamePaused {
 		private set {
 			_isGamePaused = value;
@@ -50,17 +47,12 @@ public class GM : NetworkBehaviour {
 	}
 
 	private void Awake() {
-		foreach (var rootObject in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
-			foreach (var xd in rootObject.GetComponentsInChildren<Initable>(true))
-				xd.Init();
+//		foreach (var rootObject in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
+		foreach (var initable in GetComponentsInChildren<Initable>(true))
+			initable.Init();
 
-		UIMenuPanelBase.OnAnyPanelClosed += () => {
-			isGamePaused = isAnyMenuOpened;
-		};
-		UIMenuPanelBase.OnAnyPanelOpened += () => {
-			isGamePaused = isAnyMenuOpened;
-		};
-		mainGameMenu.Open();
+		UIMenuPanelBase.OnAnyPanelClosed += () => { isGamePaused = UIManager.isAnyMenuOpened; };
+		UIMenuPanelBase.OnAnyPanelOpened += () => { isGamePaused = UIManager.isAnyMenuOpened; };
 	}
 
 	public static void EnableCamera(bool enabled) {
@@ -69,26 +61,30 @@ public class GM : NetworkBehaviour {
 
 	public void StartSinglePlayerGame() {
 		isMultiplayer = false;
+
+		dungeonGenerator.Generate();
 		SpawnPlayer();
-		SpawnEnemy();
+//		SpawnEnemy();
 	}
 
 	public void EndGame() {
 		DestroyBots();
 		if (isMultiplayer) {
-			multiplayerMenu.StopMultiplayer();
+			UIManager.instance.multiplayerMenu.StopMultiplayer();
 		} else {
 			if (player != null && player.isAlive)
 				Destroy(player.gameObject);
 		}
 	}
 
+	private Vector3 pos;
+
 	private void SpawnPlayer() {
 		_player = Instantiate(basicUnitPrefab);
-		_player.transform.position = Vector3.up;
+		pos = dungeonGenerator.GetPlayerStartingPosition();
+		_player.transform.position = pos;
 		_player.InitAsPlayer();
 		instance.cinemachineFreeLook.enabled = true;
-		_player.OnDeath += youDiedMenu.Open;
 
 		foreach (var go in _player.GetComponentsInChildren<Transform>()) go.tag = "Player";
 //        foreach (var go in _player.GetComponentsInChildren<Transform>()) go.gameObject.layer = 1 >> 9;
@@ -103,10 +99,6 @@ public class GM : NetworkBehaviour {
 		newEnemy.InitAsBot();
 		newEnemy.OnDeath += () => RemoveBot(newEnemy);
 		foreach (var go in newEnemy.GetComponentsInChildren<Transform>()) go.tag = "Enemy";
-	}
-
-	public static void OpenInGameMenu() {
-		instance.inGameMenu.Open();
 	}
 
 	private void DestroyBots() {

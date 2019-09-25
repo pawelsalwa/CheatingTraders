@@ -9,7 +9,9 @@ using Random = UnityEngine.Random;
 public class DungeonMap : MonoBehaviour {
 
 	public DungeonTile tilePrefab;
+	public DungeonTileRoom tileRoomPrefab;
 	public GameObject wallPrefab;
+	public GameObject copingPrefab;
 	public float xTileSize = 6, zTileSize = 6;
 
 	[SerializeField] private List<DungeonTile> dgTiles = new List<DungeonTile>();
@@ -19,22 +21,26 @@ public class DungeonMap : MonoBehaviour {
 		return dgTiles.Any(a => a.x == x && a.z == z);
 	}
 
-	public void AddTile(int nx, int nz, DungeonTile.TileType tileType) {
+	public void AddTile(int nx, int nz, DungeonTile.TileType tileType, int indexIfRoom) {
 		if (DoesMapContainTile(nx, nz)) {
 			Debug.LogWarning($"Trying to create tile on existing tile. Coordinates: ({nx}, {nz})", GetDungeonTile(nx, nz)?.gameObject);
 			return;
 		}
 
 		DungeonTile newOne = Instantiate(tilePrefab, transform);
+//		DungeonTileRoom newOneRoom = Instantiate(tileRoomPrefab, transform);
 		newOne.x = nx;
 		newOne.z = nz;
 		newOne.transform.position = new Vector3(xTileSize * nx, 0, zTileSize * nz);
 		newOne.tileType = tileType;
 		dgTiles.Add(newOne);
+		var ceiling = Instantiate(tilePrefab, newOne.transform);
+		ceiling.transform.position += Vector3.up * 4.8f;
+		ceiling.transform.rotation = Quaternion.Euler(Vector3.forward * 180f);
 	}
 
 	public DungeonTile GetDungeonTile(int x, int z) {
-		return dgTiles.FirstOrDefault(a => a.x == x && a.z == z);
+		return DoesMapContainTile(x, z) ? dgTiles.FirstOrDefault(a => a.x == x && a.z == z) : null;
 	}
 
 	public void CreateAllWalls() {
@@ -48,7 +54,10 @@ public class DungeonMap : MonoBehaviour {
 			newOne.transform.Translate(Vector3.right * xTileSize / 2);
 			newOne.transform.Rotate(new Vector3(0, 90f, 0));
 			wallList.Add(newOne);
-		}
+		} else
+			if (tile.tileType == DungeonTile.TileType.Room && GetDungeonTile(tile.x + 1, tile.z).tileType == DungeonTile.TileType.Corridor) {
+				//dooooors
+			}
 
 		if (!DoesMapContainTile(tile.x - 1, tile.z)) {
 			GameObject newOne = Instantiate(wallPrefab, tile.transform);

@@ -20,7 +20,7 @@ public class CameraOrbit : MonoBehaviour {
 	}
 
 	void LateUpdate() {
-		if (GM.isAnyMenuOpened) return;
+		if (UIManager.isAnyMenuOpened) return;
 		offset = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * turnSpeed, Vector3.up) * offset;
 		offset = Quaternion.AngleAxis(Input.GetAxis("Mouse Y") * turnSpeed, Vector3.left) * offset;
 

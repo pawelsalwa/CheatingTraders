@@ -41,6 +41,7 @@ public class BasicUnit : NetworkBehaviour {
 	public virtual void InitAsPlayer() {
 		userInputHandler.enabled = true;
 		GetComponent<BotController>().enabled = false;
+		GetComponent<CharacterController>().enabled = true;
 		GM.instance.cinemachineFreeLook.m_Follow = cameraFollow;
 		GM.instance.cinemachineFreeLook.m_LookAt = cameraOrbit;
 	}
@@ -48,6 +49,7 @@ public class BasicUnit : NetworkBehaviour {
 	public void InitAsBot() {
 		userInputHandler.enabled = false;
 		GetComponent<BotController>().enabled = true;
+		GetComponent<CharacterController>().enabled = true;
 	}
 	
 	private void Die() {
