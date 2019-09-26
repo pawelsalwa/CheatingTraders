@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(DungeonMap))]
 public class DungeonGenerator : MonoBehaviour {
@@ -138,6 +140,17 @@ public class DungeonGenerator : MonoBehaviour {
 		}
 	}
 
+	/// <param name="random"></param>
+	/// <param name="mean"></param>
+	/// <param name="stddev"></param>
+	/// <returns></returns>
+	public static double GetRandomGaussianNumber(System.Random random, double mean = 0, double stddev = 1) {
+		double x1 = 1 - random.NextDouble();
+		double x2 = 1 - random.NextDouble();
+
+		double y1 = Math.Sqrt(-2.0f * Math.Log((float) x1)) * Math.Cos(2.0f * Math.PI * x2);
+		return y1 * stddev + mean;
+	}
 
 	public void Deregenerate() {
 		map.ClearMap();
