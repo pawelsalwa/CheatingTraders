@@ -64,7 +64,7 @@ public class GM : NetworkBehaviour {
 
 		dungeonGenerator.Generate();
 		SpawnPlayer();
-//		SpawnEnemy();
+		SpawnEnemy();
 	}
 
 	public void EndGame() {
@@ -82,7 +82,7 @@ public class GM : NetworkBehaviour {
 	private void SpawnPlayer() {
 		_player = Instantiate(basicUnitPrefab);
 		pos = dungeonGenerator.GetPlayerStartingPosition();
-		_player.transform.position = pos;
+		_player.transform.position = dungeonGenerator.GetPlayerStartingPosition();
 		_player.InitAsPlayer();
 		instance.cinemachineFreeLook.enabled = true;
 
@@ -95,7 +95,7 @@ public class GM : NetworkBehaviour {
 		AiUnits.Add(newEnemy);
 		newEnemy.userInputHandler.enabled = false;
 		newEnemy.GetComponent<BotController>().enabled = true;
-		newEnemy.transform.position = Vector3.up + new Vector3(Random.Range(0, 11), Random.Range(0, 11), Random.Range(0, 11));
+		newEnemy.transform.position = dungeonGenerator.GetPlayerStartingPosition() + Vector3.forward * Random.Range(0, 2);
 		newEnemy.InitAsBot();
 		newEnemy.OnDeath += () => RemoveBot(newEnemy);
 		foreach (var go in newEnemy.GetComponentsInChildren<Transform>()) go.tag = "Enemy";

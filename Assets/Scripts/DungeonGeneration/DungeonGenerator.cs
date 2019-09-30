@@ -10,9 +10,8 @@ using Random = UnityEngine.Random;
 public class DungeonGenerator : MonoBehaviour {
 
 	public int roomMinSize, roomMaxSize, maxRoomNum = 6;
-	public int minTileX, maxTileX, minTileZ, maxTileZ;
-
-	public int maxRoomDistanceGeneration = 10;
+//	public int minTileX, maxTileX, minTileZ, maxTileZ;
+	public int dungeonMaxSize = 10;
 
 	private DungeonMap _map;
 	private DungeonMap map => _map == null ? _map = GetComponent<DungeonMap>() : _map;
@@ -43,8 +42,8 @@ public class DungeonGenerator : MonoBehaviour {
 			}
 
 			var newRoom = new RoomSetup {
-				minx = Random.Range(minTileX, maxTileX),
-				minz = Random.Range(minTileZ, maxTileZ),
+				minx = Random.Range(- dungeonMaxSize / 2, dungeonMaxSize / 2),
+				minz = Random.Range(- dungeonMaxSize / 2, dungeonMaxSize / 2),
 				widthx = Random.Range(roomMinSize, roomMaxSize),
 				heightz = Random.Range(roomMinSize, roomMaxSize)
 			};
@@ -76,8 +75,8 @@ public class DungeonGenerator : MonoBehaviour {
 			}
 
 			var newRoom = new RoomSetup {
-				minx = Random.Range(minTileX, maxTileX),
-				minz = Random.Range(minTileZ, maxTileZ),
+				minx = Random.Range(- dungeonMaxSize / 2, dungeonMaxSize / 2),
+				minz = Random.Range(- dungeonMaxSize / 2, dungeonMaxSize / 2),
 				widthx = Random.Range(roomMinSize, roomMaxSize),
 				heightz = Random.Range(roomMinSize, roomMaxSize)
 			};
