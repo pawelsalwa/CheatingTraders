@@ -22,7 +22,7 @@ public class BotController : MonoBehaviour {
 		set {
 			if(_combatState == value)
 				return;
-			Debug.Log(_combatState.ToString());
+			//Debug.Log(_combatState.ToString());
 			_combatState = value;
 		}
 	}

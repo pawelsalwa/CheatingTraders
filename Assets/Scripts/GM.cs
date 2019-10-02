@@ -24,7 +24,7 @@ public class GM : NetworkBehaviour {
 	public DungeonGenerator dungeonGenerator;
 
 	public BasicUnit _player;
-	public static BasicUnit player => instance._player.isAlive ? instance._player : null;
+	public static BasicUnit player => instance._player == null ? null : instance._player.isAlive ? instance._player : null;
 
 	private static bool _isGamePaused;
 
