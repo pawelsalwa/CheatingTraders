@@ -6,32 +6,32 @@ public class TransparentWallsRaycasting : MonoBehaviour {
 	private List<MeshRenderer> transparentRenderers = new List<MeshRenderer>();
 
 	private void Update() {
-		ResetRenderers();
-		if (GM.instance?.mainCamera == null || GM.player == null) return;
+		// ResetRenderers();
+		// if (GM.instance?.mainCamera == null || GM.player == null) return;
 		
-		var fromPos = GM.instance.mainCamera.transform.position;
-		var targetPos = GM.player.transform.position;
-		var targetDir = targetPos - fromPos;
+		// var fromPos = GM.instance.mainCamera.transform.position;
+		// var targetPos = GM.player.transform.position;
+		// var targetDir = targetPos - fromPos;
 
-		Debug.DrawRay(fromPos, targetDir, Color.white, Time.deltaTime, true);
+		// Debug.DrawRay(fromPos, targetDir, Color.white, Time.deltaTime, true);
 
-		if (!Physics.Raycast(
-			fromPos, 
-			targetDir, 
-			out var hitInfo)
-		)
-			return;
+		// if (!Physics.Raycast(
+		// 	fromPos, 
+		// 	targetDir, 
+		// 	out var hitInfo)
+		// )
+		// 	return;
 
-		if (!hitInfo.transform.CompareTag("Enviro"))
-			return;
+		// if (!hitInfo.transform.CompareTag("Enviro"))
+		// 	return;
 
-		var newRenderer = hitInfo.transform.gameObject.GetComponent<MeshRenderer>();
-		transparentRenderers.Add(newRenderer);
+		// var newRenderer = hitInfo.transform.gameObject.GetComponent<MeshRenderer>();
+		// transparentRenderers.Add(newRenderer);
 
-		var asd = new MaterialPropertyBlock();
-		asd.SetFloat("_transparency", 1f);
-		newRenderer.SetPropertyBlock(asd);
-		Debug.Log("found gO: ", hitInfo.transform.gameObject);
+		// var asd = new MaterialPropertyBlock();
+		// asd.SetFloat("_transparency", 1f);
+		// newRenderer.SetPropertyBlock(asd);
+		// Debug.Log("found gO: ", hitInfo.transform.gameObject);
 	}
 
 	private void ResetRenderers() {

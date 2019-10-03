@@ -8,12 +8,12 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: dungeonMaterial 1 wall
-  m_Shader: {fileID: 4800000, guid: 1d58c3eb66e0853448c76e77b2e159d6, type: 3}
-  m_ShaderKeywords: _ALPHABLEND_ON _COLORADDSUBDIFF_ON
+  m_Shader: {fileID: 4800000, guid: 22f8aa5b7c881f94fbade5652b8c297f, type: 3}
+  m_ShaderKeywords: _ALPHABLEND_ON _COLORADDSUBDIFF_ON _KEYWORD0_ON _WORKS_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -53,6 +53,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample0:
+        m_Texture: {fileID: 2800000, guid: 21600197df6c3fe4b95d60886e78c973, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TransparencyMask:
+        m_Texture: {fileID: 2800000, guid: 21600197df6c3fe4b95d60886e78c973, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -102,7 +110,9 @@ Material:
     - _ZWrite: 0
     - __dirty: 0
     - _asdasdasd: 0.86
-    - _transparency: 1
+    - _offset: 0
+    - _transparency: 0.204
+    - _works: 1
     m_Colors:
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 0.24056603, g: 0.2498949, b: 0.3207547, a: 0.047058824}
@@ -111,3 +121,5 @@ Material:
     - _OutlineColor: {r: 1, g: 0, b: 0, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _TintColor: {r: 0, g: 0, b: 0, a: 1}
+    - _playerDir: {r: 0.16505092, g: -0, b: 0.9862852, a: 0}
+    - _playerPos: {r: -2.8190596, g: 0.17190695, b: -23.039892, a: 0}
