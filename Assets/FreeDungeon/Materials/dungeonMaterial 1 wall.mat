@@ -60,7 +60,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TransparencyMask:
-        m_Texture: {fileID: 2800000, guid: 21600197df6c3fe4b95d60886e78c973, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8000776579e3fd94db7d953f1d85f7ae, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -114,8 +114,8 @@ Material:
     - _ZWrite: 0
     - __dirty: 0
     - _asdasdasd: 0.86
-    - _offset: 0
-    - _transparency: 0.8
+    - _offset: -0.607
+    - _transparency: 0.091
     - _works: 1
     m_Colors:
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
@@ -125,5 +125,5 @@ Material:
     - _OutlineColor: {r: 1, g: 0, b: 0, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _TintColor: {r: 0, g: 0, b: 0, a: 1}
-    - _playerDir: {r: -0.03391213, g: 0, b: -0.99942493, a: 0}
-    - _playerPos: {r: -6.3469625, g: 0.17190695, b: 5.372306, a: 0}
+    - _playerDir: {r: -0.9567591, g: 0, b: -0.29088175, a: 0}
+    - _playerPos: {r: -6.063079, g: 0.17190695, b: -2.8351238, a: 0}
