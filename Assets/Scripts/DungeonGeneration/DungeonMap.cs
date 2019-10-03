@@ -43,7 +43,7 @@ public class DungeonMap : MonoBehaviour {
 		return DoesMapContainTile(x, z) ? dgTiles.FirstOrDefault(a => a.x == x && a.z == z) : null;
 	}
 
-	public void CreateAllWalls() {
+	private void CreateAllWalls() {
 		foreach (var tile in dgTiles)
 			CreateWalls(tile);
 	}
@@ -54,10 +54,11 @@ public class DungeonMap : MonoBehaviour {
 			newOne.transform.Translate(Vector3.right * xTileSize / 2);
 			newOne.transform.Rotate(new Vector3(0, 90f, 0));
 			wallList.Add(newOne);
-		} else
-			if (tile.tileType == DungeonTile.TileType.Room && GetDungeonTile(tile.x + 1, tile.z).tileType == DungeonTile.TileType.Corridor) {
-				//dooooors
-			}
+		} 
+			// else
+//			if (tile.tileType == DungeonTile.TileType.Room && GetDungeonTile(tile.x + 1, tile.z).tileType == DungeonTile.TileType.Corridor) {
+//				//dooooors
+//			}
 
 		if (!DoesMapContainTile(tile.x - 1, tile.z)) {
 			GameObject newOne = Instantiate(wallPrefab, tile.transform);

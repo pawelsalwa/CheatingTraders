@@ -9,8 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: dungeonMaterial 1 wall
   m_Shader: {fileID: 4800000, guid: 22f8aa5b7c881f94fbade5652b8c297f, type: 3}
-  m_ShaderKeywords: _ALPHABLEND_ON _COLORADDSUBDIFF_ON _KEYWORD0_ON _WORKS_ON
-  m_LightmapFlags: 4
+  m_ShaderKeywords: _ALPHABLEND_ON _COLORADDSUBDIFF_ON _EMISSION _KEYWORD0_ON _WORKS_ON
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -67,6 +67,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _textMain:
+        m_Texture: {fileID: 2800000, guid: 2eae380099ec3d14ea5cb8abc0a33c48, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Amount: 1
     - _Amplitude: 1
@@ -111,7 +115,7 @@ Material:
     - __dirty: 0
     - _asdasdasd: 0.86
     - _offset: 0
-    - _transparency: 0.204
+    - _transparency: 0.8
     - _works: 1
     m_Colors:
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
@@ -121,5 +125,5 @@ Material:
     - _OutlineColor: {r: 1, g: 0, b: 0, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _TintColor: {r: 0, g: 0, b: 0, a: 1}
-    - _playerDir: {r: 0.16505092, g: -0, b: 0.9862852, a: 0}
-    - _playerPos: {r: -2.8190596, g: 0.17190695, b: -23.039892, a: 0}
+    - _playerDir: {r: -0.03391213, g: 0, b: -0.99942493, a: 0}
+    - _playerPos: {r: -6.3469625, g: 0.17190695, b: 5.372306, a: 0}

@@ -26,7 +26,7 @@ public class DungeonGenerator : MonoBehaviour {
 			GenerateRandomRoomAndConnectIt();
 		}
 
-		map.CreateAllWalls();
+		map.ReregenerateWalls();
 	}
 
 	public Vector3 GetPlayerStartingPosition() {
