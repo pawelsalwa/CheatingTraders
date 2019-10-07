@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5b54ecc0a3b8b2c4ea9ed6b7655416cf
+guid: e465ca8d92dc1b540be25a3ffdf882ca
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable:
@@ -26,7 +26,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -35,13 +35,13 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Sword And Shield Strafe (1)
+      name: mixamo.com
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
       lastFrame: 78
       wrapMode: 0
-      orientationOffsetY: -60.02
+      orientationOffsetY: 18.3
       level: 0
       cycleOffset: 0
       loop: 0
@@ -51,12 +51,12 @@ ModelImporter:
       loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 1
-      keepOriginalOrientation: 1
+      keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000000000001000000000000000000000001000000010000000000000000000000
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
       transformMask: []
@@ -98,7 +98,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  referencedClips: []
+  referencedClips:
+  - 5b54ecc0a3b8b2c4ea9ed6b7655416cf
+  - 3da1bf7e2b87f58478d5abe7299a3ce0
+  - 45263691288619242b9977c3f2a06205
   importAnimation: 1
   copyAvatar: 1
   humanDescription:

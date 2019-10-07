@@ -30,8 +30,9 @@ public class DungeonGenerator : MonoBehaviour {
 	}
 
 	public Vector3 GetPlayerStartingPosition() {
-		var xd = map.GetDungeonTile(roomsList[0].GetMiddlePoint().x, roomsList[0].GetMiddlePoint().y);
-		return xd.transform.position + Vector3.up;
+		var xd = map.GetDungeonTile(roomsList[0].GetMiddleTile().x, roomsList[0].GetMiddleTile().y);
+//		Vector3 xdd = new Vector3(roomsList[0].GetMiddlePoint().x, 1f, roomsList[0].GetMiddlePoint().y);
+		return xd.transform.position;
 	}
 
 	public void GenerateRandomRoomAndConnectIt() {
@@ -117,8 +118,8 @@ public class DungeonGenerator : MonoBehaviour {
 	}
 
 	private void GenerateCorridor(RoomSetup roomFrom, RoomSetup roomTo) {
-		var xd1 = roomFrom.GetMiddlePoint();
-		var xd2 = roomTo.GetMiddlePoint();
+		var xd1 = roomFrom.GetMiddleTile();
+		var xd2 = roomTo.GetMiddleTile();
 		Vector2Int currentTile = new Vector2Int(xd1.x, xd1.y);
 
 		GenerateVerticalPart();

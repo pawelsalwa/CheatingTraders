@@ -937,7 +937,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 43ee353b20ca3494a9620b8f259f36fc, type: 3}
-    m_Threshold: 0.16666667
+    m_Threshold: 0.09375
     m_Position: {x: -1, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -945,7 +945,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 3193aa699df03134e9c3aecf337517cc, type: 3}
-    m_Threshold: 0.33333334
+    m_Threshold: 0.1875
     m_Position: {x: 0, y: -1}
     m_TimeScale: -1
     m_CycleOffset: 0
@@ -953,16 +953,24 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 43ee353b20ca3494a9620b8f259f36fc, type: 3}
-    m_Threshold: 0.5
+    m_Threshold: 0.28125
     m_Position: {x: 1, y: 0}
     m_TimeScale: -1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: rotationFactor
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: 43ee353b20ca3494a9620b8f259f36fc, type: 3}
+    m_Threshold: 0.375
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: rotationFactor
     m_Mirror: 0
   m_BlendParameter: dodgeFrontFactor
   m_BlendParameterY: dodgeRightFactor
   m_MinThreshold: 0
-  m_MaxThreshold: 0.5
+  m_MaxThreshold: 0.375
   m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
   m_BlendType: 2
@@ -1937,7 +1945,7 @@ BlendTree:
       type: 3}
     m_Threshold: -45
     m_Position: {x: 0, y: 0}
-    m_TimeScale: -1.5
+    m_TimeScale: -2
     m_CycleOffset: 0
     m_DirectBlendParameter: rotationFactor
     m_Mirror: 0
@@ -1969,10 +1977,11 @@ BlendTree:
     m_DirectBlendParameter: rotationFactor
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: d39ea4a96f4662f4a9e9636338a45fde, type: 3}
+    m_Motion: {fileID: -203655887218126122, guid: 5b54ecc0a3b8b2c4ea9ed6b7655416cf,
+      type: 3}
     m_Threshold: 135
     m_Position: {x: 0, y: 0}
-    m_TimeScale: 1
+    m_TimeScale: 2
     m_CycleOffset: 0
     m_DirectBlendParameter: rotationFactor
     m_Mirror: 0

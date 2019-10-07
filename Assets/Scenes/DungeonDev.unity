@@ -655,10 +655,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa4091a8a97edb49a41fc4b3761def3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomMinSize: 3
-  roomMaxSize: 5
-  maxRoomNum: 7
-  dungeonMaxSize: 11
+  roomMinSize: 2
+  roomMaxSize: 4
+  maxRoomNum: 3
+  dungeonMaxSize: 15
 --- !u!4 &327699207
 Transform:
   m_ObjectHideFlags: 0
@@ -715,7 +715,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: fee8077d3e2ea214f99963852f307100, type: 2}
-  objecta: {fileID: 0}
 --- !u!114 &417703366 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3677809436862947689, guid: b3302bfd663666346891d34e89127901,
