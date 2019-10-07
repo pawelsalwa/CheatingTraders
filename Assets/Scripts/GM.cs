@@ -64,7 +64,7 @@ public class GM : NetworkBehaviour {
 
 		dungeonGenerator.Generate();
 		SpawnPlayer();
-		SpawnEnemy();
+		//SpawnEnemy();
 	}
 
 	public void EndGame() {

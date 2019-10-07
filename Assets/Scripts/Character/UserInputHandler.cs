@@ -12,6 +12,9 @@ public class UserInputHandler : NetworkBehaviour {
 	
 	private DodgingComponent _dodgingComponent;
 	private DodgingComponent dodgingComponent => _dodgingComponent == null ? _dodgingComponent = GetComponent<DodgingComponent>() : _dodgingComponent;
+	
+	private Animator _animator;
+	private Animator animator => _animator == null ? _animator = GetComponent<Animator>() : _animator;
 
 	private Transform cameraRot => GM.instance.mainCamera.gameObject.transform;
 
@@ -168,5 +171,14 @@ public class UserInputHandler : NetworkBehaviour {
 	private void HandleMisc() {
 		if (Input.GetKeyDown(KeyCode.Escape))
 			UIManager.instance.inGameMenu.Open();
+
+		if (Input.GetKey(KeyCode.LeftShift)) {
+			animator.SetLayerWeight(3, 1);
+			animator.SetLayerWeight(2, 0);
+		} else {
+			animator.SetLayerWeight(3, 0);
+			animator.SetLayerWeight(2, 1);
+		}
+			
 	}
 }

@@ -34,20 +34,21 @@ public class BotController : MonoBehaviour {
 	public BasicUnit currentTarget;
 	
 	[Header("AI Config")]
-	public float combatStartDistance = 5f;
-	public float combatQuitDistance = 8f;
+	public float combatModeStartDistance = 5f;
+	public float combatModeQuitDistance = 8f;
 	
 	public float timeBetweenAiActionChange = 1f;
 	public float enemyDetectionDistance = 14f;
 	public LayerMask Mask;
 	
-	private float attackRange = 1.3f;
+	public float attackStartDistance = 2f;
+	public float attackQuitDistance = 2.2f;
 	
 	private float currentTimeBetweenActions = 0f;
 	private float distanceToTarget;
 	
 	private bool inCombatMode = false;
-	private bool isInCombatDist =>  distanceToTarget < combatQuitDistance && inCombatMode;
+	private bool isInCombatDist =>  distanceToTarget < combatModeQuitDistance && inCombatMode;
 	
 	private Transform player => GM.player?.transform;
 	private Vector3 thisPos;
@@ -122,8 +123,8 @@ public class BotController : MonoBehaviour {
 	}
 
 	private void UpdateIfInCombatMode() { //simple hysteresis
-		if (distanceToTarget < combatStartDistance) inCombatMode = true;
-		if (distanceToTarget > combatQuitDistance) inCombatMode = false;
+		if (distanceToTarget < combatModeStartDistance) inCombatMode = true;
+		if (distanceToTarget > combatModeQuitDistance) inCombatMode = false;
 	}
 
 	private void SetRandomCombatAction() {
@@ -140,7 +141,7 @@ public class BotController : MonoBehaviour {
 	private void ExecuteCombatAction() {
 		switch (combatState) {
 			case CombatState.MoveW:
-				if (distanceToTarget >= attackRange)
+				if (distanceToTarget >= attackStartDistance)
 					movement.MoveW();
 				timeBetweenAiActionChange = 1f;
 				break;
@@ -160,7 +161,7 @@ public class BotController : MonoBehaviour {
 	}
 
 	private void AttackIfInRange() {
-		if (distanceToTarget < attackRange) attack.ContinueToAttack();
+		if (distanceToTarget < attackStartDistance) attack.ContinueToAttack();
 		else attack.StopAttacking();
 	}
 }

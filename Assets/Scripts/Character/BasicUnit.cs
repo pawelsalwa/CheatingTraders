@@ -44,6 +44,7 @@ public class BasicUnit : NetworkBehaviour {
 		GetComponent<CharacterController>().enabled = true;
 		GM.instance.cinemachineFreeLook.m_Follow = cameraFollow;
 		GM.instance.cinemachineFreeLook.m_LookAt = cameraOrbit;
+		OnDeath += UIManager.instance.youDiedMenu.Open;
 	}
 	
 	public void InitAsBot() {
