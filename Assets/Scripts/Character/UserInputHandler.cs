@@ -22,6 +22,8 @@ public class UserInputHandler : NetworkBehaviour {
 
 	private MoveDir moveDir;
 
+	private bool lShift => Input.GetKey(KeyCode.LeftShift);
+
 	private void Update() {
 		if (GM.isGamePaused) return;
 		HandleMisc();
@@ -92,28 +94,28 @@ public class UserInputHandler : NetworkBehaviour {
 				movement.DontMove();
 				break;
 			case MoveDir.W:
-				movement.MoveW();
+				movement.MoveW(lShift);
 				break;
 			case MoveDir.S:
-				movement.MoveS();
+				movement.MoveS(lShift);
 				break;
 			case MoveDir.A:
-				movement.MoveA();
+				movement.MoveA(lShift);
 				break;
 			case MoveDir.D:
-				movement.MoveD();
+				movement.MoveD(lShift);
 				break;
 			case MoveDir.WD:
-				movement.MoveWD();
+				movement.MoveWD(lShift);
 				break;
 			case MoveDir.WA:
-				movement.MoveWA();
+				movement.MoveWA(lShift);
 				break;
 			case MoveDir.SD:
-				movement.MoveSD();
+				movement.MoveSD(lShift);
 				break;
 			case MoveDir.SA:
-				movement.MoveSA();
+				movement.MoveSA(lShift);
 				break;
 			default: break;
 		}
@@ -172,13 +174,13 @@ public class UserInputHandler : NetworkBehaviour {
 		if (Input.GetKeyDown(KeyCode.Escape))
 			UIManager.instance.inGameMenu.Open();
 
-		if (Input.GetKey(KeyCode.LeftShift)) {
-			animator.SetLayerWeight(3, 1);
-			animator.SetLayerWeight(2, 0);
-		} else {
-			animator.SetLayerWeight(3, 0);
-			animator.SetLayerWeight(2, 1);
-		}
+		// if (Input.GetKey(KeyCode.LeftShift)) {
+		// 	animator.SetLayerWeight(3, 1);
+		// 	animator.SetLayerWeight(2, 0);
+		// } else {
+		// 	animator.SetLayerWeight(3, 0);
+		// 	animator.SetLayerWeight(2, 1);
+		// }
 			
 	}
 }

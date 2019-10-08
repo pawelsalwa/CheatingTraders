@@ -1081,6 +1081,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   moveSpeed: 0.05
+  runSpeedMultiplier: 1.983
+  currentSpeed: 0
+  speedAnimFactor: 0
   _rotationSmoothFactor: 0.3
   animSensitivity: 0.4
 --- !u!114 &7439631042915170079
@@ -1152,17 +1155,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a55e82fdd4f0b04ca72e3bdbb923b1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement: {fileID: 4866097812400902558}
-  attack: {fileID: 3427392319552801460}
-  rotatation: {fileID: 1537876270}
   currentTarget: {fileID: 0}
-  combatStartDistance: 5
-  combatQuitDistance: 8
+  combatModeStartDistance: 5
+  combatModeQuitDistance: 8
   timeBetweenAiActionChange: 1
   enemyDetectionDistance: 14
   Mask:
     serializedVersion: 2
     m_Bits: 512
+  attackStartDistance: 1.8
+  attackQuitDistance: 2.2
 --- !u!114 &-3826738508489503866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1178,7 +1180,7 @@ MonoBehaviour:
   serverOnly: 0
   localPlayerAuthority: 1
   m_AssetId: 
-  m_SceneId: 955279775
+  m_SceneId: 2057169532
 --- !u!114 &-4090241180245051461
 MonoBehaviour:
   m_ObjectHideFlags: 0

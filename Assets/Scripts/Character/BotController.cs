@@ -27,10 +27,18 @@ public class BotController : MonoBehaviour {
 		}
 	}
 
-	public MovementComponent movement;
-	public AttackComponent attack;
-	
-	public CharacterRotationComponent rotatation;
+	private BasicUnit _thisUnit;
+	private BasicUnit thisUnit => _thisUnit == null ? _thisUnit = GetComponent<BasicUnit>() : _thisUnit;
+
+	private MovementComponent _movement;
+	private MovementComponent movement => _movement == null ? _movement = GetComponent<MovementComponent>() : _movement;
+
+	private AttackComponent _attack;
+	private AttackComponent attack => _attack == null ? _attack = GetComponent<AttackComponent>() : _attack;
+
+	private CharacterRotationComponent _rotatation;
+	private CharacterRotationComponent rotatation => _rotatation == null ? _rotatation = GetComponent<CharacterRotationComponent>() : _rotatation;
+
 	public BasicUnit currentTarget;
 	
 	[Header("AI Config")]
@@ -54,10 +62,8 @@ public class BotController : MonoBehaviour {
 	private Vector3 thisPos;
 	private Vector3 targetPos;
 	private Vector3 targetDir;
-	
-	private BasicUnit _thisUnit;
-	private BasicUnit thisUnit => _thisUnit == null ? _thisUnit = GetComponent<BasicUnit>() : _thisUnit;
 
+	private bool shiftPressed = false;
 
 	private void Update() {
 		if (!IsValid()) {
@@ -136,25 +142,26 @@ public class BotController : MonoBehaviour {
 
 		currentTimeBetweenActions = 0f;
 		combatState = (CombatState) (Random.Range(0, 1000) % 4);
+		shiftPressed = Random.Range(0, 2) == 1;
 	}
 
 	private void ExecuteCombatAction() {
 		switch (combatState) {
 			case CombatState.MoveW:
 				if (distanceToTarget >= attackStartDistance)
-					movement.MoveW();
+					movement.MoveW(shiftPressed);
 				timeBetweenAiActionChange = 1f;
 				break;
 			case CombatState.MoveS:
-				movement.MoveS();
+				movement.MoveS(shiftPressed);
 				timeBetweenAiActionChange = 1f;
 				break;
 			case CombatState.StrafeA:
-				movement.MoveA();
+				movement.MoveA(shiftPressed);
 				timeBetweenAiActionChange = 1f;
 				break;
 			case CombatState.StrafeD:
-				movement.MoveD();
+				movement.MoveD(shiftPressed);
 				timeBetweenAiActionChange = 1f;
 				break;
 		}
