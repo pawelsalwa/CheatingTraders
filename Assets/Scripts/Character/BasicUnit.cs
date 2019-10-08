@@ -36,6 +36,8 @@ public class BasicUnit : NetworkBehaviour {
 
 	protected virtual void Start() {
 		hp.OnHpDropBelowZero += Die;
+		UIMenuPanelBase.OnAnyPanelOpened += () => { animator.speed = UIManager.isAnyMenuOpened ? 0f : 1f; GM.instance.cinemachineFreeLook.enabled = !UIManager.isAnyMenuOpened;};
+		UIMenuPanelBase.OnAnyPanelClosed += () => { animator.speed = UIManager.isAnyMenuOpened ? 0f : 1f; GM.instance.cinemachineFreeLook.enabled = !UIManager.isAnyMenuOpened;};		
 	}
 
 	public virtual void InitAsPlayer() {
