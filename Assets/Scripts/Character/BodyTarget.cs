@@ -4,9 +4,7 @@ using UnityEngine;
 using System;
 using System.Threading.Tasks;
 
-///<summary> Component being able to take damage </summary>
-[RequireComponent(typeof(Collider), typeof(Rigidbody))]
-public class AttackTarget : MonoBehaviour {
+public class BodyTarget : AttackTarget {
 
     public event Action<int> OnDamageTaken = (damage) => { };
 

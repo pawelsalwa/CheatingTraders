@@ -8,25 +8,26 @@ using System;
 [RequireComponent(typeof(Collider))]
 public class Weapon : MonoBehaviour {
     
-    public event Action<AttackTarget, int> OnDamageDealt = (attTarget, damageDealt) => { };
+    public event Action<BodyTarget, int> OnDamageDealt = (attTarget, damageDealt) => { };
+    public event Action<Shield> OnShieldEncountered = (shield) => { };
 
     public int damage = 10;
 
-    [Header("Should contain AttackTarget of character wielding this weapon :)")]
-    public AttackTarget[] ignoredAttackTargets;
+    [Header("Should contain AttackTarget and Shield of character wielding this weapon :)")]
+    public BodyTarget[] ignoredBodyTargets;
 
 //    private Collider _collider;
-//	public Collider collider => _collider == null ? _collider = GetComponent<Collider>() : _collider;
+//	  public Collider collider => _collider == null ? _collider = GetComponent<Collider>() : _collider;
 
     private bool hasDealtDamage = false;
 
-    private Dictionary<AttackTarget, bool> targetToHasTakenDamage = new Dictionary<AttackTarget, bool>();
+    private Dictionary<BodyTarget, bool> targetToHasTakenDamage = new Dictionary<BodyTarget, bool>();
 
     [SerializeField]
     private List<AttackTarget> attTargets = new List<AttackTarget>();
 
     public void DealDamageIfFoundTarget() {
-        if (attTargets.Count == 0) 
+        if (attTargets.Count == 0)
             return;
         
         foreach (var target in attTargets) {
@@ -49,16 +50,20 @@ public class Weapon : MonoBehaviour {
 	private void OnTriggerEnter(Collider other) {
         var newAttTarget = other.gameObject.GetComponent<AttackTarget>();
 
-        if (ignoredAttackTargets.Any(x => x == newAttTarget))      
+        if (ignoredBodyTargets.Any(x => x == newAttTarget))      
             return;
+
+        if (newAttTarget is Shield) {
+            OnShieldEncountered(newAttTarget as Shield);
+        }
 
         attTargets.Add(newAttTarget);
 	}
 
     private void OnTriggerExit(Collider other) {
-        var lastCollider = other.gameObject.GetComponent<AttackTarget>();
+        var lastCollider = other.gameObject.GetComponent<BodyTarget>();
 
-        if (ignoredAttackTargets.Any(x => x == lastCollider))      
+        if (ignoredBodyTargets.Any(x => x == lastCollider))      
             return;
 
         if (attTargets.Contains(lastCollider))
@@ -66,7 +71,7 @@ public class Weapon : MonoBehaviour {
 	}
 
     private void ResetAllTargets() {
-        var asd = new List<AttackTarget>();
+        var asd = new List<BodyTarget>();
         foreach (var target in targetToHasTakenDamage) 
             asd.Add(target.Key);
             

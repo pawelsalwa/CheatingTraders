@@ -39,7 +39,7 @@ public class GM : NetworkBehaviour {
 		}
 	}
 
-	private List<BasicUnit> AiUnits = new List<BasicUnit>();
+	public List<BasicUnit> AiUnits = new List<BasicUnit>();
 
 	[RuntimeInitializeOnLoadMethod]
 	private static void MakeSureInstanceIsActive() {
@@ -62,8 +62,10 @@ public class GM : NetworkBehaviour {
 	public void StartSinglePlayerGame() {
 		isMultiplayer = false;
 
-		dungeonGenerator.Generate();
+		dungeonGenerator?.Generate();
 		SpawnPlayer();
+		SpawnEnemy();
+//		SpawnEnemy();
 		//SpawnEnemy();
 	}
 

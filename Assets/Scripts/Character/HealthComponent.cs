@@ -7,7 +7,7 @@ public class HealthComponent : MonoBehaviour {
 
     public event Action OnHpDropBelowZero = () => {};
 	
-	public AttackTarget attTarget;
+	public BodyTarget attTarget;
 
 	public int hp = 100;
 
