@@ -6,7 +6,7 @@ using UnityEngine;
 public class AttackComponent : MonoBehaviour {
 
 	public Weapon weapon;
-
+	public Shield shield;
 
 	public string attackingAnimatorKey = "attacking";
 	public string shieldBlockingAnimatorKey = "shieldBlock";
@@ -33,17 +33,15 @@ public class AttackComponent : MonoBehaviour {
 	
 	///<summary> plays block animation. Should be called on update for anim to work</summary>
 	public void ContinueToBlock() {
+		if (shield == null) return;
 		animator.SetBool(shieldBlockingAnimatorKey, true);
-
-//		if (animCanDealDamage)
-//			weapon.DealDamageIfFoundTarget();
-//		else {
-//			weapon.StopDealingDamage();
-//		}
+		shield.gameObject.SetActive(true);
 	}
 
 	public void StopBlocking() {
+		if (shield == null) return;
 		animator.SetBool(shieldBlockingAnimatorKey, false);
+		shield.gameObject.SetActive(false);
 	}
 
 	///<summary>idzcie do animacji i tam szukajcie wywolania xD</summary>

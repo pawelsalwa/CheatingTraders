@@ -109,7 +109,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6411967396822282029
 Transform:
   m_ObjectHideFlags: 0
@@ -147,8 +147,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.15847789, y: 0.5069447, z: 0.8295702}
-  m_Center: {x: 0.019141875, y: 0.0055543454, z: 0.05812505}
+  m_Size: {x: 0.4442788, y: 0.741206, z: 0.95246124}
+  m_Center: {x: -0.123758204, y: 0.00997144, z: -0.0033203773}
 --- !u!54 &7827601255591463601
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1139,6 +1139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 1846347863798710084}
+  shield: {fileID: 4307072911819992583}
   attackingAnimatorKey: attacking
   shieldBlockingAnimatorKey: shieldBlock
 --- !u!114 &4866097812400902558
@@ -1277,7 +1278,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5561384731807584725}
-  - component: {fileID: 7236610442839391203}
+  - component: {fileID: 7764962530618953469}
   - component: {fileID: 8914492747795798633}
   - component: {fileID: 7581574680759952653}
   m_Layer: 9
@@ -1301,7 +1302,7 @@ Transform:
   m_Father: {fileID: 1564253461696141623}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &7236610442839391203
+--- !u!136 &7764962530618953469
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1311,10 +1312,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.2698519
-  m_Height: 1.64
+  m_Radius: 0.59861183
+  m_Height: 1.81
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: -0.019923955}
+  m_Center: {x: 0.03531003, y: 0, z: 0}
 --- !u!54 &8914492747795798633
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1498,8 +1499,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 49
-  ignoredBodyTargets: []
-  attTargets: []
+  ignoredBodyTargets:
+  - {fileID: 4307072911819992583}
+  - {fileID: 7581574680759952653}
+  targets: []
 --- !u!1 &5565389519608211199
 GameObject:
   m_ObjectHideFlags: 0

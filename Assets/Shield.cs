@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shield : AttackTarget {
+public class Shield : WeaponTarget {
 
 	private void name() {
 		

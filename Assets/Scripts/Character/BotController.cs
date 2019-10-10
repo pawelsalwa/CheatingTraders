@@ -98,8 +98,8 @@ public class BotController : MonoBehaviour {
 
 	private void SeekTarget() {
 		if (player == null) return;
-		
-		thisPos = transform.position + Vector3.up;
+
+		thisPos = transform.position + Vector3.up * 2;
 		targetPos = player.position + Vector3.up;
 		targetDir = targetPos - thisPos;
 

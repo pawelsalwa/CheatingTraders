@@ -4,6 +4,6 @@ using UnityEngine;
 
 ///<summary> Component being able to collide with weapon </summary>
 [RequireComponent(typeof(Collider), typeof(Rigidbody))]
-public class AttackTarget : MonoBehaviour {
+public class WeaponTarget : MonoBehaviour {
 	
 }

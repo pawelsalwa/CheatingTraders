@@ -125,5 +125,5 @@ Material:
     - _OutlineColor: {r: 1, g: 0, b: 0, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _TintColor: {r: 0, g: 0, b: 0, a: 1}
-    - _playerDir: {r: -0.99282193, g: 0, b: 0.11960286, a: 0}
-    - _playerPos: {r: -6.8120813, g: 0.17190689, b: 37.82067, a: 0}
+    - _playerDir: {r: -0.48764676, g: 0, b: -0.8730414, a: 0}
+    - _playerPos: {r: 30.215464, g: 0.17190695, b: -24.30559, a: 0}

@@ -14,28 +14,28 @@ public class Weapon : MonoBehaviour {
     public int damage = 10;
 
     [Header("Should contain AttackTarget and Shield of character wielding this weapon :)")]
-    public BodyTarget[] ignoredBodyTargets;
+    public WeaponTarget[] ignoredBodyTargets;
 
 //    private Collider _collider;
 //	  public Collider collider => _collider == null ? _collider = GetComponent<Collider>() : _collider;
 
     private bool hasDealtDamage = false;
 
-    private Dictionary<BodyTarget, bool> targetToHasTakenDamage = new Dictionary<BodyTarget, bool>();
+    private readonly Dictionary<BodyTarget, bool> targetToHasTakenDamage = new Dictionary<BodyTarget, bool>();
 
     [SerializeField]
-    private List<AttackTarget> attTargets = new List<AttackTarget>();
+    private List<BodyTarget> targets = new List<BodyTarget>();
 
     public void DealDamageIfFoundTarget() {
-        if (attTargets.Count == 0)
+        if (targets.Count == 0)
             return;
         
-        foreach (var target in attTargets) {
-            if (targetToHasTakenDamage.ContainsKey(target) && targetToHasTakenDamage[target]) 
+        foreach (var target in targets) {
+            if (targetToHasTakenDamage.ContainsKey((BodyTarget)target) && targetToHasTakenDamage[(BodyTarget)target]) 
                 continue;
             
-            if (!targetToHasTakenDamage.ContainsKey(target))
-                targetToHasTakenDamage.Add(target, false);
+            if (!targetToHasTakenDamage.ContainsKey((BodyTarget)target))
+                targetToHasTakenDamage.Add((BodyTarget)target, false);
             
             target.TakeDamage(damage);
             targetToHasTakenDamage[target] = true;
@@ -48,26 +48,29 @@ public class Weapon : MonoBehaviour {
     }
 	
 	private void OnTriggerEnter(Collider other) {
-        var newAttTarget = other.gameObject.GetComponent<AttackTarget>();
+        var newAttTarget = other.gameObject.GetComponent<WeaponTarget>();
 
         if (ignoredBodyTargets.Any(x => x == newAttTarget))      
             return;
 
         if (newAttTarget is Shield) {
             OnShieldEncountered(newAttTarget as Shield);
+            Debug.Log("shield encountered");
         }
 
-        attTargets.Add(newAttTarget);
+        if (newAttTarget is BodyTarget) {
+            targets.Add(newAttTarget as BodyTarget);
+        }
 	}
 
     private void OnTriggerExit(Collider other) {
-        var lastCollider = other.gameObject.GetComponent<BodyTarget>();
+        var lastCollider = other.gameObject.GetComponent<WeaponTarget>();
 
         if (ignoredBodyTargets.Any(x => x == lastCollider))      
             return;
 
-        if (attTargets.Contains(lastCollider))
-            attTargets.Remove(lastCollider);
+        if (lastCollider is BodyTarget && targets.Contains(lastCollider))
+            targets.Remove(lastCollider as BodyTarget);
 	}
 
     private void ResetAllTargets() {

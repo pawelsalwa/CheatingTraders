@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using System.Threading.Tasks;
 
-public class BodyTarget : AttackTarget {
+public class BodyTarget : WeaponTarget {
 
     public event Action<int> OnDamageTaken = (damage) => { };
 
