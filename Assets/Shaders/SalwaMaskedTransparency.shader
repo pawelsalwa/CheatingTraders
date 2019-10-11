@@ -37,7 +37,7 @@
             {
                 float2 uv : TEXCOORD0;
                 float4 worldPos : TEXCOORD1;
-                float2 screenPos : TEXCOORD2;
+                float4 screenPos : TEXCOORD2;
                 UNITY_FOG_COORDS(1)
                 float4 vertex : SV_POSITION;
             };
@@ -59,7 +59,7 @@
                 
                 o.worldPos = mul (unity_ObjectToWorld, v.vertex);
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.screenPos = ComputeScreenPos(v.vertex);
+                o.screenPos = ComputeScreenPos(o.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 
                 UNITY_TRANSFER_FOG(o,o.vertex);
@@ -71,11 +71,15 @@
                 // sample the texture float4 tex2D(sampler2D samp, float2 s)
                 fixed4 col = tex2D(_MainTex, i.uv);
                 
-                fixed4 maskVal = tex2D(_TransparencyMask, i.screenPos * _TransparencyMask_TexelSize.zw);
+                float2 textureCoordinate = i.screenPos.xy / i.screenPos.w;
                 
-                if( dot(_playerDir.xz, normalize(_playerPos.xz - i.worldPos.xz)) + _offset> 0 ) {
-                    col.a = _transparency;
-                    //col.a = maskVal.z;
+                fixed4 maskVal = tex2D(_TransparencyMask, textureCoordinate);
+                
+                if( dot(_playerDir.xz, normalize(_playerPos.xz - i.worldPos.xz)) + _offset> 0 ) {   
+                
+                    
+                    //col.a = _transparency;
+                    col.a = 1 - maskVal.x;
                 } else {
                     col.a = 1;         
                 }
