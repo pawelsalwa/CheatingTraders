@@ -1,47 +1,84 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TransparentWallsRaycasting : MonoBehaviour {
 
-	private List<MeshRenderer> transparentRenderers = new List<MeshRenderer>();
+	public List<MeshRenderer> transparentRenderers = new List<MeshRenderer>();
+
+	/// <summary> from pos is behind camera to make sure raycast from it hits all needed colliders </summary>
+	private Vector3 fromPos => GM.instance.mainCamera.transform.position - GM.instance.mainCamera.transform.forward.normalized;
+
+	private Vector3 targetPos => GM.player.transform.position + Vector3.up;
+	private Vector3 targetDirCenter => targetPos - fromPos;
+	private Vector3 targetDirLeft => GM.player.transform.position - GM.player.transform.right * 2f - fromPos + Vector3.up;
+	private Vector3 targetDirRight => GM.player.transform.position + GM.player.transform.right * 2f - fromPos + Vector3.up;
+
+	private Vector3 targetDirLeft2 => GM.player.transform.position - GM.player.transform.right * 4f - fromPos + Vector3.up;
+	private Vector3 targetDirRight2 => GM.player.transform.position + GM.player.transform.right * 4f - fromPos + Vector3.up;
+
+	private float distanceToPlayer => Vector3.Magnitude(fromPos - targetPos);
 
 	private void Update() {
-		// ResetRenderers();
-		// if (GM.instance?.mainCamera == null || GM.player == null) return;
-		
-		// var fromPos = GM.instance.mainCamera.transform.position;
-		// var targetPos = GM.player.transform.position;
-		// var targetDir = targetPos - fromPos;
+		if (GM.instance?.mainCamera == null || GM.player == null) return;
 
-		// Debug.DrawRay(fromPos, targetDir, Color.white, Time.deltaTime, true);
+		ResetRenderers();
 
-		// if (!Physics.Raycast(
-		// 	fromPos, 
-		// 	targetDir, 
-		// 	out var hitInfo)
-		// )
-		// 	return;
+		Debug.DrawRay(fromPos, targetDirCenter, Color.cyan, Time.deltaTime, true);
+		Debug.DrawRay(fromPos, targetDirLeft, Color.cyan, Time.deltaTime, true);
+		Debug.DrawRay(fromPos, targetDirRight, Color.cyan, Time.deltaTime, true);
+		Debug.DrawRay(fromPos, targetDirLeft2, Color.cyan, Time.deltaTime, true);
+		Debug.DrawRay(fromPos, targetDirRight2, Color.cyan, Time.deltaTime, true);
 
-		// if (!hitInfo.transform.CompareTag("Enviro"))
-		// 	return;
+		if (!IsCameraBehindWall()) { return; }
 
-		// var newRenderer = hitInfo.transform.gameObject.GetComponent<MeshRenderer>();
-		// transparentRenderers.Add(newRenderer);
+		Physics.Raycast(fromPos, targetDirCenter,  out var hitInfos);
+		Physics.Raycast(fromPos, targetDirLeft,  out var hitInfos1);
+		Physics.Raycast(fromPos, targetDirRight,  out var hitInfos2);
+		Physics.Raycast(fromPos, targetDirLeft2,  out var hitInfos3);
+		Physics.Raycast(fromPos, targetDirRight2,  out var hitInfos4);
 
-		// var asd = new MaterialPropertyBlock();
-		// asd.SetFloat("_transparency", 1f);
-		// newRenderer.SetPropertyBlock(asd);
-		// Debug.Log("found gO: ", hitInfo.transform.gameObject);
+//		if (hitInfos.Length == 0) return;
+
+		SetTransparentOnMaterials(hitInfos);
+		SetTransparentOnMaterials(hitInfos1);
+		SetTransparentOnMaterials(hitInfos2);
+		SetTransparentOnMaterials(hitInfos3);
+		SetTransparentOnMaterials(hitInfos4);
+	}
+
+	private bool IsCameraBehindWall() {
+		return Physics.Raycast(fromPos, targetDirCenter, out var hitInfo, distanceToPlayer) && hitInfo.transform.CompareTag("Enviro");
+	}
+
+	private void SetTransparentOnMaterials(RaycastHit hitInfo) {
+
+//		foreach (var hitInfo in hitInfos) {
+			if (!hitInfo.transform.CompareTag("Enviro"))
+				return;
+
+			var newRenderer = hitInfo.transform.gameObject.GetComponent<MeshRenderer>();
+			if (transparentRenderers.Contains(newRenderer))
+				return;
+
+			transparentRenderers.Add(newRenderer);
+			var mpBlock = new MaterialPropertyBlock();
+			mpBlock.SetInt("_isWorking", 1);
+			newRenderer.SetPropertyBlock(mpBlock);
+//		}
 	}
 
 	private void ResetRenderers() {
 		foreach (var rend in transparentRenderers) {
-			var asd = new MaterialPropertyBlock();
-			asd.SetFloat("_transparency", 0f);
-			rend.SetPropertyBlock(asd);
+			try {
+				var mpBlock = new MaterialPropertyBlock();
+				mpBlock.SetInt("_isWorking", 0);
+				rend.SetPropertyBlock(mpBlock);
+			} catch (Exception) { }
 		}
 
 		transparentRenderers.Clear();
 	}
-	
+
 }

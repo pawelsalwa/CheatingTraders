@@ -60,7 +60,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TransparencyMask:
-        m_Texture: {fileID: 2800000, guid: 8000776579e3fd94db7d953f1d85f7ae, type: 3}
+        m_Texture: {fileID: 2800000, guid: f7c018d4fcb91ce4e88e3b1007fb5481, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -94,7 +94,7 @@ Material:
     - _EmissionEnabled: 0
     - _FlipbookMode: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.2
+    - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _LightingEnabled: 0
     - _Metallic: 0
@@ -114,16 +114,17 @@ Material:
     - _ZWrite: 0
     - __dirty: 0
     - _asdasdasd: 0.86
-    - _offset: -0.26
+    - _isWorking: 0
+    - _offset: 1
     - _transparency: 0.201
     - _works: 1
     m_Colors:
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 0.24056603, g: 0.2498949, b: 0.3207547, a: 0.047058824}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 1, g: 0, b: 0, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _TintColor: {r: 0, g: 0, b: 0, a: 1}
-    - _playerDir: {r: -0.48764676, g: 0, b: -0.8730414, a: 0}
-    - _playerPos: {r: 30.215464, g: 0.17190695, b: -24.30559, a: 0}
+    - _playerDir: {r: -0.97221917, g: 0, b: -0.23407233, a: 0}
+    - _playerPos: {r: 22.054613, g: 0.17190701, b: -10.830886, a: 0}

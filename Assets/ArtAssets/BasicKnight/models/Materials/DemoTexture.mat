@@ -59,6 +59,8 @@ Material:
     - _Amount: 1
     - _Amplitude: 0
     - _BumpScale: 1
+    - _CircleRadius: 0.5
+    - _CutOff: 0
     - _Cutoff: 0.5
     - _CutoutThresh: 0
     - _Density: 30
@@ -68,8 +70,9 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Metallic: 0
+    - _Metallic: 0.743
     - _Mode: 0
+    - _NoiseRadius: 1
     - _OcclusionStrength: 1
     - _Outline: 0.03
     - _Parallax: 0.02
@@ -77,6 +80,7 @@ Material:
     - _SpecularHighlights: 1
     - _Speed: 10
     - _SrcBlend: 1
+    - _Thickness: 0.25
     - _Transparency: 1
     - _UVSec: 0
     - _ZWrite: 1

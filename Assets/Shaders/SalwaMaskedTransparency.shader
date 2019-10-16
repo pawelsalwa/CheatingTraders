@@ -8,6 +8,7 @@
 		_playerDir("playerDir", Vector) = (0,0,0,0)
 		_offset("offset", Range(-1.0,1.0)) = 0.0
         _transparency("transparency", Range(0.0,1.0)) = 0.4
+        _isWorking("isWorking", float) = 0
     }
     SubShader
     {
@@ -52,6 +53,7 @@
             uniform float3 _playerDir;
             uniform float _offset;
             uniform float _transparency;            
+            float _isWorking;
 
             v2f vert (appdata v)
             {
@@ -75,7 +77,7 @@
                 
                 fixed4 maskVal = tex2D(_TransparencyMask, textureCoordinate);
                 
-                if( dot(_playerDir.xz, normalize(_playerPos.xz - i.worldPos.xz)) + _offset> 0 ) {   
+                if( dot(_playerDir.xz, normalize(_playerPos.xz - i.worldPos.xz)) + _offset > 0  && _isWorking == 1) {   
                 
                     
                     //col.a = _transparency;
