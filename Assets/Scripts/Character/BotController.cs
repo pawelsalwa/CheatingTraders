@@ -104,17 +104,12 @@ public class BotController : MonoBehaviour {
 		Debug.DrawRay(thisPos, targetDir, Color.white, Time.deltaTime, true);
 		int attackableBodyLayer = 9;
 
-		if (!Physics.Raycast(thisPos, targetDir, out var hitInfo, Mathf.Infinity, Mask)) {
-			Debug.LogError("nohit");
-			currentTarget = null; return;
-		} else {
-			Debug.Log("hit: " + hitInfo.transform.gameObject.name, hitInfo.transform.gameObject );
-		}
+		if (!Physics.Raycast(thisPos, targetDir, out var hitInfo, Mathf.Infinity, Mask)) {currentTarget = null; return;}
 		if (!hitInfo.transform.CompareTag("Player")) {currentTarget = null; return;}
 		if ((distanceToTarget = hitInfo.distance) > enemyDetectionDistance) {currentTarget = null; return;}
 		
 		currentTarget = hitInfo.transform.GetComponentInParent<BasicUnit>(); //TODO: legitny system łapania targetu (moze nawet bez tagow)
-//		currentTarget = currentTarget.isAlive ? currentTarget : null;
+		currentTarget = currentTarget.isAlive ? currentTarget : null;
 	}
 
 

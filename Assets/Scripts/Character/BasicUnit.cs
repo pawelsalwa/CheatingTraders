@@ -56,6 +56,7 @@ public class BasicUnit : NetworkBehaviour {
 		GM.instance.cinemachineFreeLook.m_LookAt = cameraOrbit;
 		OnDeath += UIManager.instance.youDiedMenu.Open;
 		SetLayer(playerLayer);
+		gameObject.name = "-- PlayerUnit --";
 	}
 
 	public void InitAsBot() {
@@ -63,6 +64,7 @@ public class BasicUnit : NetworkBehaviour {
 		GetComponent<BotController>().enabled = true;
 		GetComponent<CharacterController>().enabled = true;
 		SetLayer(botLayer);
+		gameObject.name = "-- BotUnit --";
 	}
 
 	private void SetLayer(int layer) {
