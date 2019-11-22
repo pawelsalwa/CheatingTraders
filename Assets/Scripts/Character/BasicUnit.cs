@@ -5,6 +5,7 @@ using Mirror;
 using UnityEditor;
 using UnityEngine;
 using System;
+using System.Linq;
 
 public enum ControlledBy {
 	Player,
@@ -25,6 +26,8 @@ public class BasicUnit : NetworkBehaviour {
 	public Transform cameraOrbit;
 	public Transform cameraFollow;
 
+	public int playerLayer, botLayer;
+
 	private bool _isAlive = true;
 	public bool isAlive => _isAlive;
 
@@ -36,6 +39,7 @@ public class BasicUnit : NetworkBehaviour {
 
 	protected virtual void Start() {
 		hp.OnHpDropBelowZero += Die;
+		attTarget.OnDamageTaken += damageAmount => { animator.SetTrigger("takeDamageTrigger"); };
 	}
 
 
@@ -51,12 +55,18 @@ public class BasicUnit : NetworkBehaviour {
 		GM.instance.cinemachineFreeLook.m_Follow = cameraFollow;
 		GM.instance.cinemachineFreeLook.m_LookAt = cameraOrbit;
 		OnDeath += UIManager.instance.youDiedMenu.Open;
+		SetLayer(playerLayer);
 	}
 
 	public void InitAsBot() {
 		userInputHandler.enabled = false;
 		GetComponent<BotController>().enabled = true;
 		GetComponent<CharacterController>().enabled = true;
+		SetLayer(botLayer);
+	}
+
+	private void SetLayer(int layer) {
+		foreach (var child in GetComponentsInChildren<Transform>(true)) child.gameObject.layer = layer;
 	}
 
 	private void Die() {

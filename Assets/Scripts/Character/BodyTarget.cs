@@ -18,7 +18,7 @@ public class BodyTarget : WeaponTarget {
 
     public void TakeDamage(int damage) {
         if (!isTargettable) return;
-//        Debug.Log("damage taken " + damage, gameObject);
+        Debug.Log("damage taken " + damage, gameObject);
         OnDamageTaken(damage);
         AnimateMaterialColorAsync();
     }

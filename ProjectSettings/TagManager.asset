@@ -17,8 +17,8 @@ TagManager:
   - 
   - 
   - AttackingWeapon
-  - AttackableBody
-  - 
+  - AttackableBodyPlayer
+  - AttackableBodyEnemy
   - 
   - 
   - 

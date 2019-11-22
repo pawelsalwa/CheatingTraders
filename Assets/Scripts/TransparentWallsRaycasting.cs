@@ -33,19 +33,19 @@ public class TransparentWallsRaycasting : MonoBehaviour {
 
 		if (!IsCameraBehindWall()) { return; }
 
-		Physics.Raycast(fromPos, targetDirCenter,  out var hitInfos);
-		Physics.Raycast(fromPos, targetDirLeft,  out var hitInfos1);
-		Physics.Raycast(fromPos, targetDirRight,  out var hitInfos2);
-		Physics.Raycast(fromPos, targetDirLeft2,  out var hitInfos3);
-		Physics.Raycast(fromPos, targetDirRight2,  out var hitInfos4);
+		bool hit1 = Physics.Raycast(fromPos, targetDirCenter,  out var hitInfos);
+		bool hit2 = Physics.Raycast(fromPos, targetDirLeft,  out var hitInfos1);
+		bool hit3 = Physics.Raycast(fromPos, targetDirRight,  out var hitInfos2);
+		bool hit4 = Physics.Raycast(fromPos, targetDirLeft2,  out var hitInfos3);
+		bool hit5 = Physics.Raycast(fromPos, targetDirRight2,  out var hitInfos4);
 
 //		if (hitInfos.Length == 0) return;
 
-		SetTransparentOnMaterials(hitInfos);
-		SetTransparentOnMaterials(hitInfos1);
-		SetTransparentOnMaterials(hitInfos2);
-		SetTransparentOnMaterials(hitInfos3);
-		SetTransparentOnMaterials(hitInfos4);
+		if (hit1) SetTransparentOnMaterials(hitInfos);
+		if (hit2) SetTransparentOnMaterials(hitInfos1);
+		if (hit3) SetTransparentOnMaterials(hitInfos2);
+		if (hit4) SetTransparentOnMaterials(hitInfos3);
+		if (hit5) SetTransparentOnMaterials(hitInfos4);
 	}
 
 	private bool IsCameraBehindWall() {

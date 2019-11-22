@@ -91,22 +91,25 @@ public class BotController : MonoBehaviour {
 	}
 
 	private bool IsValid() {
-		if (GM.isGamePaused) return false;
-		if (!thisUnit.isAlive) return false;
-		return true;
+		return !GM.isGamePaused && thisUnit.isAlive;
 	}
 
 	private void SeekTarget() {
 		if (player == null) return;
 
-		thisPos = transform.position + Vector3.up * 2;
+		thisPos = transform.position + Vector3.up;
 		targetPos = player.position + Vector3.up;
 		targetDir = targetPos - thisPos;
 
 		Debug.DrawRay(thisPos, targetDir, Color.white, Time.deltaTime, true);
-		int attackableBodyLayer = 9; 
+		int attackableBodyLayer = 9;
 
-		if (!Physics.Raycast(thisPos, targetDir, out var hitInfo, Mask)) return;
+		if (!Physics.Raycast(thisPos, targetDir, out var hitInfo, Mathf.Infinity, Mask)) {
+			Debug.LogError("nohit");
+			currentTarget = null; return;
+		} else {
+			Debug.Log("hit: " + hitInfo.transform.gameObject.name, hitInfo.transform.gameObject );
+		}
 		if (!hitInfo.transform.CompareTag("Player")) {currentTarget = null; return;}
 		if ((distanceToTarget = hitInfo.distance) > enemyDetectionDistance) {currentTarget = null; return;}
 		
@@ -141,8 +144,8 @@ public class BotController : MonoBehaviour {
 			return;
 
 		currentTimeBetweenActions = 0f;
-		combatState = (CombatState) (Random.Range(0, 1000) % 4);
-		shiftPressed = Random.Range(0, 2) == 1;
+		combatState = (CombatState) (Random.Range(0, 1000) % 2) + 2;
+//		shiftPressed = Random.Range(0, 2) == 1;
 	}
 
 	private void ExecuteCombatAction() {

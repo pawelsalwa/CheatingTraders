@@ -306,7 +306,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.1792453, g: 0.1792453, b: 0.1792453, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -390,6 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e814b170c6254cb43928810090e6bc85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transparentRenderers: []
 --- !u!1 &2329566664886391603
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,6 +525,7 @@ MonoBehaviour:
     type: 3}
   dungeonGenerator: {fileID: 0}
   _player: {fileID: 0}
+  AiUnits: []
 --- !u!1 &2823691741629826164
 GameObject:
   m_ObjectHideFlags: 0

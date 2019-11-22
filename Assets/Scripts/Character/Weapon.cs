@@ -46,8 +46,12 @@ public class Weapon : MonoBehaviour {
     public void StopDealingDamage() {
         ResetAllTargets();
     }
-	
-	private void OnTriggerEnter(Collider other) {
+
+    private void OnCollisionEnter(Collision other) {
+        Debug.Log("huj");
+    }
+    
+    private void OnTriggerEnter(Collider other) {
         var newAttTarget = other.gameObject.GetComponent<WeaponTarget>();
 
         if (ignoredBodyTargets.Any(x => x == newAttTarget))      
@@ -56,6 +60,7 @@ public class Weapon : MonoBehaviour {
         if (newAttTarget is Shield) {
             OnShieldEncountered(newAttTarget as Shield);
             Debug.Log("shield encountered");
+            (newAttTarget as Shield).TakeImpactFromBlock();
         }
 
         if (newAttTarget is BodyTarget) {
