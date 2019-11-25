@@ -112,4 +112,10 @@ public class GM : NetworkBehaviour {
 		if (AiUnits.Contains(bot))
 			AiUnits.Remove(bot);
 	}
+
+	private void Update() {
+		if (Input.GetKeyDown(KeyCode.H)) DestroyBots();
+	}
+	
+	
 }

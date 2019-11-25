@@ -8,9 +8,9 @@ public class MovementComponentNetwork : MovementComponent {
 
 	private Vector3 lastPos;
 
-	protected override void OnMoveRequested() {
-		SendTransformToServer();
-	}
+//	protected override void OnMoveRequested() {
+//		SendTransformToServer();
+//	}
 
 	private void SendTransformToServer() {
 		if (isLocalPlayer)
