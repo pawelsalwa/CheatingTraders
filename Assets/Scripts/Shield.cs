@@ -7,7 +7,11 @@ public class Shield : WeaponTarget {
 
 	public Action OnShieldImpacted = () => { };
 
-	public void TakeImpactFromBlock() {
+	protected override void OnHitReceived(int weaponDamage) {
+		TakeImpactFromBlock();
+	}
+
+	private void TakeImpactFromBlock() {
 		OnShieldImpacted();
 	}
 	

@@ -37,7 +37,7 @@ public class Weapon : MonoBehaviour {
             if (!targetToHasTakenDamage.ContainsKey((BodyTarget)target))
                 targetToHasTakenDamage.Add((BodyTarget)target, false);
             
-            target.TakeDamage(damage);
+            target.ReceiveWeaponHit(damage);
             targetToHasTakenDamage[target] = true;
             OnDamageDealt(target, damage);
         }
@@ -60,7 +60,7 @@ public class Weapon : MonoBehaviour {
         if (newAttTarget is Shield) {
             OnShieldEncountered(newAttTarget as Shield);
             Debug.Log("shield encountered");
-            (newAttTarget as Shield).TakeImpactFromBlock();
+            (newAttTarget as Shield).ReceiveWeaponHit(damage);
         }
 
         if (newAttTarget is BodyTarget) {

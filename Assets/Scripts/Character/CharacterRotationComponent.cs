@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 
-public class CharacterRotationComponent : NetworkBehaviour {
+public class CharacterRotationComponent : MonoBehaviour {
 
     public float _rotationSmoothFactor = 0.4f;
     public float _rotationAnimationSmoothFactor = 0.01f;

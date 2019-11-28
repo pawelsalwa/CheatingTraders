@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 995696f7120878c4794eb53301422dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTargettable: 1
 --- !u!65 &7389782351321562513
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1057,8 +1058,8 @@ GameObject:
   - component: {fileID: 2036131077303213700}
   - component: {fileID: 1537876270}
   - component: {fileID: 39532043410761939}
-  - component: {fileID: -3826738508489503866}
   - component: {fileID: -4090241180245051461}
+  - component: {fileID: 1435914164732806625}
   m_Layer: 0
   m_Name: BasicKnight
   m_TagString: Player
@@ -1140,10 +1141,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 1846347863798710084}
   shield: {fileID: 4307072911819992583}
-  attackingAnimatorKey: attacking
-  shieldBlockingAnimatorKey: shieldBlock
-  enemyShieldEncounteredAnimatorKey: enemyShieldEncountered
-  onShieldImpactedAnimKey: onShieldImpacted
 --- !u!114 &4866097812400902558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1156,14 +1153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e918ae94d8452489461cba0a9cd03c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   moveSpeed: 0.05
   runSpeedMultiplier: 1.983
-  currentSpeed: 0
-  speedAnimFactor: 0
-  _rotationSmoothFactor: 0.3
-  animSensitivity: 0.4
 --- !u!114 &7439631042915170079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1176,11 +1167,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b536f0099503d6240ba321077478f3cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   movement: {fileID: 4866097812400902558}
   attack: {fileID: 3427392319552801460}
   rotatation: {fileID: 1537876270}
+  dodgingComponent: {fileID: -4090241180245051461}
 --- !u!114 &2036131077303213700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1193,8 +1183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 563f0fb4577cb2b4d8660abf3a0e718a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   hp: {fileID: 7278028305238215328}
   attTarget: {fileID: 7581574680759952653}
   animDieKey: die
@@ -1203,6 +1191,8 @@ MonoBehaviour:
   cameraFollow: {fileID: 8640631685897387814}
   playerLayer: 9
   botLayer: 10
+  userInputHandler: {fileID: 7439631042915170079}
+  botController: {fileID: 39532043410761939}
 --- !u!114 &1537876270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1215,8 +1205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a512a232e2c7d204f8f09d8ad5a54cf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   _rotationSmoothFactor: 0.3
   _rotationAnimationSmoothFactor: 0.1
   rotationAnimKey: rotationFactor
@@ -1245,22 +1233,6 @@ MonoBehaviour:
     m_Bits: 512
   attackStartDistance: 1.8
   attackQuitDistance: 2.2
---- !u!114 &-3826738508489503866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564253461696300375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serverOnly: 0
-  localPlayerAuthority: 1
-  m_AssetId: 
-  m_SceneId: 2869601654
 --- !u!114 &-4090241180245051461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1273,6 +1245,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 569be7376469e4c459af60cd6bf0c322, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1435914164732806625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1564253461696300375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cf8f14d6280b1d44b2e3be30011289e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveXSmoothness: 0.05
+  moveYSmoothness: 0.05
+  takeDamageTrigger: takeDamageTrigger
+  animDieTrigger: dieTrigger
+  verticalMovementKey: moveA
+  horizontalMovementKey: moveW
+  isMovingKey: moving
+  dodgeTrigger: dodgeTrigger
+  dodgeFrontFactor: dodgeFrontFactor
+  dodgeRightFactor: dodgeRightFactor
+  attackingAnimatorKey: attacking
+  shieldBlockingAnimatorKey: shieldBlock
+  enemyShieldEncounteredAnimatorKey: enemyShieldEncountered
+  onShieldImpactedAnimKey: onShieldImpacted
 --- !u!1 &2657292109224698753
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,10 +1346,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 398f593b488765d49b8fda8b94881694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTargettable: 1
   damageTakingMaterial: {fileID: 2100000, guid: b3ae2273451ef0143a935a5ad49faf7a,
     type: 2}
   meshRenderer: {fileID: 1564253461707868197}
-  isTargettable: 1
   materialchangeMiliseconds: 80
 --- !u!1 &2705335911998409021
 GameObject:

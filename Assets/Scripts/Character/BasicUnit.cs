@@ -6,14 +6,13 @@ using UnityEditor;
 using UnityEngine;
 using System;
 using System.Linq;
+using System.Xml.Serialization;
 
-public enum ControlledBy {
-	Player,
-	AI
-}
-
-[RequireComponent(typeof(Animator))]
-public class BasicUnit : NetworkBehaviour {
+[RequireComponent(typeof(MovementComponent))]
+[RequireComponent(typeof(DodgingComponent))]
+[RequireComponent(typeof(AttackComponent))]
+[RequireComponent(typeof(UnitAnimationManager))]
+public class BasicUnit : MonoBehaviour {
 
 	public event Action OnDeath = () => { };
 
@@ -31,24 +30,28 @@ public class BasicUnit : NetworkBehaviour {
 	private bool _isAlive = true;
 	public bool isAlive => _isAlive;
 
-	private Animator _animator;
-	private Animator animator => _animator == null ? _animator = GetComponent<Animator>() : _animator;
+	private MovementComponent _movementComponent;
+	private MovementComponent movementComponent => _movementComponent == null ? _movementComponent = GetComponent<MovementComponent>() : _movementComponent;
 
-	private UserInputHandler _userInputHandler;
-	public UserInputHandler userInputHandler => _userInputHandler == null ? _userInputHandler = GetComponent<UserInputHandler>() : _userInputHandler;
+	private UnitAnimationManager _animManager;
+	private UnitAnimationManager animManager => _animManager == null ? _animManager = GetComponent<UnitAnimationManager>() : _animManager;
+	
+	private AttackComponent _attackComponent;
+	private AttackComponent attackComponent => _attackComponent == null ? _attackComponent = GetComponent<AttackComponent>() : _attackComponent;
+	
+	private DodgingComponent _dodgingComponent;
+	private DodgingComponent dodgingComponent => _dodgingComponent == null ? _dodgingComponent = GetComponent<DodgingComponent>() : _dodgingComponent;
 
-	protected virtual void Start() {
-		hp.OnHpDropBelowZero += Die;
-		attTarget.OnDamageTaken += damageAmount => { animator.SetTrigger("takeDamageTrigger"); };
-	}
+	public UserInputHandler userInputHandler;
+	public BotController botController;
 
 
 	private void OnMenuChanged() {
-		animator.speed = UIManager.isAnyMenuOpened ? 0f : 1f;
+//		animator.speed = UIManager.isAnyMenuOpened ? 0f : 1f;
 		GM.instance.cinemachineFreeLook.enabled = !UIManager.isAnyMenuOpened;
 	}
 
-	public virtual void InitAsPlayer() {
+	public void InitAsPlayer() {
 		userInputHandler.enabled = true;
 		GetComponent<BotController>().enabled = false;
 		GetComponent<CharacterController>().enabled = true;
@@ -78,7 +81,7 @@ public class BasicUnit : NetworkBehaviour {
 		OnDeath();
 		_isAlive = false;
 		attTarget.isTargettable = false;
-		animator.SetBool(animDieKey, true);
+		animManager.Die();
 		foreach (var childCollider in GetComponentsInChildren<Collider>())
 			childCollider.enabled = false;
 
@@ -91,17 +94,36 @@ public class BasicUnit : NetworkBehaviour {
 //		if (EditorApplication.isPlaying)
 //#endif 
 //		{
-			Destroy(gameObject, deadBodyTimeout); // async code doesnt stop on play mode exit
+		Destroy(gameObject, deadBodyTimeout); // async code doesnt stop on play mode exit
 //		}
 	}
-	
+
 	private void OnEnable() {
-		UIMenuPanelBase.OnAnyPanelOpened += OnMenuChanged;
-		UIMenuPanelBase.OnAnyPanelClosed += OnMenuChanged;
+		SubscribeToEvents();
 	}
 
 	private void OnDisable() {
+		UnsubscribeEvents();
+	}
+
+	private void SubscribeToEvents() {
+		UIMenuPanelBase.OnAnyPanelOpened += OnMenuChanged;
+		UIMenuPanelBase.OnAnyPanelClosed += OnMenuChanged;
+		hp.OnHpDropBelowZero += Die;
+		
+		attTarget.OnDamageTaken += _ => { animManager.TakeDamage(); };
+		movementComponent.OnMovementRequested += animManager.SetMovementAnim;
+		dodgingComponent.OnDodgeRequested += animManager.SetDodgeAnim;
+		attackComponent.OnAttackCommand += animManager.SetAttackAnim;
+		attackComponent.OnBlockCommand += animManager.SetBlockAnim;
+	}
+	
+	private void UnsubscribeEvents() {
 		UIMenuPanelBase.OnAnyPanelOpened -= OnMenuChanged;
 		UIMenuPanelBase.OnAnyPanelClosed -= OnMenuChanged;
+		hp.OnHpDropBelowZero -= Die;
+		movementComponent.OnMovementRequested -= animManager.SetMovementAnim;
+		dodgingComponent.OnDodgeRequested -= animManager.SetDodgeAnim;
 	}
+
 }

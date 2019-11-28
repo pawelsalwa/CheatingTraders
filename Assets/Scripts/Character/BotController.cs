@@ -17,10 +17,11 @@ public class BotController : MonoBehaviour {
 	}
 
 	private CombatState _combatState;
+
 	private CombatState combatState {
 		get => _combatState;
 		set {
-			if(_combatState == value)
+			if (_combatState == value)
 				return;
 			//Debug.Log(_combatState.ToString());
 			_combatState = value;
@@ -40,24 +41,25 @@ public class BotController : MonoBehaviour {
 	private CharacterRotationComponent rotatation => _rotatation == null ? _rotatation = GetComponent<CharacterRotationComponent>() : _rotatation;
 
 	public BasicUnit currentTarget;
-	
+
 	[Header("AI Config")]
 	public float combatModeStartDistance = 5f;
+
 	public float combatModeQuitDistance = 8f;
-	
+
 	public float timeBetweenAiActionChange = 1f;
 	public float enemyDetectionDistance = 14f;
 	public LayerMask Mask;
-	
+
 	public float attackStartDistance = 2f;
 	public float attackQuitDistance = 2.2f;
-	
+
 	private float currentTimeBetweenActions = 0f;
 	private float distanceToTarget;
-	
+
 	private bool inCombatMode = false;
-	private bool isInCombatDist =>  distanceToTarget < combatModeQuitDistance && inCombatMode;
-	
+	private bool isInCombatDist => distanceToTarget < combatModeQuitDistance && inCombatMode;
+
 	private Transform player => GM.player?.transform;
 	private Vector3 thisPos;
 	private Vector3 targetPos;
@@ -67,14 +69,14 @@ public class BotController : MonoBehaviour {
 
 	private void Update() {
 		if (!IsValid()) {
-			attack.StopAttacking();
+			attack.SetAttackCommand(false);
 			return;
 		}
-			
+
 		SeekTarget();
 
 		if (currentTarget == null) {
-			movement.DontMove();	
+			movement.DontMove();
 			return;
 		}
 
@@ -104,10 +106,21 @@ public class BotController : MonoBehaviour {
 		Debug.DrawRay(thisPos, targetDir, Color.white, Time.deltaTime, true);
 		int attackableBodyLayer = 9;
 
-		if (!Physics.Raycast(thisPos, targetDir, out var hitInfo, Mathf.Infinity, Mask)) {currentTarget = null; return;}
-		if (!hitInfo.transform.CompareTag("Player")) {currentTarget = null; return;}
-		if ((distanceToTarget = hitInfo.distance) > enemyDetectionDistance) {currentTarget = null; return;}
-		
+		if (!Physics.Raycast(thisPos, targetDir, out var hitInfo, Mathf.Infinity, Mask)) {
+			currentTarget = null;
+			return;
+		}
+
+		if (!hitInfo.transform.CompareTag("Player")) {
+			currentTarget = null;
+			return;
+		}
+
+		if ((distanceToTarget = hitInfo.distance) > enemyDetectionDistance) {
+			currentTarget = null;
+			return;
+		}
+
 		currentTarget = hitInfo.transform.GetComponentInParent<BasicUnit>(); //TODO: legitny system łapania targetu (moze nawet bez tagow)
 		currentTarget = currentTarget.isAlive ? currentTarget : null;
 	}
@@ -166,7 +179,7 @@ public class BotController : MonoBehaviour {
 	}
 
 	private void AttackIfInRange() {
-		if (distanceToTarget < attackStartDistance) attack.ContinueToAttack();
-		else attack.StopAttacking();
+		if (distanceToTarget < attackStartDistance) attack.SetAttackCommand(true);
+		else attack.SetAttackCommand(false);
 	}
 }

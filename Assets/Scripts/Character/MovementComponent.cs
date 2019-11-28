@@ -1,87 +1,86 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 
+/// <summary> uses CharacterController to trigger movement </summary>
 [RequireComponent(typeof(CharacterController))]
-public class MovementComponent : NetworkBehaviour {
+public class MovementComponent : MonoBehaviour {
 
-	[SerializeField, UnityEngine.Range(0f, 0.5f)]
+	public event Action<float, float, float> OnMovementRequested = (horizontal, vertical, speedFactor) => { };
+
+	[SerializeField, Range(0f, 0.5f)]
 	private float moveSpeed;
-	// private float runSpeed => moveSpeed * 2;
 
-	[SerializeField, UnityEngine.Range(1f, 3f)]
+	[SerializeField, Range(1f, 3f)]
 	private float runSpeedMultiplier;
 
 	private float runSpeed => moveSpeed * runSpeedMultiplier;
-
-	[SerializeField]
-	private float currentSpeed;
-
-	[SerializeField]
-	private float speedAnimFactor;
-	[SerializeField, Range(0f, 1f)]
-	private float speedAnimXFactor = 0.5f;
-	[SerializeField, Range(0f, 1f)]
-	private float speedAnimYFactor = 0.5f;
-
-	[SerializeField, UnityEngine.Range(0f, 2f)]
-	private float _rotationSmoothFactor = 0.6f;
+	
+	
+	private float speedAnimFactor = 0.5f;
 
 	private CharacterController _charController;
 	private CharacterController charController => _charController == null ? _charController = GetComponent<CharacterController>() : _charController;
 
-	private Animator _animator;
-	protected Animator animator => _animator == null ? _animator = GetComponent<Animator>() : _animator;
+	public void Move(UserInputHandler.MoveDir dir, bool running = false) {
+		switch (dir) {
+			case UserInputHandler.MoveDir.none:
+				DontMove();
+				break;
+			case UserInputHandler.MoveDir.W:
+				MoveW(running);
+				break;
+			case UserInputHandler.MoveDir.S:
+				MoveS(running);
+				break;
+			case UserInputHandler.MoveDir.A:
+				MoveA(running);
+				break;
+			case UserInputHandler.MoveDir.D:
+				MoveD(running);
+				break;
+			case UserInputHandler.MoveDir.WD:
+				MoveWD(running);
+				break;
+			case UserInputHandler.MoveDir.WA:
+				MoveWA(running);
+				break;
+			case UserInputHandler.MoveDir.SD:
+				MoveSD(running);
+				break;
+			case UserInputHandler.MoveDir.SA:
+				MoveSA(running);
+				break;
+			default: 
+				DontMove();
+				break;
+		}
+	}
 
-	public float animSensitivity = 0.4f;
+	public void MoveW(bool run = false) { MoveDir(transform.forward * (run ? runSpeed : moveSpeed), 0f, 1f); }
 
-//	private float oldAngle;
-//	private float newAngle;
+	public void MoveS(bool run = false) { MoveDir(-transform.forward * (run ? runSpeed : moveSpeed), 0f, -1f); }
 
-	public void MoveW(bool run = false) { MoveDir(transform.forward * (run ? runSpeed : moveSpeed), 0, 1); }
+	public void MoveA(bool run = false) { MoveDir(-transform.right * (run ? runSpeed : moveSpeed), -1f, 0f); }
 
-	public void MoveS(bool run = false) { MoveDir(-transform.forward * (run ? runSpeed : moveSpeed), 0, -1); }
+	public void MoveD(bool run = false) { MoveDir(transform.right * (run ? runSpeed : moveSpeed), 1f, 0f); }
 
-	public void MoveA(bool run = false) { MoveDir(-transform.right * (run ? runSpeed : moveSpeed), -1, 0); }
+	public void MoveWA(bool run = false) { MoveDir(Vector3.Normalize(-transform.right + transform.forward) * (run ? runSpeed : moveSpeed), -1f, 1f); }
 
-	public void MoveD(bool run = false) { MoveDir(transform.right * (run ? runSpeed : moveSpeed), 1, 0); }
+	public void MoveWD(bool run = false) { MoveDir(Vector3.Normalize(transform.right + transform.forward) * (run ? runSpeed : moveSpeed), 1f, 1f); }
 
-	public void MoveWA(bool run = false) { MoveDir(Vector3.Normalize(-transform.right + transform.forward) * (run ? runSpeed : moveSpeed), -1, 1); }
+	public void MoveSA(bool run = false) { MoveDir(Vector3.Normalize(-transform.right + -transform.forward) * (run ? runSpeed : moveSpeed), -1f, -1f); }
 
-	public void MoveWD(bool run = false) { MoveDir(Vector3.Normalize(transform.right + transform.forward) * (run ? runSpeed : moveSpeed), 1, 1); }
+	public void MoveSD(bool run = false) { MoveDir(Vector3.Normalize(transform.right + -transform.forward) * (run ? runSpeed : moveSpeed), 1f, -1f); }
 
-	public void MoveSA(bool run = false) { MoveDir(Vector3.Normalize(-transform.right + -transform.forward) * (run ? runSpeed : moveSpeed), -1, -1); }
-
-	public void MoveSD(bool run = false) { MoveDir(Vector3.Normalize(transform.right + -transform.forward) * (run ? runSpeed : moveSpeed), 1, -1); }
-
-	public void DontMove() { MoveDir(Vector3.zero, 0, 0); }
+	public void DontMove() { MoveDir(Vector3.zero, 0f, 0f); }
 
 	private void MoveDir(Vector3 dir, float xAnim, float yAnim) {
-		currentSpeed = dir.magnitude;
-		animator.SetBool("moving", dir != Vector3.zero);
-
-		speedAnimFactor = Mathf.Lerp(speedAnimFactor, Mathf.InverseLerp(moveSpeed, runSpeed, currentSpeed), 0.1f);
-		animator.SetLayerWeight(0, 1 - speedAnimFactor);
-		animator.SetLayerWeight(1, speedAnimFactor);
-
-//		Vector3 lastPos = transform.position;
 		charController.Move(dir);
-
-//		Debug.Log("forw: " + transform.forward);
-//		Debug.Log("dir: " + dir.normalized);
-//
-//		Debug.Log("w: " + yAnim);
-//		Debug.Log("a: " + xAnim);
-
-		animator.SetFloat("moveA", yAnim, speedAnimXFactor, Time.deltaTime);
-		animator.SetFloat("moveW", xAnim, speedAnimYFactor, Time.deltaTime);
-
-//		newAngle = Vector3.SignedAngle(transform.forward, transform.position - lastPos, Vector3.up);
-//		newAngle = Mathf.Repeat(Mathf.LerpAngle(oldAngle + 180f, newAngle + 180f, animSensitivity), 360f) - 180f;
-		// angle = 0 moves forward, angle = 90 moves right angle = -90 moves left
-//		animator.SetFloat("movingAngle", newAngle); //, 0.1f, Time.deltaTime);
-
-//		oldAngle = newAngle;
+		float currentSpeed = dir.magnitude;
+		speedAnimFactor = Mathf.Lerp( speedAnimFactor, Mathf.InverseLerp(moveSpeed, runSpeed, currentSpeed), 0.1f);
+		OnMovementRequested(xAnim, yAnim, speedAnimFactor);
 	}
 }

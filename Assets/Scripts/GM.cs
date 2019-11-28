@@ -25,7 +25,21 @@ public class GM : NetworkBehaviour {
 
 	public BasicUnit _player;
 	public static BasicUnit player => instance._player == null ? null : instance._player.isAlive ? instance._player : null;
+	
+	private ProjectConstants _projectConstants;
 
+	public static ProjectConstants projectConstants {
+		get {
+			if (instance._projectConstants == null)
+				instance._projectConstants = instance.GetComponent<ProjectConstants>();
+
+			if (instance._projectConstants == null)
+				instance._projectConstants = instance.gameObject.AddComponent<ProjectConstants>();
+
+			return instance._projectConstants;
+		}
+	}
+			
 	private static bool _isGamePaused;
 
 	public static bool isGamePaused {
