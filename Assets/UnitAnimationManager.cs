@@ -1,9 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public class UnitAnimationManager : MonoBehaviour {
+
+	public event Action staggeringEntered = () => { };
+	public event Action staggeringEnded = () => { };
 
 	private Animator _animator;
 	private Animator animator => _animator == null ? _animator = GetComponent<Animator>() : _animator;
@@ -58,6 +62,7 @@ public class UnitAnimationManager : MonoBehaviour {
 	public void TakeDamageAnim() {
 		animator.SetTrigger(takeDamageTrigger);
 		animator.SetBool(isStaggeringAnimatorKey, true);
+		staggeringEntered();
 		currentStaggerDurForDebug = 0;
 		CancelInvoke("ResetStagger");
 		Invoke("ResetStagger", staggerDurationSecs);
@@ -69,6 +74,7 @@ public class UnitAnimationManager : MonoBehaviour {
 
 	private void ResetStagger() {
 		animator.SetBool(isStaggeringAnimatorKey, false);
+		staggeringEnded();
 	}
 
 	private void Update() {

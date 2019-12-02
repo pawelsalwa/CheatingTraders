@@ -245,7 +245,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: New State 4
+  m_Name: take Damage
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -534,11 +534,11 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.07669914
-  m_TransitionOffset: 0.02235325
-  m_ExitTime: 0.3
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_ExitTime: 0
+  m_HasExitTime: 0
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 0
@@ -1642,7 +1642,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 6506366349934055826}
-    m_Position: {x: -160, y: -80, z: 0}
+    m_Position: {x: -140, y: -140, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3316755145580409836}
     m_Position: {x: 610, y: 110, z: 0}

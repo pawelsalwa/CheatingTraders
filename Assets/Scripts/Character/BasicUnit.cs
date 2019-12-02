@@ -27,6 +27,9 @@ public class BasicUnit : MonoBehaviour {
 	private bool _isAlive = true;
 	public bool isAlive => _isAlive;
 	
+//	private bool _isStaggered = false;
+//	public bool isStaggered => _isStaggered; //TODO: will be needed here?
+	
 	private HealthComponent _hp;
 	private HealthComponent hp => _hp == null ? _hp = GetComponentInChildren<HealthComponent>(true) : _hp;
 	
@@ -67,7 +70,7 @@ public class BasicUnit : MonoBehaviour {
 	}
 
 	public void InitAsBot() {
-		hp.hp = 2;
+		hp.hp = 111;
 		userInputHandler.enabled = false;
 		GetComponent<BotController>().enabled = true;
 		GetComponent<CharacterController>().enabled = true;
@@ -83,10 +86,10 @@ public class BasicUnit : MonoBehaviour {
 		if (!_isAlive) // only shadows die twice 
 			return;
 
-		OnDeath();
 		_isAlive = false;
-		bodyTarget.isTargettable = false;
 		animManager.Die();
+		OnDeath();
+		bodyTarget.isTargettable = false;
 		foreach (var childCollider in GetComponentsInChildren<Collider>())
 			childCollider.enabled = false;
 
@@ -111,10 +114,13 @@ public class BasicUnit : MonoBehaviour {
 		UIMenuPanelBase.OnAnyPanelClosed += OnMenuChanged;
 		
 		bodyTarget.OnDamageTaken += HandleTakingDamage;
-		movementComponent.OnMovementRequested += animManager.SetMovementAnim;
+		movementComponent.OnMovementRequested += HandleMovement;
 		dodgingComponent.OnDodgeRequested += animManager.SetDodgeAnim;
-		combatComponent.OnAttackCommand += animManager.SetAttackAnim;
+		combatComponent.OnAttackCommand += HandleAttack;
 		combatComponent.OnBlockCommand += animManager.SetBlockAnim;
+
+		animManager.staggeringEntered += movementComponent.DisableMovement;
+		animManager.staggeringEnded += movementComponent.EnableMovement;
 	}
 	
 	private void UnsubscribeEvents() {
@@ -122,24 +128,24 @@ public class BasicUnit : MonoBehaviour {
 		UIMenuPanelBase.OnAnyPanelClosed -= OnMenuChanged;
 		
 		bodyTarget.OnDamageTaken -= HandleTakingDamage;
-		movementComponent.OnMovementRequested -= animManager.SetMovementAnim;
+		movementComponent.OnMovementRequested -= HandleMovement;
 		dodgingComponent.OnDodgeRequested -= animManager.SetDodgeAnim;
-		combatComponent.OnAttackCommand -= animManager.SetAttackAnim;
+		combatComponent.OnAttackCommand -= HandleAttack;
 		combatComponent.OnBlockCommand -= animManager.SetBlockAnim;
+	}
+
+	private void HandleMovement(float xAnim, float yAnim, float speedAnimFactor) {
+		animManager.SetMovementAnim(xAnim, yAnim, speedAnimFactor);
 	}
 
 	private void HandleTakingDamage(int damage) {
 		combatComponent.DisableDealingDamage();
 		
-		if (hp.TakeDamage(damage).isHpBelowZero) {
-			Die();
-		} else {
-			animManager.TakeDamageAnim();
-		}
+		if (hp.TakeDamage(damage).isHpBelowZero) Die();
+		else animManager.TakeDamageAnim();
 	}
 
 	private void HandleAttack(bool isAttacking) {
 		animManager.SetAttackAnim(isAttacking);
 	}
-
 }

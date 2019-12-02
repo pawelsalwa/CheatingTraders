@@ -17,12 +17,19 @@ public class MovementComponent : MonoBehaviour {
 	private float runSpeedMultiplier;
 
 	private float runSpeed => moveSpeed * runSpeedMultiplier;
-	
-	
 	private float speedAnimFactor = 0.5f;
+	private bool movementEnabled = true;
 
 	private CharacterController _charController;
 	private CharacterController charController => _charController == null ? _charController = GetComponent<CharacterController>() : _charController;
+
+	public void EnableMovement() {
+		movementEnabled = true;
+	}
+	
+	public void DisableMovement() {
+		movementEnabled = false;
+	}
 
 	public void Move(UserInputHandler.MoveDir dir, bool running = false) {
 		switch (dir) {
@@ -78,6 +85,8 @@ public class MovementComponent : MonoBehaviour {
 	public void DontMove() { MoveDir(Vector3.zero, 0f, 0f); }
 
 	private void MoveDir(Vector3 dir, float xAnim, float yAnim) {
+		if (!movementEnabled) return;
+		
 		charController.Move(dir * Time.timeScale);
 		float currentSpeed = dir.magnitude;
 		speedAnimFactor = Mathf.Lerp( speedAnimFactor, Mathf.InverseLerp(moveSpeed, runSpeed, currentSpeed), 0.1f);
