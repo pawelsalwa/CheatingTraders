@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 ///<summary> gets events from animation and orders weapon to deal damage (everything on update) </summary>
-public class AttackComponent : MonoBehaviour {
+public class CombatComponent : MonoBehaviour {
 
 	public event Action<bool> OnAttackCommand = isAttacking => { };
 	public event Action<bool> OnBlockCommand = isBlocking => { };
@@ -12,7 +12,9 @@ public class AttackComponent : MonoBehaviour {
 	public Weapon weapon;
 	public Shield shield;
 
-	private bool animCanDealDamage = false;
+	public bool enableDebugs = false;
+
+	private bool canDealDamageByAnim = false;
 	private bool animCanImpactShield = false;
 
 //	private void Awake() {
@@ -31,16 +33,40 @@ public class AttackComponent : MonoBehaviour {
 	///<summary> plays attack animation allowing hit event from it. Should be called on update for anim to work</summary>
 	public void SetAttackCommand(bool isAttacking) {
 		if (!isAttacking) {
+			if (canDealDamageByAnim) 
+				DisableDealingDamage();
+			
 			OnAttackCommand(false);
 			return;
 		}
 		
-		if (animCanDealDamage)
+		if (canDealDamageByAnim)
 			weapon.DealDamageIfFoundTarget();
 		else 
 			weapon.StopDealingDamage();
 		
 		OnAttackCommand(true);
+	}
+	
+	public void DisableDealingDamage() {
+		if(enableDebugs)
+			Debug.Log("<color=red>DisabledAttack</color> " + gameObject.name, gameObject);
+		canDealDamageByAnim = false;
+	}
+	
+	private void EnableDealingDamage() {
+		if(enableDebugs)
+			Debug.Log("<color=green>EnabledAttack</color> " + gameObject.name, gameObject);
+		canDealDamageByAnim = true;
+	}
+	
+	///<summary> Unity calls those mono functions from animations by string :\ </summary>
+	private void SwordHitTargetByAnim() {
+		EnableDealingDamage();
+	}
+	
+	private void SwordPassedThroughTargetByAnim() {
+		DisableDealingDamage();
 	}
 	
 //	public void ContinueToBlock() {
@@ -58,16 +84,6 @@ public class AttackComponent : MonoBehaviour {
 //	}
 
 	private void TakeImpactFromBlock() {
-		Debug.Log("taking impact " + gameObject);
-//		animator.SetTrigger(onShieldImpactedAnimKey);
-	}
-
-	///<summary> Unity calls mono functions from animations by string :\ </summary>
-	private void SwordHitTargetByAnim() {
-		animCanDealDamage = true;
-	}
-
-	private void SwordPassedThroughTargetByAnim() {
-		animCanDealDamage = false;
+		Debug.Log("taking impact " + gameObject.name, gameObject);
 	}
 }

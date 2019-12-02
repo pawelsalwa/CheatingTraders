@@ -8,7 +8,7 @@ using UnityEngine;
 public class UserInputHandler : MonoBehaviour {
 
 	public MovementComponent movement;
-	public AttackComponent attack;
+	public CombatComponent combat;
 	public CharacterRotationComponent rotatation;
 	public DodgingComponent dodgingComponent;
 
@@ -51,8 +51,8 @@ public class UserInputHandler : MonoBehaviour {
 	}
 	
 	private void HandleAttack() {
-		attack.SetBlockCommand(mouse1);
-		attack.SetAttackCommand(mouse0 && !mouse1);
+		combat.SetBlockCommand(mouse1);
+		combat.SetAttackCommand(mouse0 && !mouse1);
 //		if (Input.GetKey(KeyCode.Mouse1)) {
 //			attack.StopAttacking();
 //			attack.ContinueToBlock();

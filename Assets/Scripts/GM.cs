@@ -10,17 +10,18 @@ using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 ///<summary> Game Manager singleton </summary>
-public class GM : NetworkBehaviour {
+public class GM : MonoBehaviour {
 
 	private static GM _instance;
 	public static GM instance => _instance == null ? _instance = FindObjectOfType<GM>() : _instance;
 
-	public static bool isMultiplayer = false;
+	public static bool isMultiplayer = false; 
+	[Range(0f, 1f)]
+	public float timeScale = 1;
 
 	public CinemachineFreeLook cinemachineFreeLook;
 	public Camera mainCamera;
 	public BasicUnit basicUnitPrefab;
-
 	public DungeonGenerator dungeonGenerator;
 
 	public BasicUnit _player;
@@ -101,6 +102,7 @@ public class GM : NetworkBehaviour {
 		_player.transform.position = dungeonGenerator.GetPlayerStartingPosition();
 		_player.InitAsPlayer();
 		instance.cinemachineFreeLook.enabled = true;
+		
 
 		foreach (var go in _player.GetComponentsInChildren<Transform>()) go.tag = "Player";
 //        foreach (var go in _player.GetComponentsInChildren<Transform>()) go.gameObject.layer = 1 >> 9;
@@ -129,7 +131,8 @@ public class GM : NetworkBehaviour {
 
 	private void Update() {
 		if (Input.GetKeyDown(KeyCode.H)) DestroyBots();
+		if (Input.GetKeyDown(KeyCode.G)) SpawnEnemy();
+
+		Time.timeScale = timeScale;
 	}
-	
-	
 }

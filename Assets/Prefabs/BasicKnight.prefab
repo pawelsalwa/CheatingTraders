@@ -1141,6 +1141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 1846347863798710084}
   shield: {fileID: 4307072911819992583}
+  enableDebugs: 0
 --- !u!114 &4866097812400902558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1168,7 +1169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement: {fileID: 4866097812400902558}
-  attack: {fileID: 3427392319552801460}
+  combat: {fileID: 3427392319552801460}
   rotatation: {fileID: 1537876270}
   dodgingComponent: {fileID: -4090241180245051461}
 --- !u!114 &2036131077303213700
@@ -1183,10 +1184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 563f0fb4577cb2b4d8660abf3a0e718a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: {fileID: 7278028305238215328}
-  attTarget: {fileID: 7581574680759952653}
   animDieKey: die
-  deadBodyTimeout: 2000
+  deadBodyTimeout: 2
   cameraOrbit: {fileID: 5085911358754118236}
   cameraFollow: {fileID: 8640631685897387814}
   playerLayer: 9
@@ -1259,6 +1258,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveXSmoothness: 0.05
   moveYSmoothness: 0.05
+  staggerDurationSecs: 1
+  currentStaggerDurForDebug: 0
   takeDamageTrigger: takeDamageTrigger
   animDieTrigger: dieTrigger
   verticalMovementKey: moveA
@@ -1271,6 +1272,7 @@ MonoBehaviour:
   shieldBlockingAnimatorKey: shieldBlock
   enemyShieldEncounteredAnimatorKey: enemyShieldEncountered
   onShieldImpactedAnimKey: onShieldImpacted
+  isStaggeringAnimatorKey: isStaggering
 --- !u!1 &2657292109224698753
 GameObject:
   m_ObjectHideFlags: 0
@@ -1351,6 +1353,7 @@ MonoBehaviour:
     type: 2}
   meshRenderer: {fileID: 1564253461707868197}
   materialchangeMiliseconds: 80
+  enableDebugs: 0
 --- !u!1 &2705335911998409021
 GameObject:
   m_ObjectHideFlags: 0
@@ -1628,8 +1631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c7dddee779fd64194852c99aaadd4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attTarget: {fileID: 7581574680759952653}
-  hp: 1000
+  hp: 1
 --- !u!1 &7258358882971864217
 GameObject:
   m_ObjectHideFlags: 0

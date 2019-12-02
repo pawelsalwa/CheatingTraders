@@ -34,8 +34,8 @@ public class BotController : MonoBehaviour {
 	private MovementComponent _movement;
 	private MovementComponent movement => _movement == null ? _movement = GetComponent<MovementComponent>() : _movement;
 
-	private AttackComponent _attack;
-	private AttackComponent attack => _attack == null ? _attack = GetComponent<AttackComponent>() : _attack;
+	private CombatComponent _combat;
+	private CombatComponent Combat => _combat == null ? _combat = GetComponent<CombatComponent>() : _combat;
 
 	private CharacterRotationComponent _rotatation;
 	private CharacterRotationComponent rotatation => _rotatation == null ? _rotatation = GetComponent<CharacterRotationComponent>() : _rotatation;
@@ -69,7 +69,7 @@ public class BotController : MonoBehaviour {
 
 	private void Update() {
 		if (!IsValid()) {
-			attack.SetAttackCommand(false);
+			Combat.SetAttackCommand(false);
 			return;
 		}
 
@@ -179,7 +179,7 @@ public class BotController : MonoBehaviour {
 	}
 
 	private void AttackIfInRange() {
-		if (distanceToTarget < attackStartDistance) attack.SetAttackCommand(true);
-		else attack.SetAttackCommand(false);
+		if (distanceToTarget < attackStartDistance) Combat.SetAttackCommand(true);
+		else Combat.SetAttackCommand(false);
 	}
 }

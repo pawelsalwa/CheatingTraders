@@ -15,12 +15,15 @@ public class BodyTarget : WeaponTarget {
     [Range(0 , 500)]
     public int materialchangeMiliseconds = 80;
 
+    public bool enableDebugs = false;
+
     protected override void OnHitReceived(int weaponDamage) {
         TakeDamage(weaponDamage);
     }
 
     private void TakeDamage(int damage) {
-        Debug.Log("damage taken " + damage, gameObject);
+        if(enableDebugs)
+            Debug.Log("damage taken " + damage, gameObject);
         OnDamageTaken(damage);
         AnimateMaterialColorAsync();
     }

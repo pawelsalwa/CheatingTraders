@@ -78,7 +78,7 @@ public class MovementComponent : MonoBehaviour {
 	public void DontMove() { MoveDir(Vector3.zero, 0f, 0f); }
 
 	private void MoveDir(Vector3 dir, float xAnim, float yAnim) {
-		charController.Move(dir);
+		charController.Move(dir * Time.timeScale);
 		float currentSpeed = dir.magnitude;
 		speedAnimFactor = Mathf.Lerp( speedAnimFactor, Mathf.InverseLerp(moveSpeed, runSpeed, currentSpeed), 0.1f);
 		OnMovementRequested(xAnim, yAnim, speedAnimFactor);

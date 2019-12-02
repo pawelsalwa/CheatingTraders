@@ -5,20 +5,13 @@ using System;
 
 public class HealthComponent : MonoBehaviour {
 
-    public event Action OnHpDropBelowZero = () => {};
-	
-	public BodyTarget attTarget;
+	public bool isHpBelowZero => hp < 0;
 
 	public int hp = 100;
-
-	public void Awake() {
-		attTarget.OnDamageTaken += (damage) => TakeDamage(damage);
-	}
-
-	private void TakeDamage(int damage) {
+	
+	public HealthComponent TakeDamage(int damage) {
 		hp -= damage;
-
-		if (hp <= 0) 
-			OnHpDropBelowZero();
+		return this;
 	}
+
 }

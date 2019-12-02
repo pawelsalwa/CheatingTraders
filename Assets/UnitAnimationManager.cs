@@ -11,6 +11,8 @@ public class UnitAnimationManager : MonoBehaviour {
 	[Header("Animation params")]
 	[Range(0f, 1f)] public float moveXSmoothness = 0.5f;
 	[Range(0f, 1f)] public float moveYSmoothness = 0.5f;
+	[Range(0f, 3f)] public float staggerDurationSecs = 1f;
+	[Range(0f, 3f)] public float currentStaggerDurForDebug = 0f;
 	
 	[Header("Animator keys")]
 	public string takeDamageTrigger = "takeDamageTrigger";
@@ -28,6 +30,7 @@ public class UnitAnimationManager : MonoBehaviour {
 	public string shieldBlockingAnimatorKey = "shieldBlock";
 	public string enemyShieldEncounteredAnimatorKey = "enemyShieldEncountered";
 	public string onShieldImpactedAnimKey = "onShieldImpacted";
+	public string isStaggeringAnimatorKey = "isStaggering";
 
 	public void SetMovementAnim(float xAnim, float yAnim, float speedAnimFactor) {
 		animator.SetBool(isMovingKey, !(Mathf.Approximately(xAnim,0f) && Mathf.Approximately(yAnim,0f)));
@@ -38,7 +41,7 @@ public class UnitAnimationManager : MonoBehaviour {
 	}
 	
 	public void SetDodgeAnim(float yAnim, float xAnim) {
-		if (Mathf.Approximately(yAnim, 0f) || Mathf.Approximately(yAnim, 0f)) // jesli rozne od zera
+		if (!Mathf.Approximately(yAnim, 0f) || !Mathf.Approximately(xAnim, 0f)) // jesli rozne od zera
 			animator.SetTrigger(dodgeTrigger);
 		animator.SetFloat(dodgeFrontFactor, yAnim);
 		animator.SetFloat(dodgeRightFactor, xAnim);
@@ -52,11 +55,24 @@ public class UnitAnimationManager : MonoBehaviour {
 		animator.SetBool(shieldBlockingAnimatorKey, blocking);
 	}
 
-	public void TakeDamage() {
+	public void TakeDamageAnim() {
 		animator.SetTrigger(takeDamageTrigger);
+		animator.SetBool(isStaggeringAnimatorKey, true);
+		currentStaggerDurForDebug = 0;
+		CancelInvoke("ResetStagger");
+		Invoke("ResetStagger", staggerDurationSecs);
 	}
 
 	public void Die() {
 		animator.SetTrigger(animDieTrigger);
+	}
+
+	private void ResetStagger() {
+		animator.SetBool(isStaggeringAnimatorKey, false);
+	}
+
+	private void Update() {
+		currentStaggerDurForDebug += Time.deltaTime;
+		currentStaggerDurForDebug = Mathf.Clamp(currentStaggerDurForDebug, 0f, 3f);
 	}
 }
