@@ -9,7 +9,7 @@ using System;
 public class Weapon : MonoBehaviour {
     
     public event Action<BodyTarget, int> OnDamageDealt = (attTarget, damageDealt) => { };
-    public event Action<Shield> OnShieldEncountered = (shield) => { };
+    public event Action<Shield> OnEnemyShieldEncounter = (shield) => { };
 
     public int damage = 10;
 
@@ -58,7 +58,7 @@ public class Weapon : MonoBehaviour {
             return;
 
         if (newAttTarget is Shield) {
-            OnShieldEncountered(newAttTarget as Shield);
+            OnEnemyShieldEncounter(newAttTarget as Shield);
             Debug.Log("shield encountered");
             (newAttTarget as Shield).ReceiveWeaponHit(damage);
         }

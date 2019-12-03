@@ -1271,7 +1271,7 @@ MonoBehaviour:
   attackingAnimatorKey: attacking
   shieldBlockingAnimatorKey: shieldBlock
   enemyShieldEncounteredAnimatorKey: enemyShieldEncountered
-  onShieldImpactedAnimKey: onShieldImpacted
+  shieldTakingImpactAnimKey: shieldTakeImpactTrigger
   isStaggeringAnimatorKey: isStaggering
 --- !u!1 &2657292109224698753
 GameObject:

@@ -32,8 +32,8 @@ public class UnitAnimationManager : MonoBehaviour {
 	[Space(10)]
 	public string attackingAnimatorKey = "attacking";
 	public string shieldBlockingAnimatorKey = "shieldBlock";
-	public string enemyShieldEncounteredAnimatorKey = "enemyShieldEncountered";
-	public string onShieldImpactedAnimKey = "onShieldImpacted";
+	public string enemyShieldEncounteredAnimatorKey = "enemyShieldEncounteredTrigger";
+	public string shieldTakingImpactAnimKey = "shieldTakeImpactTrigger";
 	public string isStaggeringAnimatorKey = "isStaggering";
 
 	public void SetMovementAnim(float xAnim, float yAnim, float speedAnimFactor) {
@@ -66,6 +66,14 @@ public class UnitAnimationManager : MonoBehaviour {
 		currentStaggerDurForDebug = 0;
 		CancelInvoke("ResetStagger");
 		Invoke("ResetStagger", staggerDurationSecs);
+	}
+	
+	public void SetEnemyShieldEncounteredAnim() {
+		animator.SetTrigger(enemyShieldEncounteredAnimatorKey);
+	}
+	
+	public void TakeShieldImpact() {
+		animator.SetTrigger(shieldTakingImpactAnimKey);
 	}
 
 	public void Die() {

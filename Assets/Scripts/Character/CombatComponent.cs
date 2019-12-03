@@ -8,6 +8,8 @@ public class CombatComponent : MonoBehaviour {
 
 	public event Action<bool> OnAttackCommand = isAttacking => { };
 	public event Action<bool> OnBlockCommand = isBlocking => { };
+	public event Action<Shield> OnEnemyShieldEncounter = shield => { };
+	public event Action OnShieldImpact = () => { };
 
 	public Weapon weapon;
 	public Shield shield;
@@ -17,10 +19,6 @@ public class CombatComponent : MonoBehaviour {
 	private bool canDealDamageByAnim = false;
 	private bool animCanImpactShield = false;
 
-//	private void Awake() {
-//		weapon.OnShieldEncountered += (shield) => { animator.SetTrigger(enemyShieldEncounteredAnimatorKey); };
-//		shield.OnShieldImpacted += TakeImpactFromBlock;
-//	}
 
 	///<summary> plays block animation. Should be called on update for anim to work</summary>
 	public void SetBlockCommand(bool isBlocking) {
@@ -60,6 +58,7 @@ public class CombatComponent : MonoBehaviour {
 		canDealDamageByAnim = true;
 	}
 	
+	
 	///<summary> Unity calls those mono functions from animations by string :\ </summary>
 	private void SwordHitTargetByAnim() {
 		EnableDealingDamage();
@@ -67,6 +66,11 @@ public class CombatComponent : MonoBehaviour {
 	
 	private void SwordPassedThroughTargetByAnim() {
 		DisableDealingDamage();
+	}
+	
+	private void Awake() {
+		weapon.OnEnemyShieldEncounter += OnEnemyShieldEncounter;
+		shield.OnShieldImpacted += TakeImpactFromBlock;
 	}
 	
 //	public void ContinueToBlock() {
@@ -85,5 +89,6 @@ public class CombatComponent : MonoBehaviour {
 
 	private void TakeImpactFromBlock() {
 		Debug.Log("taking impact " + gameObject.name, gameObject);
+		OnShieldImpact();
 	}
 }

@@ -116,8 +116,11 @@ public class BasicUnit : MonoBehaviour {
 		bodyTarget.OnDamageTaken += HandleTakingDamage;
 		movementComponent.OnMovementRequested += HandleMovement;
 		dodgingComponent.OnDodgeRequested += animManager.SetDodgeAnim;
+		
 		combatComponent.OnAttackCommand += HandleAttack;
 		combatComponent.OnBlockCommand += animManager.SetBlockAnim;
+		combatComponent.OnEnemyShieldEncounter += HandleEncounteringEnemyShield;
+		combatComponent.OnShieldImpact += TakeShieldImpact;
 
 		animManager.staggeringEntered += movementComponent.DisableMovement;
 		animManager.staggeringEnded += movementComponent.EnableMovement;
@@ -147,5 +150,13 @@ public class BasicUnit : MonoBehaviour {
 
 	private void HandleAttack(bool isAttacking) {
 		animManager.SetAttackAnim(isAttacking);
+	}
+
+	private void HandleEncounteringEnemyShield(Shield enemyShield) {
+		animManager.SetEnemyShieldEncounteredAnim();
+	}
+	
+	private void TakeShieldImpact() {
+		animManager.TakeShieldImpact();
 	}
 }
