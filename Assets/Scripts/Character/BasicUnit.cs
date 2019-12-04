@@ -18,13 +18,14 @@ public class BasicUnit : MonoBehaviour {
 
 	public event Action OnDeath = () => { };
 
-	public string animDieKey;
-	public int deadBodyTimeout = 2;
+	[SerializeField]
+	private int deadBodyTimeout = 2;
 
 	public Transform cameraOrbit;
 	public Transform cameraFollow;
 
-	public int playerLayer, botLayer;
+	[SerializeField]
+	private int playerLayer, botLayer;
 
 	private bool _isAlive = true;
 	public bool isAlive => _isAlive;
@@ -156,7 +157,6 @@ public class BasicUnit : MonoBehaviour {
 
 	private void HandleEncounteringEnemyShield(Shield enemyShield) {
 		Debug.Log("<color=orange>HandleEncounteringEnemyShield</color>");
-		// combatComponent.DisableDealingDamage();
 		animManager.SetEnemyShieldEncounteredAnim();
 	}
 	

@@ -1502,9 +1502,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 49
-  ignoredBodyTargets:
-  - {fileID: 4307072911819992583}
+  ignoredWeaponTargets:
   - {fileID: 7581574680759952653}
+  - {fileID: 4307072911819992583}
   targets: []
 --- !u!1 &5565389519608211199
 GameObject:
