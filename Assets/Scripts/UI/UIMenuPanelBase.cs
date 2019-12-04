@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UIMenuPanelBase : MonoBehaviour, Initable {
-	
+
+	public static event Action OnAnyPanelChanged = () => { };	
 	public static event Action OnAnyPanelOpened = () => { };
 	public static event Action OnAnyPanelClosed = () => { };
 	
@@ -24,6 +25,7 @@ public class UIMenuPanelBase : MonoBehaviour, Initable {
 		Opened();
 		OnOpened();
 		OnAnyPanelOpened();
+		OnAnyPanelChanged();
 	}
 	
 	public void Close() {
@@ -32,6 +34,7 @@ public class UIMenuPanelBase : MonoBehaviour, Initable {
 		Closed();
 		OnClosed();
 		OnAnyPanelClosed();
+		OnAnyPanelChanged();
 	}
 
 	protected virtual void Inited() { }

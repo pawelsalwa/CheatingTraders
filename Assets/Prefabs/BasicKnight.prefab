@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 7827601255591463601}
   m_Layer: 9
   m_Name: Shield
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1118,7 +1118,7 @@ CharacterController:
   m_GameObject: {fileID: 1564253461696300375}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Height: 1.58
   m_Radius: 0.3
@@ -1190,8 +1190,6 @@ MonoBehaviour:
   cameraFollow: {fileID: 8640631685897387814}
   playerLayer: 9
   botLayer: 10
-  userInputHandler: {fileID: 7439631042915170079}
-  botController: {fileID: 39532043410761939}
 --- !u!114 &1537876270
 MonoBehaviour:
   m_ObjectHideFlags: 0

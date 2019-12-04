@@ -99,24 +99,21 @@ public class GM : MonoBehaviour {
 	private void SpawnPlayer() {
 		_player = Instantiate(basicUnitPrefab);
 		pos = dungeonGenerator.GetPlayerStartingPosition();
+		_player.GetComponent<CharacterController>().enabled = false;
 		_player.transform.position = dungeonGenerator.GetPlayerStartingPosition();
+		_player.GetComponent<CharacterController>().enabled = true;
 		_player.InitAsPlayer();
 		instance.cinemachineFreeLook.enabled = true;
-		
-
-		foreach (var go in _player.GetComponentsInChildren<Transform>()) go.tag = "Player";
-//        foreach (var go in _player.GetComponentsInChildren<Transform>()) go.gameObject.layer = 1 >> 9;
 	}
 
 	public void SpawnEnemy() {
 		var newEnemy = Instantiate(basicUnitPrefab);
 		AiUnits.Add(newEnemy);
-		newEnemy.userInputHandler.enabled = false;
-		newEnemy.GetComponent<BotController>().enabled = true;
+		newEnemy.GetComponent<CharacterController>().enabled = false;
 		newEnemy.transform.position = dungeonGenerator.GetPlayerStartingPosition() + Vector3.forward * Random.Range(0, 2);
+		newEnemy.GetComponent<CharacterController>().enabled = true;
 		newEnemy.InitAsBot();
 		newEnemy.OnDeath += () => RemoveBot(newEnemy);
-		foreach (var go in newEnemy.GetComponentsInChildren<Transform>()) go.tag = "Enemy";
 	}
 
 	private void DestroyBots() {

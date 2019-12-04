@@ -36,6 +36,7 @@ public class UnitAnimationManager : MonoBehaviour {
 	public string shieldTakingImpactAnimKey = "shieldTakeImpactTrigger";
 	public string isStaggeringAnimatorKey = "isStaggering";
 
+
 	public void SetMovementAnim(float xAnim, float yAnim, float speedAnimFactor) {
 		animator.SetBool(isMovingKey, !(Mathf.Approximately(xAnim,0f) && Mathf.Approximately(yAnim,0f)));
 		animator.SetLayerWeight(0, 1 - speedAnimFactor);
@@ -88,5 +89,17 @@ public class UnitAnimationManager : MonoBehaviour {
 	private void Update() {
 		currentStaggerDurForDebug += Time.deltaTime;
 		currentStaggerDurForDebug = Mathf.Clamp(currentStaggerDurForDebug, 0f, 3f);
+	}
+
+	private void OnEnable() {
+		UIMenuPanelBase.OnAnyPanelChanged += UpdateAnimState;
+	}
+
+	private void OnDisable() {
+		UIMenuPanelBase.OnAnyPanelChanged -= UpdateAnimState;
+	}
+
+	private void UpdateAnimState(){
+		animator.enabled = !UIManager.isAnyMenuOpened;
 	}
 }

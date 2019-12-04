@@ -69,8 +69,13 @@ public class CombatComponent : MonoBehaviour {
 	}
 	
 	private void Awake() {
-		weapon.OnEnemyShieldEncounter += OnEnemyShieldEncounter;
+		weapon.OnEnemyShieldEncounter += EnemyShieldEncounter;
 		shield.OnShieldImpacted += TakeImpactFromBlock;
+	}
+
+	private void EnemyShieldEncounter(Shield shield) {
+		DisableDealingDamage();
+		OnEnemyShieldEncounter(shield);
 	}
 	
 //	public void ContinueToBlock() {

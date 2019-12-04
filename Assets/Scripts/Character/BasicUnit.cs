@@ -12,6 +12,8 @@ using System.Xml.Serialization;
 [RequireComponent(typeof(DodgingComponent))]
 [RequireComponent(typeof(CombatComponent))]
 [RequireComponent(typeof(UnitAnimationManager))]
+[RequireComponent(typeof(BotController))]
+[RequireComponent(typeof(UserInputHandler))]
 public class BasicUnit : MonoBehaviour {
 
 	public event Action OnDeath = () => { };
@@ -47,39 +49,40 @@ public class BasicUnit : MonoBehaviour {
 	
 	private DodgingComponent _dodgingComponent;
 	private DodgingComponent dodgingComponent => _dodgingComponent == null ? _dodgingComponent = GetComponent<DodgingComponent>() : _dodgingComponent;
-
-	public UserInputHandler userInputHandler;
-	public BotController botController;
-
-	private void OnMenuChanged() {
-//		animator.speed = UIManager.isAnyMenuOpened ? 0f : 1f;
-		GM.instance.cinemachineFreeLook.enabled = !UIManager.isAnyMenuOpened;
-	}
+	
+	private UserInputHandler _userInputHandler;
+	private UserInputHandler userInputHandler => _userInputHandler == null ? _userInputHandler = GetComponent<UserInputHandler>() : _userInputHandler;
+	
+	private BotController _botController;
+	private BotController botController => _botController == null ? _botController = GetComponent<BotController>() : _botController;
 
 	public void InitAsPlayer() {
-		hp.hp = 200;
-		
+		hp.hp = 200;		
 		userInputHandler.enabled = true;
-		GetComponent<BotController>().enabled = false;
-		GetComponent<CharacterController>().enabled = true;
+		botController.enabled = false;
 		GM.instance.cinemachineFreeLook.m_Follow = cameraFollow;
 		GM.instance.cinemachineFreeLook.m_LookAt = cameraOrbit;
 		OnDeath += UIManager.instance.youDiedMenu.Open;
 		SetLayer(playerLayer);
+		SetTag("Player");
 		gameObject.name = "-- PlayerUnit --";
 	}
 
 	public void InitAsBot() {
 		hp.hp = 111;
 		userInputHandler.enabled = false;
-		GetComponent<BotController>().enabled = true;
-		GetComponent<CharacterController>().enabled = true;
+		botController.enabled = true;
 		SetLayer(botLayer);
+		SetTag("Enemy");
 		gameObject.name = "-- BotUnit --";
 	}
 
 	private void SetLayer(int layer) {
 		foreach (var child in GetComponentsInChildren<Transform>(true)) child.gameObject.layer = layer;
+	}
+
+	private void SetTag(string tag) {
+		foreach (var child in GetComponentsInChildren<Transform>(true)) child.gameObject.tag = tag;
 	}
 
 	private void Die() {
@@ -93,7 +96,6 @@ public class BasicUnit : MonoBehaviour {
 		foreach (var childCollider in GetComponentsInChildren<Collider>())
 			childCollider.enabled = false;
 
-//		RemoveLoosersBody();
 		Invoke("RemoveLoosersBody", deadBodyTimeout);
 	}
 
@@ -153,10 +155,16 @@ public class BasicUnit : MonoBehaviour {
 	}
 
 	private void HandleEncounteringEnemyShield(Shield enemyShield) {
+		Debug.Log("<color=orange>HandleEncounteringEnemyShield</color>");
+		// combatComponent.DisableDealingDamage();
 		animManager.SetEnemyShieldEncounteredAnim();
 	}
 	
 	private void TakeShieldImpact() {
 		animManager.TakeShieldImpact();
+	}
+
+	private void OnMenuChanged() {
+		GM.instance.cinemachineFreeLook.enabled = !UIManager.isAnyMenuOpened;
 	}
 }

@@ -53,18 +53,6 @@ public class UserInputHandler : MonoBehaviour {
 	private void HandleAttack() {
 		combat.SetBlockCommand(mouse1);
 		combat.SetAttackCommand(mouse0 && !mouse1);
-//		if (Input.GetKey(KeyCode.Mouse1)) {
-//			attack.StopAttacking();
-//			attack.ContinueToBlock();
-//			return;
-//		} else {
-//			attack.StopBlocking();
-//		}
-//
-//		if (Input.GetKey(KeyCode.Mouse0))
-//			attack.ContinueToAttack();
-//		else
-//			attack.StopAttacking();
 	}
 
 	private void HandleMovement() {
@@ -87,20 +75,10 @@ public class UserInputHandler : MonoBehaviour {
 
 	private void HandleRotation() {
 		rotatation.LookAt(new Vector3(cameraRot.forward.x, 0f, cameraRot.forward.z));
-//        rotatation.AnimateRotation(Input.GetAxis("Horizontal"));
 	}
 
 	private void HandleMisc() {
 		if (Input.GetKeyDown(KeyCode.Escape))
 			UIManager.instance.inGameMenu.Open();
-
-		// if (Input.GetKey(KeyCode.LeftShift)) {
-		// 	animator.SetLayerWeight(3, 1);
-		// 	animator.SetLayerWeight(2, 0);
-		// } else {
-		// 	animator.SetLayerWeight(3, 0);
-		// 	animator.SetLayerWeight(2, 1);
-		// }
-			
 	}
 }
