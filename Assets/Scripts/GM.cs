@@ -80,8 +80,6 @@ public class GM : MonoBehaviour {
 		dungeonGenerator?.Generate();
 		SpawnPlayer();
 		SpawnEnemy();
-//		SpawnEnemy();
-		//SpawnEnemy();
 	}
 
 	public void EndGame() {
@@ -94,11 +92,8 @@ public class GM : MonoBehaviour {
 		}
 	}
 
-	private Vector3 pos;
-
 	private void SpawnPlayer() {
 		_player = Instantiate(basicUnitPrefab);
-		pos = dungeonGenerator.GetPlayerStartingPosition();
 		_player.GetComponent<CharacterController>().enabled = false;
 		_player.transform.position = dungeonGenerator.GetPlayerStartingPosition();
 		_player.GetComponent<CharacterController>().enabled = true;

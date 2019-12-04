@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using Random = UnityEngine.Random;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(BasicUnit))]
 public class BotController : MonoBehaviour {
 	private enum CombatState {
-		StrafeA,
-		StrafeD,
+		MoveA,
+		MoveD,
 		MoveW,
 		MoveS
 	}
@@ -23,11 +16,11 @@ public class BotController : MonoBehaviour {
 		set {
 			if (_combatState == value)
 				return;
-			//Debug.Log(_combatState.ToString());
+
 			_combatState = value;
 		}
-	}
-
+	}	
+	
 	private BasicUnit _thisUnit;
 	private BasicUnit thisUnit => _thisUnit == null ? _thisUnit = GetComponent<BasicUnit>() : _thisUnit;
 
@@ -40,32 +33,53 @@ public class BotController : MonoBehaviour {
 	private CharacterRotationComponent _rotatation;
 	private CharacterRotationComponent rotatation => _rotatation == null ? _rotatation = GetComponent<CharacterRotationComponent>() : _rotatation;
 
-	public BasicUnit currentTarget;
+	private WeightedRandomObjectsBag<CombatState> objectsBag = new WeightedRandomObjectsBag<CombatState>();
+
+	[SerializeField]
+	private BasicUnit currentTarget;
 
 	[Header("AI Config")]
-	public float combatModeStartDistance = 5f;
+	[SerializeField]
+	private float combatModeStartDistance = 5f;
 
-	public float combatModeQuitDistance = 8f;
+	[SerializeField]
+	private float combatModeQuitDistance = 8f;
 
-	public float timeBetweenAiActionChange = 1f;
-	public float enemyDetectionDistance = 14f;
-	public LayerMask Mask;
+	[SerializeField]
+	private float timeBetweenAiActionChange = 1f;
+	[SerializeField]
+	private float enemyDetectionDistance = 14f;
+	[SerializeField]
+	private LayerMask Mask;
 
-	public float attackStartDistance = 2f;
-	public float attackQuitDistance = 2.2f;
+	[SerializeField, Range(0.1f, 2.5f)]
+	private float attackStartDistance = 0.7f;
+	[SerializeField, Range(1f, 3f)]
+	private float attackQuitDistance = 1.5f;
 
 	private float currentTimeBetweenActions = 0f;
 	private float distanceToTarget;
 
-	private bool inCombatMode = false;
-	private bool isInCombatDist => distanceToTarget < combatModeQuitDistance && inCombatMode;
+	private bool inAggroMode = false;
+	private bool inAttackMode = false;
 
 	private Transform player => GM.player?.transform;
-	private Vector3 thisPos;
-	private Vector3 targetPos;
-	private Vector3 targetDir;
+	private Vector3 thisPos => transform.position + Vector3.up;
+	private Vector3 targetPos => player.position + Vector3.up;
+	private Vector3 targetDir => targetPos - thisPos;
 
 	private bool shiftPressed = false;
+
+	private void Awake() {
+		InitCombatStatesWeights();
+	}
+
+	private void InitCombatStatesWeights() {
+		objectsBag.AddWeightedObject(CombatState.MoveW, 10);
+		objectsBag.AddWeightedObject(CombatState.MoveS, 1);
+		objectsBag.AddWeightedObject(CombatState.MoveA, 1);
+		objectsBag.AddWeightedObject(CombatState.MoveD, 1);
+	}
 
 	private void Update() {
 		if (!IsValid()) {
@@ -81,9 +95,9 @@ public class BotController : MonoBehaviour {
 		}
 
 		LookAtTarget();
-		UpdateIfInCombatMode();
+		UpdateIfInAggroMode();
 
-		if (inCombatMode)
+		if (inAggroMode)
 			SetRandomCombatAction();
 		else
 			Chase();
@@ -99,12 +113,7 @@ public class BotController : MonoBehaviour {
 	private void SeekTarget() {
 		if (player == null) return;
 
-		thisPos = transform.position + Vector3.up;
-		targetPos = player.position + Vector3.up;
-		targetDir = targetPos - thisPos;
-
 		Debug.DrawRay(thisPos, targetDir, Color.white, Time.deltaTime, true);
-		int attackableBodyLayer = 9;
 
 		if (!Physics.Raycast(thisPos, targetDir, out var hitInfo, Mathf.Infinity, Mask)) {
 			currentTarget = null;
@@ -139,9 +148,14 @@ public class BotController : MonoBehaviour {
 		rotatation.LookAt(player.position - transform.position);
 	}
 
-	private void UpdateIfInCombatMode() { //simple hysteresis
-		if (distanceToTarget < combatModeStartDistance) inCombatMode = true;
-		if (distanceToTarget > combatModeQuitDistance) inCombatMode = false;
+	private void UpdateIfInAggroMode() { // hysteresis
+		if (distanceToTarget < combatModeStartDistance) inAggroMode = true;
+		if (distanceToTarget > combatModeQuitDistance) inAggroMode = false;
+	}
+	
+	private void UpdateIfInAttackMode() { // hysteresis
+		if (distanceToTarget < attackStartDistance) inAttackMode = true;
+		if (distanceToTarget > attackQuitDistance) inAttackMode = false;
 	}
 
 	private void SetRandomCombatAction() {
@@ -152,7 +166,9 @@ public class BotController : MonoBehaviour {
 			return;
 
 		currentTimeBetweenActions = 0f;
-		combatState = (CombatState) (Random.Range(0, 1000) % 2) + 2;
+		combatState = objectsBag.GetRandomWeightedObject();
+
+//		combatState = (CombatState) (Random.Range(0, 1000) % 2) + 2;
 //		shiftPressed = Random.Range(0, 2) == 1;
 	}
 
@@ -161,17 +177,19 @@ public class BotController : MonoBehaviour {
 			case CombatState.MoveW:
 				if (distanceToTarget >= attackStartDistance)
 					movement.MoveW(shiftPressed);
+				else
+					movement.DontMove();
 				timeBetweenAiActionChange = 1f;
 				break;
 			case CombatState.MoveS:
 				movement.MoveS(shiftPressed);
 				timeBetweenAiActionChange = 1f;
 				break;
-			case CombatState.StrafeA:
+			case CombatState.MoveA:
 				movement.MoveA(shiftPressed);
 				timeBetweenAiActionChange = 1f;
 				break;
-			case CombatState.StrafeD:
+			case CombatState.MoveD:
 				movement.MoveD(shiftPressed);
 				timeBetweenAiActionChange = 1f;
 				break;
@@ -179,7 +197,7 @@ public class BotController : MonoBehaviour {
 	}
 
 	private void AttackIfInRange() {
-		if (distanceToTarget < attackStartDistance) Combat.SetAttackCommand(true);
-		else Combat.SetAttackCommand(false);
+		UpdateIfInAttackMode();
+		Combat.SetAttackCommand(inAttackMode);
 	}
 }

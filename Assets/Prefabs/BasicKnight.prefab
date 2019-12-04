@@ -137,6 +137,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTargettable: 1
+  damageTakingMaterial: {fileID: 0}
+  meshRenderer: {fileID: 0}
+  materialchangeMiliseconds: 80
 --- !u!65 &7389782351321562513
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -148,7 +151,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4442788, y: 0.741206, z: 0.95246124}
+  m_Size: {x: 0.4442788, y: 1.56, z: 0.95246124}
   m_Center: {x: -0.123758204, y: 0.00997144, z: -0.0033203773}
 --- !u!54 &7827601255591463601
 Rigidbody:
@@ -1184,7 +1187,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 563f0fb4577cb2b4d8660abf3a0e718a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animDieKey: die
   deadBodyTimeout: 2
   cameraOrbit: {fileID: 5085911358754118236}
   cameraFollow: {fileID: 8640631685897387814}
@@ -1221,15 +1223,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTarget: {fileID: 0}
-  combatModeStartDistance: 5
-  combatModeQuitDistance: 8
+  combatModeStartDistance: 3
+  combatModeQuitDistance: 5
   timeBetweenAiActionChange: 1
   enemyDetectionDistance: 14
   Mask:
     serializedVersion: 2
     m_Bits: 512
-  attackStartDistance: 1.8
-  attackQuitDistance: 2.2
+  attackStartDistance: 0.7
+  attackQuitDistance: 1.5
 --- !u!114 &-4090241180245051461
 MonoBehaviour:
   m_ObjectHideFlags: 0

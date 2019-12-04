@@ -23,7 +23,9 @@ public class Weapon : MonoBehaviour {
     [SerializeField]
     private List<WeaponTarget> targets = new List<WeaponTarget>();
 
-    public void DealDamageIfFoundTarget() {        
+    public void DealDamageIfFoundTarget() {
+        RemoveDestroyedTargets();
+        
         foreach (var target in targets) {
 
             if (target is Shield) {
@@ -59,7 +61,7 @@ public class Weapon : MonoBehaviour {
 
     private void OnTriggerExit(Collider other) {
         var lastWeaponTarget = other.gameObject.GetComponent<WeaponTarget>();
-
+        
         if (ignoredWeaponTargets.Any(x => x == lastWeaponTarget))      
             return;
 
@@ -74,6 +76,12 @@ public class Weapon : MonoBehaviour {
             
         for (int i = 0; i < targetToHasTakenDamage.Count; i++)
             targetToHasTakenDamage[asd[i]] = false;
+    }
+
+    private void RemoveDestroyedTargets() {
+        for (int i = targets.Count - 1; i >= 0; i--)
+             if (targets[i] == null)
+                 targets.Remove(targets[i]);
     }
 
     private void ShieldEncountered(Shield shield) {
