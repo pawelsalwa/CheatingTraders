@@ -18,6 +18,9 @@ public class BasicUnit : MonoBehaviour {
 
 	public event Action OnDeath = () => { };
 
+	public bool isAttacking => combatComponent.m_isAttacking;
+	public bool isBlocking => combatComponent.m_isBlocking;
+
 	[SerializeField]
 	private int deadBodyTimeout = 2;
 
@@ -156,7 +159,6 @@ public class BasicUnit : MonoBehaviour {
 	}
 
 	private void HandleEncounteringEnemyShield(Shield enemyShield) {
-		Debug.Log("<color=orange>HandleEncounteringEnemyShield</color>");
 		animManager.SetEnemyShieldEncounteredAnim();
 	}
 	

@@ -1231,7 +1231,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   attackStartDistance: 0.7
-  attackQuitDistance: 1.5
+  attackQuitDistance: 1
 --- !u!114 &-4090241180245051461
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,7 +11,8 @@ public class Weapon : MonoBehaviour {
     public event Action<BodyTarget, int> OnDamageDealt = (attTarget, damageDealt) => { };
     public event Action<Shield> OnEnemyShieldEncounter = (shield) => { };
 
-    public int damage = 10;
+    [SerializeField] private int damage = 10;
+    [SerializeField] private bool enableDebugs = false;
 
     [Header("Should contain WeaponTarget and Shield of character wielding this weapon :)")]
     public WeaponTarget[] ignoredWeaponTargets;
@@ -85,7 +86,8 @@ public class Weapon : MonoBehaviour {
     }
 
     private void ShieldEncountered(Shield shield) {
-        Debug.Log("shield encountered");
+        if (enableDebugs)
+            Debug.Log("shield encountered");
         OnEnemyShieldEncounter(shield);
         shield.ReceiveWeaponHit(0);
     }

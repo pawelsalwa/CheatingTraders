@@ -11,12 +11,12 @@ public class MovementComponent : MonoBehaviour {
 	public event Action<float, float, float> OnMovementRequested = (horizontal, vertical, speedFactor) => { };
 
 	[SerializeField, Range(0f, 0.5f)]
-	private float moveSpeed;
+	private float normalMoveSpeed = 0.05f;
 
 	[SerializeField, Range(1f, 3f)]
-	private float runSpeedMultiplier;
+	private float runSpeedMultiplier = 2f;
 
-	private float runSpeed => moveSpeed * runSpeedMultiplier;
+	private float runSpeed => normalMoveSpeed * runSpeedMultiplier;
 	private float speedAnimFactor = 0.5f;
 	private bool movementEnabled = true;
 
@@ -29,6 +29,10 @@ public class MovementComponent : MonoBehaviour {
 	
 	public void DisableMovement() {
 		movementEnabled = false;
+	}
+
+	public void SetMoveFactor(float moveFactor = 1f) {
+		currentMoveSpeed = 
 	}
 
 	public void Move(UserInputHandler.MoveDir dir, bool running = false) {
@@ -66,21 +70,21 @@ public class MovementComponent : MonoBehaviour {
 		}
 	}
 
-	public void MoveW(bool run = false) { MoveDir(transform.forward * (run ? runSpeed : moveSpeed), 0f, 1f); }
+	public void MoveW(bool run = false) { MoveDir(transform.forward * (run ? runSpeed : normalMoveSpeed), 0f, 1f); }
 
-	public void MoveS(bool run = false) { MoveDir(-transform.forward * (run ? runSpeed : moveSpeed), 0f, -1f); }
+	public void MoveS(bool run = false) { MoveDir(-transform.forward * (run ? runSpeed : normalMoveSpeed), 0f, -1f); }
 
-	public void MoveA(bool run = false) { MoveDir(-transform.right * (run ? runSpeed : moveSpeed), -1f, 0f); }
+	public void MoveA(bool run = false) { MoveDir(-transform.right * (run ? runSpeed : normalMoveSpeed), -1f, 0f); }
 
-	public void MoveD(bool run = false) { MoveDir(transform.right * (run ? runSpeed : moveSpeed), 1f, 0f); }
+	public void MoveD(bool run = false) { MoveDir(transform.right * (run ? runSpeed : normalMoveSpeed), 1f, 0f); }
 
-	public void MoveWA(bool run = false) { MoveDir(Vector3.Normalize(-transform.right + transform.forward) * (run ? runSpeed : moveSpeed), -1f, 1f); }
+	public void MoveWA(bool run = false) { MoveDir(Vector3.Normalize(-transform.right + transform.forward) * (run ? runSpeed : normalMoveSpeed), -1f, 1f); }
 
-	public void MoveWD(bool run = false) { MoveDir(Vector3.Normalize(transform.right + transform.forward) * (run ? runSpeed : moveSpeed), 1f, 1f); }
+	public void MoveWD(bool run = false) { MoveDir(Vector3.Normalize(transform.right + transform.forward) * (run ? runSpeed : normalMoveSpeed), 1f, 1f); }
 
-	public void MoveSA(bool run = false) { MoveDir(Vector3.Normalize(-transform.right + -transform.forward) * (run ? runSpeed : moveSpeed), -1f, -1f); }
+	public void MoveSA(bool run = false) { MoveDir(Vector3.Normalize(-transform.right + -transform.forward) * (run ? runSpeed : normalMoveSpeed), -1f, -1f); }
 
-	public void MoveSD(bool run = false) { MoveDir(Vector3.Normalize(transform.right + -transform.forward) * (run ? runSpeed : moveSpeed), 1f, -1f); }
+	public void MoveSD(bool run = false) { MoveDir(Vector3.Normalize(transform.right + -transform.forward) * (run ? runSpeed : normalMoveSpeed), 1f, -1f); }
 
 	public void DontMove() { MoveDir(Vector3.zero, 0f, 0f); }
 
@@ -89,7 +93,7 @@ public class MovementComponent : MonoBehaviour {
 		
 		charController.Move(dir * Time.timeScale);
 		float currentSpeed = dir.magnitude;
-		speedAnimFactor = Mathf.Lerp( speedAnimFactor, Mathf.InverseLerp(moveSpeed, runSpeed, currentSpeed), 0.1f);
+		speedAnimFactor = Mathf.Lerp( speedAnimFactor, Mathf.InverseLerp(normalMoveSpeed, runSpeed, currentSpeed), 0.1f);
 		OnMovementRequested(xAnim, yAnim, speedAnimFactor);
 	}
 }

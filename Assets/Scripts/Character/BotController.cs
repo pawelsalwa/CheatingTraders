@@ -2,12 +2,21 @@
 
 [RequireComponent(typeof(BasicUnit))]
 public class BotController : MonoBehaviour {
-	private enum CombatState {
-		MoveA,
-		MoveD,
-		MoveW,
-		MoveS
+	private enum MovementState { MoveA, MoveD, MoveW, MoveS, None }
+
+	private MovementState _movementState;
+
+	private MovementState movementState {
+		get => _movementState;
+		set {
+			if (_movementState == value)
+				return;
+
+			_movementState = value;
+		}
 	}
+	
+	private enum CombatState { Attack, ShieldBlock, None }
 
 	private CombatState _combatState;
 
@@ -19,7 +28,7 @@ public class BotController : MonoBehaviour {
 
 			_combatState = value;
 		}
-	}	
+	}
 	
 	private BasicUnit _thisUnit;
 	private BasicUnit thisUnit => _thisUnit == null ? _thisUnit = GetComponent<BasicUnit>() : _thisUnit;
@@ -28,12 +37,12 @@ public class BotController : MonoBehaviour {
 	private MovementComponent movement => _movement == null ? _movement = GetComponent<MovementComponent>() : _movement;
 
 	private CombatComponent _combat;
-	private CombatComponent Combat => _combat == null ? _combat = GetComponent<CombatComponent>() : _combat;
+	private CombatComponent combat => _combat == null ? _combat = GetComponent<CombatComponent>() : _combat;
 
 	private CharacterRotationComponent _rotatation;
 	private CharacterRotationComponent rotatation => _rotatation == null ? _rotatation = GetComponent<CharacterRotationComponent>() : _rotatation;
 
-	private WeightedRandomObjectsBag<CombatState> objectsBag = new WeightedRandomObjectsBag<CombatState>();
+	private readonly WeightedRandomObjectsBag<MovementState> movementActionsBag = new WeightedRandomObjectsBag<MovementState>();
 
 	[SerializeField]
 	private BasicUnit currentTarget;
@@ -68,29 +77,27 @@ public class BotController : MonoBehaviour {
 	private Vector3 targetPos => player.position + Vector3.up;
 	private Vector3 targetDir => targetPos - thisPos;
 
-	private bool shiftPressed = false;
-
 	private void Awake() {
 		InitCombatStatesWeights();
 	}
 
 	private void InitCombatStatesWeights() {
-		objectsBag.AddWeightedObject(CombatState.MoveW, 10);
-		objectsBag.AddWeightedObject(CombatState.MoveS, 1);
-		objectsBag.AddWeightedObject(CombatState.MoveA, 1);
-		objectsBag.AddWeightedObject(CombatState.MoveD, 1);
+		movementActionsBag.AddWeightedObject(MovementState.MoveW, 70);
+		movementActionsBag.AddWeightedObject(MovementState.MoveS, 10);
+		movementActionsBag.AddWeightedObject(MovementState.MoveA, 10);
+		movementActionsBag.AddWeightedObject(MovementState.MoveD, 10);
 	}
 
 	private void Update() {
 		if (!IsValid()) {
-			Combat.SetAttackCommand(false);
+			SetIdleAction();
 			return;
 		}
 
 		SeekTarget();
 
 		if (currentTarget == null) {
-			movement.DontMove();
+			SetIdleAction();
 			return;
 		}
 
@@ -98,12 +105,15 @@ public class BotController : MonoBehaviour {
 		UpdateIfInAggroMode();
 
 		if (inAggroMode)
-			SetRandomCombatAction();
+			SetRandomMovementAction();
 		else
 			Chase();
 
+		ExecuteMovementAction();
+		
+		UpdateIfInAttackMode();
+		SetCombatAction();
 		ExecuteCombatAction();
-		AttackIfInRange();
 	}
 
 	private bool IsValid() {
@@ -136,11 +146,7 @@ public class BotController : MonoBehaviour {
 
 
 	private void Chase() {
-		combatState = CombatState.MoveW;
-	}
-
-	private void Strafe() {
-		movement.MoveD();
+		movementState = MovementState.MoveW;
 	}
 
 	private void LookAtTarget() {
@@ -158,7 +164,7 @@ public class BotController : MonoBehaviour {
 		if (distanceToTarget > attackQuitDistance) inAttackMode = false;
 	}
 
-	private void SetRandomCombatAction() {
+	private void SetRandomMovementAction() {
 		currentTimeBetweenActions += Time.deltaTime;
 		currentTimeBetweenActions = Mathf.Clamp(currentTimeBetweenActions, 0f, timeBetweenAiActionChange);
 
@@ -166,38 +172,56 @@ public class BotController : MonoBehaviour {
 			return;
 
 		currentTimeBetweenActions = 0f;
-		combatState = objectsBag.GetRandomWeightedObject();
-
-//		combatState = (CombatState) (Random.Range(0, 1000) % 2) + 2;
-//		shiftPressed = Random.Range(0, 2) == 1;
+		movementState = movementActionsBag.GetRandomWeightedObject();
 	}
 
-	private void ExecuteCombatAction() {
-		switch (combatState) {
-			case CombatState.MoveW:
+	private void SetCombatAction() {
+//		combatState = currentTarget.isAttacking ? CombatState.ShieldBlock : CombatState.Attack;
+		if (inAttackMode)
+			combatState = CombatState.Attack;
+		else 
+			combatState = CombatState.None;
+	}
+
+	private void ExecuteMovementAction() {
+		switch (movementState) {
+			case MovementState.MoveW:
 				if (distanceToTarget >= attackStartDistance)
-					movement.MoveW(shiftPressed);
+					movement.MoveW();
 				else
 					movement.DontMove();
-				timeBetweenAiActionChange = 1f;
 				break;
-			case CombatState.MoveS:
-				movement.MoveS(shiftPressed);
-				timeBetweenAiActionChange = 1f;
+			case MovementState.MoveS:
+				movement.MoveS();
 				break;
-			case CombatState.MoveA:
-				movement.MoveA(shiftPressed);
-				timeBetweenAiActionChange = 1f;
+			case MovementState.MoveA:
+				movement.MoveA();
 				break;
-			case CombatState.MoveD:
-				movement.MoveD(shiftPressed);
-				timeBetweenAiActionChange = 1f;
+			case MovementState.MoveD:
+				movement.MoveD();
 				break;
 		}
 	}
 
-	private void AttackIfInRange() {
-		UpdateIfInAttackMode();
-		Combat.SetAttackCommand(inAttackMode);
+	private void ExecuteCombatAction() {
+		switch (combatState) {
+			case CombatState.ShieldBlock:
+				combat.SetBlockCommand(true);
+				break;
+			case CombatState.Attack:
+				combat.SetAttackCommand(true);
+				break;
+			case CombatState.None:
+			default:
+				combat.SetAttackCommand(false);
+				combat.SetBlockCommand(false);
+				break;
+		}
+	}
+
+	private void SetIdleAction() {
+		combat.SetAttackCommand(false);
+		combat.SetBlockCommand(false);
+		movement.DontMove();
 	}
 }

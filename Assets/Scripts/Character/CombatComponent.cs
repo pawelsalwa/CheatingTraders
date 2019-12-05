@@ -11,10 +11,13 @@ public class CombatComponent : MonoBehaviour {
 	public event Action<Shield> OnEnemyShieldEncounter = shield => { };
 	public event Action OnShieldImpact = () => { };
 
-	public Weapon weapon;
-	public Shield shield;
+	public bool m_isAttacking { get; private set; } = false;
+	public bool m_isBlocking { get; private set; } = false;
 
-	public bool enableDebugs = false;
+	[SerializeField] private Weapon weapon;
+	[SerializeField] private Shield shield;
+
+	[SerializeField] private  bool enableDebugs = false;
 
 	private bool canDealDamageByAnim = false;
 	private bool animCanImpactShield = false;
@@ -23,6 +26,8 @@ public class CombatComponent : MonoBehaviour {
 	///<summary> plays block animation. Should be called on update for anim to work</summary>
 	public void SetBlockCommand(bool isBlocking) {
 		if (shield == null) return;
+
+		m_isBlocking = isBlocking;
 		animCanImpactShield = isBlocking;
 		shield.gameObject.SetActive(isBlocking);
 		OnBlockCommand(isBlocking);
@@ -30,20 +35,20 @@ public class CombatComponent : MonoBehaviour {
 
 	///<summary> plays attack animation allowing hit event from it. Should be called on update for anim to work</summary>
 	public void SetAttackCommand(bool isAttacking) {
-		if (!isAttacking) {
-			if (canDealDamageByAnim) 
-				DisableDealingDamage();
-			
-			OnAttackCommand(false);
-			return;
+		m_isAttacking = isAttacking;
+		
+		if (isAttacking) {
+			if (canDealDamageByAnim)
+				weapon.DealDamageIfFoundTarget();
+			else 
+				weapon.StopDealingDamage();
+		} else {
+//			if (canDealDamageByAnim) //TODO: test it 
+			DisableDealingDamage();
 		}
 		
-		if (canDealDamageByAnim)
-			weapon.DealDamageIfFoundTarget();
-		else 
-			weapon.StopDealingDamage();
 		
-		OnAttackCommand(true);
+		OnAttackCommand(isAttacking);
 	}
 	
 	public void DisableDealingDamage() {
@@ -77,23 +82,10 @@ public class CombatComponent : MonoBehaviour {
 		DisableDealingDamage();
 		OnEnemyShieldEncounter(shield);
 	}
-	
-//	public void ContinueToBlock() {
-//		if (shield == null) return;
-//		animCanImpactShield = true;
-//		animator.SetBool(shieldBlockingAnimatorKey, true);
-//		shield.gameObject.SetActive(true);
-//	}
-//
-//	public void StopBlocking() {
-//		if (shield == null) return;
-//		animCanImpactShield = false;
-//		animator.SetBool(shieldBlockingAnimatorKey, false);
-//		shield.gameObject.SetActive(false);
-//	}
 
 	private void TakeImpactFromBlock() {
-		Debug.Log("taking impact " + gameObject.name, gameObject);
+		if (enableDebugs)
+			Debug.Log("taking impact " + gameObject.name, gameObject);
 		OnShieldImpact();
 	}
 }
