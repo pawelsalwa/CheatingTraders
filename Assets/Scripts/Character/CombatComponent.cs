@@ -6,22 +6,22 @@ using UnityEngine;
 ///<summary> gets events from animation and orders weapon to deal damage (everything on update) </summary>
 public class CombatComponent : MonoBehaviour {
 
-	public event Action<bool> OnAttackCommand = isAttacking => { };
+	public event Action OnAttackCommand = () => { };
 	public event Action<bool> OnBlockCommand = isBlocking => { };
 	public event Action<Shield> OnEnemyShieldEncounter = shield => { };
 	public event Action OnShieldImpact = () => { };
 
-	public bool m_isAttacking { get; private set; } = false;
+	public bool m_isAttacking { get; private set;}
 	public bool m_isBlocking { get; private set; } = false;
 
 	[SerializeField] private Weapon weapon;
 	[SerializeField] private Shield shield;
 
 	[SerializeField] private  bool enableDebugs = false;
+	[SerializeField, Range(0.1f, 3f)] private float cooldownBetweenAttacks = 1.3f;
 
 	private bool canDealDamageByAnim = false;
 	private bool animCanImpactShield = false;
-
 
 	///<summary> plays block animation. Should be called on update for anim to work</summary>
 	public void SetBlockCommand(bool isBlocking) {
@@ -33,22 +33,11 @@ public class CombatComponent : MonoBehaviour {
 		OnBlockCommand(isBlocking);
 	}
 
-	///<summary> plays attack animation allowing hit event from it. Should be called on update for anim to work</summary>
-	public void SetAttackCommand(bool isAttacking) {
-		m_isAttacking = isAttacking;
-		
-		if (isAttacking) {
-			if (canDealDamageByAnim)
-				weapon.DealDamageIfFoundTarget();
-			else 
-				weapon.StopDealingDamage();
-		} else {
-//			if (canDealDamageByAnim) //TODO: test it 
-			DisableDealingDamage();
-		}
-		
-		
-		OnAttackCommand(isAttacking);
+	public void OrderToAttack() {
+		if (m_isAttacking) return;
+		m_isAttacking = true;
+		OnAttackCommand();
+		Invoke("EnableAttackAgain", cooldownBetweenAttacks);
 	}
 	
 	public void DisableDealingDamage() {
@@ -66,16 +55,32 @@ public class CombatComponent : MonoBehaviour {
 	
 	///<summary> Unity calls those mono functions from animations by string :\ </summary>
 	private void SwordHitTargetByAnim() {
+		Update();
 		EnableDealingDamage();
 	}
 	
 	private void SwordPassedThroughTargetByAnim() {
+		Update();
 		DisableDealingDamage();
+	}
+	
+	private void EnableAttackAgain() {
+		if (enableDebugs) 
+			Debug.Log("Attack Cooldowned");
+		Update();
+		m_isAttacking = false;
 	}
 	
 	private void Awake() {
 		weapon.OnEnemyShieldEncounter += EnemyShieldEncounter;
 		shield.OnShieldImpacted += TakeImpactFromBlock;
+	}
+
+	private void Update() {
+		if (canDealDamageByAnim)
+			weapon.DealDamageIfFoundTarget();
+		else 
+			weapon.StopDealingDamage();
 	}
 
 	private void EnemyShieldEncounter(Shield shield) {

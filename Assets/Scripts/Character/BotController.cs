@@ -209,18 +209,16 @@ public class BotController : MonoBehaviour {
 				combat.SetBlockCommand(true);
 				break;
 			case CombatState.Attack:
-				combat.SetAttackCommand(true);
+				combat.OrderToAttack();
 				break;
 			case CombatState.None:
 			default:
-				combat.SetAttackCommand(false);
 				combat.SetBlockCommand(false);
 				break;
 		}
 	}
 
 	private void SetIdleAction() {
-		combat.SetAttackCommand(false);
 		combat.SetBlockCommand(false);
 		movement.DontMove();
 	}

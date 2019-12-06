@@ -1145,6 +1145,7 @@ MonoBehaviour:
   weapon: {fileID: 1846347863798710084}
   shield: {fileID: 4307072911819992583}
   enableDebugs: 0
+  cooldownBetweenAttacks: 1.23
 --- !u!114 &4866097812400902558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1157,7 +1158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e918ae94d8452489461cba0a9cd03c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.05
+  normalMoveSpeed: 0.05
   runSpeedMultiplier: 1.983
 --- !u!114 &7439631042915170079
 MonoBehaviour:
@@ -1268,7 +1269,7 @@ MonoBehaviour:
   dodgeTrigger: dodgeTrigger
   dodgeFrontFactor: dodgeFrontFactor
   dodgeRightFactor: dodgeRightFactor
-  attackingAnimatorKey: attacking
+  attackTriggerKey: attackTrigger
   shieldBlockingAnimatorKey: shieldBlock
   enemyShieldEncounteredAnimatorKey: enemyShieldEncountered
   shieldTakingImpactAnimKey: shieldTakeImpactTrigger
@@ -1470,13 +1471,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3646504501085031496}
-  m_LocalRotation: {x: -0.626055, y: 0.3745008, z: -0.33636066, w: 0.59553826}
-  m_LocalPosition: {x: -0.097, y: 0.046, z: 0.45}
+  m_LocalRotation: {x: -0.6140813, y: 0.37007937, z: -0.34105477, w: 0.6079697}
+  m_LocalPosition: {x: -0.116, y: 0.024, z: 0.722}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1564253461696141603}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -29.587002, y: 94.246, z: -90.670006}
+  m_LocalEulerAnglesHint: {x: -29.62, y: 91.853004, z: -89.132}
 --- !u!136 &7203259705895249331
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1487,8 +1488,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.05
-  m_Height: 1.26
+  m_Radius: 0.16
+  m_Height: 2.32
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1846347863798710084
@@ -1504,6 +1505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 49
+  enableDebugs: 0
   ignoredWeaponTargets:
   - {fileID: 7581574680759952653}
   - {fileID: 4307072911819992583}

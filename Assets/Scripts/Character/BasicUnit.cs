@@ -61,7 +61,7 @@ public class BasicUnit : MonoBehaviour {
 	private BotController botController => _botController == null ? _botController = GetComponent<BotController>() : _botController;
 
 	public void InitAsPlayer() {
-		hp.hp = 200;		
+		hp.hp = 2000;		
 		userInputHandler.enabled = true;
 		botController.enabled = false;
 		GM.instance.cinemachineFreeLook.m_Follow = cameraFollow;
@@ -155,8 +155,8 @@ public class BasicUnit : MonoBehaviour {
 		else animManager.TakeDamageAnim();
 	}
 
-	private void HandleAttack(bool isAttacking) {
-		animManager.SetAttackAnim(isAttacking);
+	private void HandleAttack() {
+		animManager.SetAttackAnim();
 	}
 
 	private void HandleEncounteringEnemyShield(Shield enemyShield) {

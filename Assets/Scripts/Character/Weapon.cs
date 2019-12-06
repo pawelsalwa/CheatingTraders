@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
@@ -58,8 +57,12 @@ public class Weapon : MonoBehaviour {
             return;
 
         targets.Add(newWeaponTarget);
-	}
 
+        if (huj)
+        Debug.Log($"new weapon target collided ({targets.Count} in total): " , newWeaponTarget.gameObject);
+	}
+    public bool huj = false;
+    
     private void OnTriggerExit(Collider other) {
         var lastWeaponTarget = other.gameObject.GetComponent<WeaponTarget>();
         
@@ -93,12 +96,23 @@ public class Weapon : MonoBehaviour {
     }
 
     private void BodyTargetEncountered(BodyTarget bodyTarget) {
-        if (targetToHasTakenDamage.ContainsKey(bodyTarget) && targetToHasTakenDamage[bodyTarget])
+        int xd = 1;
+        if (targetToHasTakenDamage.ContainsKey(bodyTarget) && targetToHasTakenDamage[bodyTarget]) {
+            Debug.Log("1: " + xd);
+   
             return;
+        }
         
-        if (!targetToHasTakenDamage.ContainsKey(bodyTarget))
+        xd ++;
+        if (!targetToHasTakenDamage.ContainsKey(bodyTarget)) {
+            Debug.Log("2: " + xd);
             targetToHasTakenDamage.Add(bodyTarget, false);
+        }
         
+        
+        xd ++;
+        
+        Debug.Log("3: " + xd);
         bodyTarget.ReceiveWeaponHit(damage);
         targetToHasTakenDamage[bodyTarget] = true;
         OnDamageDealt(bodyTarget, damage);

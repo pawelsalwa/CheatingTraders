@@ -31,7 +31,8 @@ public class UnitAnimationManager : MonoBehaviour {
 	public string dodgeFrontFactor = "dodgeFrontFactor";
 	public string dodgeRightFactor = "dodgeRightFactor";
 	[Space(10)]
-	public string attackingAnimatorKey = "attacking";
+//	public string attackingAnimatorKey = "attacking";
+	public string attackTriggerKey = "attackTrigger";
 	public string shieldBlockingAnimatorKey = "shieldBlock";
 	public string enemyShieldEncounteredAnimatorKey = "enemyShieldEncounteredTrigger";
 	public string shieldTakingImpactAnimKey = "shieldTakeImpactTrigger";
@@ -53,8 +54,9 @@ public class UnitAnimationManager : MonoBehaviour {
 		animator.SetFloat(dodgeRightFactor, xAnim);
 	}
 
-	public void SetAttackAnim(bool attacking) {
-		animator.SetBool(attackingAnimatorKey, attacking);
+	public void SetAttackAnim() {
+		animator.SetTrigger(attackTriggerKey);
+//		animator.SetBool(attackingAnimatorKey, attacking);
 	}
 	
 	public void SetBlockAnim(bool blocking) {

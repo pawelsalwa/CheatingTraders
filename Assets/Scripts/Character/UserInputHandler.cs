@@ -52,7 +52,9 @@ public class UserInputHandler : MonoBehaviour {
 	
 	private void HandleAttack() {
 		combat.SetBlockCommand(mouse1);
-		combat.SetAttackCommand(mouse0 && !mouse1);
+		if (mouse0 && !mouse1)
+			combat.OrderToAttack();
+
 	}
 
 	private void HandleMovement() {
