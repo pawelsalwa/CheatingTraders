@@ -25,7 +25,7 @@ public class Weapon : MonoBehaviour {
     private List<WeaponTarget> targets = new List<WeaponTarget>();
 
     public void DealDamageIfFoundTarget() {
-        RemoveDestroyedTargets();
+        RemoveNotValidTargets();
         
         foreach (var target in targets) {
 
@@ -79,9 +79,9 @@ public class Weapon : MonoBehaviour {
             targetToHasTakenDamage[asd[i]] = false;
     }
 
-    private void RemoveDestroyedTargets() {
+    private void RemoveNotValidTargets() {
         for (int i = targets.Count - 1; i >= 0; i--)
-             if (targets[i] == null)
+             if (targets[i] == null || !targets[i].gameObject.activeSelf)
                  targets.Remove(targets[i]);
     }
 
