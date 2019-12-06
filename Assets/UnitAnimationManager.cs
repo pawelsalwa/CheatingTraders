@@ -8,6 +8,7 @@ public class UnitAnimationManager : MonoBehaviour {
 
 	public event Action staggeringEntered = () => { };
 	public event Action staggeringEnded = () => { };
+	public event Action OnShieldImpactEnded = () => { };
 
 	private Animator _animator;
 	private Animator animator => _animator == null ? _animator = GetComponent<Animator>() : _animator;
@@ -69,16 +70,22 @@ public class UnitAnimationManager : MonoBehaviour {
 		Invoke("ResetStagger", staggerDurationSecs);
 	}
 	
-	public void SetEnemyShieldEncounteredAnim() {
-		animator.SetTrigger(enemyShieldEncounteredAnimatorKey);
-	}
-	
 	public void TakeShieldImpact() {
 		animator.SetTrigger(shieldTakingImpactAnimKey);
+		Invoke("ShieldImpactEnded", 1f);
 	}
 
 	public void Die() {
 		animator.SetTrigger(animDieTrigger);
+	}
+	
+	public void SetEnemyShieldEncounteredAnim() {
+		animator.SetTrigger(enemyShieldEncounteredAnimatorKey);
+	}
+
+	private void ShieldImpactEnded() {
+		CancelInvoke("ShieldImpactEnded");
+		OnShieldImpactEnded();
 	}
 
 	private void ResetStagger() {

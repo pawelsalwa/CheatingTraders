@@ -130,6 +130,7 @@ public class BasicUnit : MonoBehaviour {
 
 		animManager.staggeringEntered += movementComponent.DisableMovement;
 		animManager.staggeringEnded += movementComponent.EnableMovement;
+		animManager.OnShieldImpactEnded += () => movementComponent.SetMoveFactor(1f);
 	}
 	
 	private void UnsubscribeEvents() {
@@ -163,6 +164,7 @@ public class BasicUnit : MonoBehaviour {
 	}
 	
 	private void TakeShieldImpact() {
+		movementComponent.SetMoveFactor(0.5f);
 		animManager.TakeShieldImpact();
 	}
 
