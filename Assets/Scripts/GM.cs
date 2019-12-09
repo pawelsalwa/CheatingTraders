@@ -54,7 +54,7 @@ public class GM : MonoBehaviour {
 		}
 	}
 
-	public List<BasicUnit> AiUnits = new List<BasicUnit>();
+	public List<BasicUnit> aiUnits = new List<BasicUnit>();
 
 	[RuntimeInitializeOnLoadMethod]
 	private static void MakeSureInstanceIsActive() {
@@ -103,7 +103,7 @@ public class GM : MonoBehaviour {
 
 	public void SpawnEnemy() {
 		var newEnemy = Instantiate(basicUnitPrefab);
-		AiUnits.Add(newEnemy);
+		aiUnits.Add(newEnemy);
 		newEnemy.GetComponent<CharacterController>().enabled = false;
 		newEnemy.transform.position = dungeonGenerator.GetPlayerStartingPosition() + Vector3.forward * Random.Range(0, 2);
 		newEnemy.GetComponent<CharacterController>().enabled = true;
@@ -112,19 +112,28 @@ public class GM : MonoBehaviour {
 	}
 
 	private void DestroyBots() {
-		foreach (var unit in AiUnits) Destroy(unit.gameObject);
-		AiUnits.Clear();
+		foreach (var unit in aiUnits) Destroy(unit.gameObject);
+		aiUnits.Clear();
 	}
 
 	private void RemoveBot(BasicUnit bot) {
-		if (AiUnits.Contains(bot))
-			AiUnits.Remove(bot);
+		if (aiUnits.Contains(bot))
+			aiUnits.Remove(bot);
 	}
 
 	private void Update() {
 		if (Input.GetKeyDown(KeyCode.H)) DestroyBots();
 		if (Input.GetKeyDown(KeyCode.G)) SpawnEnemy();
+		if (Input.GetKeyDown(KeyCode.Y)) DeactivateBots();
 
 		Time.timeScale = timeScale;
+	}
+
+	private void DeactivateBots() {
+		foreach (var xd in aiUnits) 
+			xd.GetComponent<BotController>().enabled = !xd.GetComponent<BotController>().enabled;
+		
+		foreach (var xd in aiUnits) 
+			xd.GetComponent<Animator>().enabled = !xd.GetComponent<Animator>().enabled;
 	}
 }
