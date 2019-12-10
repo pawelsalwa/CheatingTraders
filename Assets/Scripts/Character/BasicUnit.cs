@@ -24,6 +24,8 @@ public class BasicUnit : MonoBehaviour {
 	[SerializeField]
 	private int deadBodyTimeout = 2;
 
+	public Weapon weapon;
+
 	public Transform cameraOrbit;
 	public Transform cameraFollow;
 
@@ -70,10 +72,11 @@ public class BasicUnit : MonoBehaviour {
 		SetLayer(playerLayer);
 		SetTag("Player");
 		gameObject.name = "-- PlayerUnit --";
+		weapon.enableDebugs = true;
 	}
 
 	public void InitAsBot() {
-		hp.hp = 111;
+		hp.hp = 5555;
 		userInputHandler.enabled = false;
 		botController.enabled = true;
 		SetLayer(botLayer);

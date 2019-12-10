@@ -11,7 +11,7 @@ public class Weapon : MonoBehaviour {
     public event Action<Shield> OnEnemyShieldEncounter = (shield) => { };
 
     [SerializeField] private int damage = 10;
-    [SerializeField] private bool enableDebugs = false;
+    [SerializeField] public bool enableDebugs = false;
 
     [Header("Should contain WeaponTarget and Shield of character wielding this weapon :)")]
     public WeaponTarget[] ignoredWeaponTargets;
@@ -58,9 +58,11 @@ public class Weapon : MonoBehaviour {
 
         targets.Add(newWeaponTarget);
 
-        if (huj)
-        Debug.Log($"new weapon target collided ({targets.Count} in total): " , newWeaponTarget.gameObject);
-	}
+        if (enableDebugs)
+            Debug.Log($"<color=orange>col entered {targets.Count} </color>\n{getListNames()}", newWeaponTarget.gameObject);
+
+        DealDamageIfFoundTarget();
+    }
     public bool huj = false;
     
     private void OnTriggerExit(Collider other) {
@@ -69,8 +71,12 @@ public class Weapon : MonoBehaviour {
         if (ignoredWeaponTargets.Any(x => x == lastWeaponTarget))      
             return;
 
-        if (targets.Contains(lastWeaponTarget))
+        if (targets.Contains(lastWeaponTarget)) {
             targets.Remove(lastWeaponTarget);
+        if (enableDebugs)
+            Debug.Log($"<color=green>col exited {targets.Count} </color> \n{getListNames()}", lastWeaponTarget.gameObject);
+            
+        }
 	}
 
     private void ResetAllTargets() {
@@ -96,25 +102,29 @@ public class Weapon : MonoBehaviour {
     }
 
     private void BodyTargetEncountered(BodyTarget bodyTarget) {
-        int xd = 1;
         if (targetToHasTakenDamage.ContainsKey(bodyTarget) && targetToHasTakenDamage[bodyTarget]) {
-            Debug.Log("1: " + xd);
-   
             return;
         }
         
-        xd ++;
         if (!targetToHasTakenDamage.ContainsKey(bodyTarget)) {
-            Debug.Log("2: " + xd);
             targetToHasTakenDamage.Add(bodyTarget, false);
         }
         
-        
-        xd ++;
-        
-        Debug.Log("3: " + xd);
+        if (enableDebugs)
+            Debug.Log($"<color=red>dealing dmg {targets.Count} </color> \n{getListNames()}");
         bodyTarget.ReceiveWeaponHit(damage);
         targetToHasTakenDamage[bodyTarget] = true;
         OnDamageDealt(bodyTarget, damage);
+    }
+
+    string getListNames() {
+
+        string ret = "";
+        foreach (var VARIABLE in targets) {
+            ret += VARIABLE.name;
+        }
+
+        return ret;
+
     }
 }

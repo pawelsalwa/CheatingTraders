@@ -16,7 +16,7 @@ public class GM : MonoBehaviour {
 	public static GM instance => _instance == null ? _instance = FindObjectOfType<GM>() : _instance;
 
 	public static bool isMultiplayer = false; 
-	[Range(0f, 1f)]
+	[Range(0f, 5f)]
 	public float timeScale = 1;
 
 	public CinemachineFreeLook cinemachineFreeLook;
