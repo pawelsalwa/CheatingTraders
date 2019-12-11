@@ -26,12 +26,16 @@ public class UserInputHandler : MonoBehaviour {
 		if (GM.isGamePaused) return;
 		HandleMisc();
 		HandleMovement();
-		HandleAttack();
+//		HandleAttack();
 		HandleDodge();
 	}
 
 	private void LateUpdate() {
 		HandleRotation();
+	}
+
+	private void FixedUpdate() {
+		HandleAttack();
 	}
 
 	private void HandleDodge() {

@@ -450,14 +450,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.38526854
+      - time: 0.3265831
         functionName: SwordHitTargetByAnim
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.44103208
+      - time: 0.49737015
         functionName: SwordPassedThroughTargetByAnim
         data: 
         objectReferenceParameter: {instanceID: 0}

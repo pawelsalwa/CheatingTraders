@@ -11,37 +11,48 @@ public class Weapon : MonoBehaviour {
     public event Action<Shield> OnEnemyShieldEncounter = (shield) => { };
 
     [SerializeField] private int damage = 10;
-    [SerializeField] public bool enableDebugs = false;
+    [SerializeField] private bool enableDebugs = false;
 
     [Header("Should contain WeaponTarget and Shield of character wielding this weapon :)")]
     public WeaponTarget[] ignoredWeaponTargets;
 
-    private bool hasDealtDamage = false;
+    private bool dealingDamageEnabled = false;
 
-    private readonly Dictionary<WeaponTarget, bool> targetToHasTakenDamage = new Dictionary<WeaponTarget, bool>();
+    private readonly Dictionary<BodyTarget, bool> targetToHasTakenDamage = new Dictionary<BodyTarget, bool>();
 
     [SerializeField]
     private List<WeaponTarget> targets = new List<WeaponTarget>();
+    
+    public void StartDealingDamage() {
+        if (enableDebugs)
+            Debug.Log($"<color=blue>start dmg from anim {targets.Count} </color>");
+        dealingDamageEnabled = true;
+        DealDamageIfFoundTarget();
+    }
+    
+    public void EndDealingDamage() {
+        if (enableDebugs)
+            Debug.Log($"<color=magenta>stop dmg from anim {targets.Count} </color>");
+        dealingDamageEnabled = false;
+        ResetAllTargets();
+    }
 
-    public void DealDamageIfFoundTarget() {
+    private void DealDamageIfFoundTarget() {
+        if (!dealingDamageEnabled) return;
         RemoveNotValidTargets();
         
         foreach (var target in targets) {
 
             if (target is Shield) {
                 ShieldEncountered(target as Shield);
-                return;                
+                continue;                
             }
 
             if (target is BodyTarget) {
                 BodyTargetEncountered(target as BodyTarget);
-                return;
+                continue;
             }            
         }
-    }
-
-    public void StopDealingDamage() {
-        ResetAllTargets();
     }
     
     private void OnTriggerEnter(Collider other) {
@@ -59,11 +70,10 @@ public class Weapon : MonoBehaviour {
         targets.Add(newWeaponTarget);
 
         if (enableDebugs)
-            Debug.Log($"<color=orange>col entered {targets.Count} </color>\n{getListNames()}", newWeaponTarget.gameObject);
+            Debug.Log($"<color=orange>col entered {targets.Count} " + (dealingDamageEnabled ? @"dealing enabled" : @"dealing disabled") + "</color>\n" , newWeaponTarget.gameObject);
 
         DealDamageIfFoundTarget();
     }
-    public bool huj = false;
     
     private void OnTriggerExit(Collider other) {
         var lastWeaponTarget = other.gameObject.GetComponent<WeaponTarget>();
@@ -73,25 +83,38 @@ public class Weapon : MonoBehaviour {
 
         if (targets.Contains(lastWeaponTarget)) {
             targets.Remove(lastWeaponTarget);
-        if (enableDebugs)
-            Debug.Log($"<color=green>col exited {targets.Count} </color> \n{getListNames()}", lastWeaponTarget.gameObject);
-            
+            if (enableDebugs)
+                Debug.Log($"<color=green>col exited {targets.Count} </color>", lastWeaponTarget.gameObject);
         }
+
+        BodyTarget lastBodyTarget = other.gameObject.GetComponent<BodyTarget>();
+        if (lastBodyTarget == null)
+            return;
+        
+        if (targetToHasTakenDamage.ContainsKey(lastBodyTarget)) 
+            targetToHasTakenDamage.Remove(lastBodyTarget);
 	}
 
     private void ResetAllTargets() {
-        var asd = new List<WeaponTarget>();
-        foreach (var target in targetToHasTakenDamage) 
-            asd.Add(target.Key);
-            
-        for (int i = 0; i < targetToHasTakenDamage.Count; i++)
-            targetToHasTakenDamage[asd[i]] = false;
+        var targetsList = new List<BodyTarget>(targetToHasTakenDamage.Keys);
+        foreach (var target in targetsList)
+            targetToHasTakenDamage[target] = false;
     }
 
     private void RemoveNotValidTargets() {
         for (int i = targets.Count - 1; i >= 0; i--)
              if (targets[i] == null || !targets[i].gameObject.activeSelf)
                  targets.Remove(targets[i]);
+    }
+
+    private void CheckDictionaryHealth() {
+        List<BodyTarget> removals = new List<BodyTarget>();
+        foreach( var item in targetToHasTakenDamage)
+            if (item.Key == null) 
+                removals.Add(item.Key);
+                
+        foreach (BodyTarget XD in removals) 
+            targetToHasTakenDamage.Remove(XD);
     }
 
     private void ShieldEncountered(Shield shield) {
@@ -102,29 +125,26 @@ public class Weapon : MonoBehaviour {
     }
 
     private void BodyTargetEncountered(BodyTarget bodyTarget) {
-        if (targetToHasTakenDamage.ContainsKey(bodyTarget) && targetToHasTakenDamage[bodyTarget]) {
+        if (targetToHasTakenDamage.ContainsKey(bodyTarget) && targetToHasTakenDamage[bodyTarget])
             return;
-        }
         
-        if (!targetToHasTakenDamage.ContainsKey(bodyTarget)) {
-            targetToHasTakenDamage.Add(bodyTarget, false);
-        }
+        if (!targetToHasTakenDamage.ContainsKey(bodyTarget))
+            targetToHasTakenDamage.Add(bodyTarget, true);
         
         if (enableDebugs)
-            Debug.Log($"<color=red>dealing dmg {targets.Count} </color> \n{getListNames()}");
+            Debug.Log($"<color=red>dealing dmg {targets.Count} </color>");
+        
         bodyTarget.ReceiveWeaponHit(damage);
-        targetToHasTakenDamage[bodyTarget] = true;
         OnDamageDealt(bodyTarget, damage);
     }
+    
+    private void FixedUpdate() {
+        DealDamageIfFoundTarget();
+    }
 
-    string getListNames() {
-
-        string ret = "";
-        foreach (var VARIABLE in targets) {
-            ret += VARIABLE.name;
-        }
-
-        return ret;
-
+    private void DebugDic() {
+        int i = 0;
+        foreach (var item in targetToHasTakenDamage)
+            Debug.Log($"<color=teal> object nr {i++} dealt= </color>" + targetToHasTakenDamage[item.Key], item.Key.gameObject);
     }
 }

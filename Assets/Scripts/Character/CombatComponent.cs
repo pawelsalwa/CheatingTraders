@@ -55,32 +55,23 @@ public class CombatComponent : MonoBehaviour {
 	
 	///<summary> Unity calls those mono functions from animations by string :\ </summary>
 	private void SwordHitTargetByAnim() {
-		Update();
-		EnableDealingDamage();
+		weapon.StartDealingDamage();
 	}
 	
 	private void SwordPassedThroughTargetByAnim() {
-		Update();
-		DisableDealingDamage();
+		weapon.EndDealingDamage();
 	}
 	
 	private void EnableAttackAgain() {
 		if (enableDebugs) 
 			Debug.Log("Attack Cooldowned");
-		Update();
+		
 		m_isAttacking = false;
 	}
 	
 	private void Awake() {
 		weapon.OnEnemyShieldEncounter += EnemyShieldEncounter;
 		shield.OnShieldImpacted += TakeImpactFromBlock;
-	}
-
-	private void Update() {
-		if (canDealDamageByAnim)
-			weapon.DealDamageIfFoundTarget();
-		else 
-			weapon.StopDealingDamage();
 	}
 
 	private void EnemyShieldEncounter(Shield shield) {

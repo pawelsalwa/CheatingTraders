@@ -72,7 +72,7 @@ public class BasicUnit : MonoBehaviour {
 		SetLayer(playerLayer);
 		SetTag("Player");
 		gameObject.name = "-- PlayerUnit --";
-		weapon.enableDebugs = true;
+//		weapon.enableDebugs = true;
 	}
 
 	public void InitAsBot() {
