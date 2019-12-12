@@ -29,7 +29,7 @@ public class GUIStamina : MonoBehaviour {
 		player.OnNotEnoughStaminaForAction -= HighlightStamina;
 	}
 
-	private void SetStaminaBar(float stamina) {
+	private void SetStaminaBar(float stamina, float staminaUI) {
 		staminaBarImage.fillAmount = stamina / 100f;
 	}
 

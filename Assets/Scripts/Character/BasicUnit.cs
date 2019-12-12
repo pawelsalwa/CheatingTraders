@@ -18,7 +18,7 @@ using System.Xml.Serialization;
 public class BasicUnit : MonoBehaviour {
 
 	public event Action OnDeath = () => { };
-	public event Action<float> OnStaminaChanged = stamina => { };
+	public event Action<float, float> OnStaminaChanged = (stamina, xd) => { };
 	public event Action OnNotEnoughStaminaForAction = () => { };
 
 	public bool isAttacking => combatComponent.m_isAttacking;
@@ -78,9 +78,9 @@ public class BasicUnit : MonoBehaviour {
 		SetLayer(playerLayer);
 		SetTag("Player");
 		gameObject.name = "-- PlayerUnit --";
-		staminaComponent.OnStaminaChanged += stamina => OnStaminaChanged(stamina);
+		staminaComponent.OnStaminaChanged += (stamina, uiStamina) => OnStaminaChanged(stamina, uiStamina);
 		staminaComponent.OnNotEnoughStaminaForAction += () => OnNotEnoughStaminaForAction();
-//		weapon.enableDebugs = true;
+		weapon.enableDebugs = true;
 	}
 
 	public void InitAsBot() {

@@ -11,7 +11,7 @@ public class Weapon : MonoBehaviour {
     public event Action<Shield> OnEnemyShieldEncounter = (shield) => { };
 
     [SerializeField] private int damage = 10;
-    [SerializeField] private bool enableDebugs = false;
+    [SerializeField] public bool enableDebugs = false;
 
     [Header("Should contain WeaponTarget and Shield of character wielding this weapon :)")]
     public WeaponTarget[] ignoredWeaponTargets;

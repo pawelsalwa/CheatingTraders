@@ -21,14 +21,14 @@ public class CombatComponent : MonoBehaviour {
 	[SerializeField, Range(0.1f, 3f)] private float cooldownBetweenAttacks = 1.3f;
 
 	private bool canDealDamageByAnim = false;
-	private bool animCanImpactShield = false;
+//	private bool animCanImpactShield = false;
 
 	///<summary> plays block animation. Should be called on update for anim to work</summary>
 	public void SetBlockCommand(bool isBlocking) {
 		if (shield == null) return;
 
 		m_isBlocking = isBlocking;
-		animCanImpactShield = isBlocking;
+//		animCanImpactShield = isBlocking;
 		shield.gameObject.SetActive(isBlocking);
 		OnBlockCommand(isBlocking);
 	}
@@ -41,17 +41,8 @@ public class CombatComponent : MonoBehaviour {
 	}
 	
 	public void DisableDealingDamage() {
-		if(enableDebugs)
-			Debug.Log("<color=red>DisabledAttack</color> " + gameObject.name, gameObject);
-		canDealDamageByAnim = false;
+		weapon.EndDealingDamage();
 	}
-	
-	private void EnableDealingDamage() {
-		if(enableDebugs)
-			Debug.Log("<color=green>EnabledAttack</color> " + gameObject.name, gameObject);
-		canDealDamageByAnim = true;
-	}
-	
 	
 	///<summary> Unity calls those mono functions from animations by string :\ </summary>
 	private void SwordHitTargetByAnim() {
@@ -75,7 +66,7 @@ public class CombatComponent : MonoBehaviour {
 	}
 
 	private void EnemyShieldEncounter(Shield shield) {
-		DisableDealingDamage();
+		weapon.EndDealingDamage();
 		OnEnemyShieldEncounter(shield);
 	}
 

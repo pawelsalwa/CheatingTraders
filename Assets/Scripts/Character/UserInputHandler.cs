@@ -86,5 +86,9 @@ public class UserInputHandler : MonoBehaviour {
 	private void HandleMisc() {
 		if (Input.GetKeyDown(KeyCode.Escape))
 			UIManager.instance.inGameMenu.Open();
+		
+		if (Input.GetKeyDown(KeyCode.C))
+			DevTools.CleanUnityConsole();
+		
 	}
 }
