@@ -14,9 +14,12 @@ using System.Xml.Serialization;
 [RequireComponent(typeof(UnitAnimationManager))]
 [RequireComponent(typeof(BotController))]
 [RequireComponent(typeof(UserInputHandler))]
+[RequireComponent(typeof(StaminaComponent))]
 public class BasicUnit : MonoBehaviour {
 
 	public event Action OnDeath = () => { };
+	public event Action<float> OnStaminaChanged = stamina => { };
+	public event Action OnNotEnoughStaminaForAction = () => { };
 
 	public bool isAttacking => combatComponent.m_isAttacking;
 	public bool isBlocking => combatComponent.m_isBlocking;
@@ -56,6 +59,9 @@ public class BasicUnit : MonoBehaviour {
 	private DodgingComponent _dodgingComponent;
 	private DodgingComponent dodgingComponent => _dodgingComponent == null ? _dodgingComponent = GetComponent<DodgingComponent>() : _dodgingComponent;
 	
+	private StaminaComponent _staminaComponent;
+	private StaminaComponent staminaComponent => _staminaComponent == null ? _staminaComponent = GetComponent<StaminaComponent>() : _staminaComponent;
+	
 	private UserInputHandler _userInputHandler;
 	private UserInputHandler userInputHandler => _userInputHandler == null ? _userInputHandler = GetComponent<UserInputHandler>() : _userInputHandler;
 	
@@ -72,6 +78,8 @@ public class BasicUnit : MonoBehaviour {
 		SetLayer(playerLayer);
 		SetTag("Player");
 		gameObject.name = "-- PlayerUnit --";
+		staminaComponent.OnStaminaChanged += stamina => OnStaminaChanged(stamina);
+		staminaComponent.OnNotEnoughStaminaForAction += () => OnNotEnoughStaminaForAction();
 //		weapon.enableDebugs = true;
 	}
 
@@ -124,7 +132,7 @@ public class BasicUnit : MonoBehaviour {
 		
 		bodyTarget.OnDamageTaken += HandleTakingDamage;
 		movementComponent.OnMovementRequested += HandleMovement;
-		dodgingComponent.OnDodgeRequested += animManager.SetDodgeAnim;
+		dodgingComponent.OnDodgeRequested += HandleDodge;
 		
 		combatComponent.OnAttackCommand += HandleAttack;
 		combatComponent.OnBlockCommand += animManager.SetBlockAnim;
@@ -142,7 +150,7 @@ public class BasicUnit : MonoBehaviour {
 		
 		bodyTarget.OnDamageTaken -= HandleTakingDamage;
 		movementComponent.OnMovementRequested -= HandleMovement;
-		dodgingComponent.OnDodgeRequested -= animManager.SetDodgeAnim;
+		dodgingComponent.OnDodgeRequested -= HandleDodge;
 		combatComponent.OnAttackCommand -= HandleAttack;
 		combatComponent.OnBlockCommand -= animManager.SetBlockAnim;
 	}
@@ -153,8 +161,9 @@ public class BasicUnit : MonoBehaviour {
 
 	private void HandleTakingDamage(int damage) {
 		combatComponent.DisableDealingDamage();
+		hp.TakeDamage(damage);
 		
-		if (hp.TakeDamage(damage).isHpBelowZero) Die();
+		if (hp.isHpBelowZero) Die();
 		else animManager.TakeDamageAnim();
 	}
 
@@ -169,6 +178,12 @@ public class BasicUnit : MonoBehaviour {
 	private void TakeShieldImpact() {
 		movementComponent.SetMoveFactor(0.5f);
 		animManager.TakeShieldImpact();
+	}
+
+	private void HandleDodge(float yAnim, float xAnim) {
+		if (!staminaComponent.AllowDodge()) return;
+
+		animManager.SetDodgeAnim(yAnim, xAnim);
 	}
 
 	private void OnMenuChanged() {

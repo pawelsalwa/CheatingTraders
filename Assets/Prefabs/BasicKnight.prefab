@@ -1063,6 +1063,7 @@ GameObject:
   - component: {fileID: 39532043410761939}
   - component: {fileID: -4090241180245051461}
   - component: {fileID: 1435914164732806625}
+  - component: {fileID: 5103529935092832675}
   m_Layer: 0
   m_Name: BasicKnight
   m_TagString: Player
@@ -1275,6 +1276,21 @@ MonoBehaviour:
   enemyShieldEncounteredAnimatorKey: enemyShieldEncountered
   shieldTakingImpactAnimKey: shieldTakeImpactTrigger
   isStaggeringAnimatorKey: isStaggering
+--- !u!114 &5103529935092832675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1564253461696300375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20be3742d8084dc883cfbec68560bced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 100
+  staminaRegenPerSec: 20
+  _currentStamina: 100
 --- !u!1 &2657292109224698753
 GameObject:
   m_ObjectHideFlags: 0

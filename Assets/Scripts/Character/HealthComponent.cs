@@ -9,9 +9,8 @@ public class HealthComponent : MonoBehaviour {
 
 	public int hp = 100;
 	
-	public HealthComponent TakeDamage(int damage) {
+	public void TakeDamage(int damage) {
 		hp -= damage;
-		return this;
 	}
 
 }

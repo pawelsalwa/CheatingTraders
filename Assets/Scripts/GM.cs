@@ -12,6 +12,8 @@ using Random = UnityEngine.Random;
 ///<summary> Game Manager singleton </summary>
 public class GM : MonoBehaviour {
 
+	public static event Action<BasicUnit> OnPlayerSpawned = player => { };
+
 	private static GM _instance;
 	public static GM instance => _instance == null ? _instance = FindObjectOfType<GM>() : _instance;
 
@@ -99,6 +101,8 @@ public class GM : MonoBehaviour {
 		_player.GetComponent<CharacterController>().enabled = true;
 		_player.InitAsPlayer();
 		instance.cinemachineFreeLook.enabled = true;
+
+		OnPlayerSpawned(_player);
 	}
 
 	public void SpawnEnemy() {
