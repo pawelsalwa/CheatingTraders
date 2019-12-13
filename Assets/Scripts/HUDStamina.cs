@@ -2,20 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 /// <summary> sets stamina bar assuming the max is 100 (might need refactor if stamina max amount varies) </summary>
-public class GUIStamina : MonoBehaviour {
+public class HUDStamina : MonoBehaviour {
 
 	[SerializeField] private Image staminaBarImage;
+	[SerializeField] private Image bgcImage;
+	[SerializeField] private HUDStaminaShade staminaShade;
 
 	private Color barNormalColor;
+	private Color bgcNormalColor;
+	
 	[SerializeField] private Color barHighlightedColor;
-
+	[SerializeField] private Color bgcHighlightedColor;
 	[SerializeField] private float highlightTimeoutSecs = 0.5f;
 
 	private void Awake() {
 		GM.OnPlayerSpawned += SubscribePlayerEvents;
 		barNormalColor = staminaBarImage.color;
+		bgcNormalColor = bgcImage.color;
 	}
 
 	private void SubscribePlayerEvents(BasicUnit player) {
@@ -29,12 +35,15 @@ public class GUIStamina : MonoBehaviour {
 		player.OnNotEnoughStaminaForAction -= HighlightStamina;
 	}
 
-	private void SetStaminaBar(float stamina, float staminaUI) {
+	private void SetStaminaBar(float stamina) {
 		staminaBarImage.fillAmount = stamina / 100f;
+		staminaShade.currentStamina = stamina;
 	}
 
 	private void HighlightStamina() {
 		staminaBarImage.color = barHighlightedColor;
+		bgcImage.color = bgcHighlightedColor;
+		
 		CancelInvoke("StopHighlightingStamina");
 		Invoke("StopHighlightingStamina", highlightTimeoutSecs);
 	}
@@ -42,6 +51,7 @@ public class GUIStamina : MonoBehaviour {
 	private void StopHighlightingStamina() {
 		CancelInvoke("StopHighlightingStamina");
 		staminaBarImage.color = barNormalColor;
+		bgcImage.color = bgcNormalColor;
 	}
 
 }

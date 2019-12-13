@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 ///<summary> Game Manager singleton </summary>
+[RequireComponent(typeof(ProjectConstants))]
 public class GM : MonoBehaviour {
 
 	public static event Action<BasicUnit> OnPlayerSpawned = player => { };
@@ -30,18 +31,7 @@ public class GM : MonoBehaviour {
 	public static BasicUnit player => instance._player == null ? null : instance._player.isAlive ? instance._player : null;
 	
 	private ProjectConstants _projectConstants;
-
-	public static ProjectConstants projectConstants {
-		get {
-			if (instance._projectConstants == null)
-				instance._projectConstants = instance.GetComponent<ProjectConstants>();
-
-			if (instance._projectConstants == null)
-				instance._projectConstants = instance.gameObject.AddComponent<ProjectConstants>();
-
-			return instance._projectConstants;
-		}
-	}
+	public static ProjectConstants projectConstants => instance._projectConstants == null ? instance._projectConstants = instance.GetComponent<ProjectConstants>() : instance._projectConstants;
 			
 	private static bool _isGamePaused;
 

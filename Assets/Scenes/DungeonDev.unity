@@ -262,6 +262,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6baa7f585f0226f469d483f52c22fea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &192189357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192189353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dc65ad012fe4d6995acd456bf00e168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerLayer: 8
+  botLayer: 9
+  maxPlayerStamina: 100
+  playerStaminaRegenPerSec: 20
+  maxBotStamina: 100
+  botStaminaRegenPerSec: 20
 --- !u!1 &204194690
 GameObject:
   m_ObjectHideFlags: 0

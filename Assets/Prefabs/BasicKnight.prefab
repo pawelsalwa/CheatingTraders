@@ -1289,7 +1289,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxStamina: 100
-  staminaRegenPerSec: 20
+  staminaRegenPerSec: 35
+  regainStaminaAfterLossTimeout: 2
   _currentStamina: 100
 --- !u!1 &2657292109224698753
 GameObject:

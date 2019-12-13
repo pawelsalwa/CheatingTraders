@@ -3,41 +3,29 @@ using System;
 
 public class StaminaComponent : MonoBehaviour {
 
-	public event Action<float, float> OnStaminaChanged = (staminaChanged, xd) => { };
+	public event Action<float> OnStaminaChanged = (staminaChanged) => { };
 	public event Action OnNotEnoughStaminaForAction = () => { };
 	
 	float dodgeCost = 40f;
 	[SerializeField] private float maxStamina = 100f;
-	[SerializeField] private float staminaRegenPerSec = 20f;
-	[SerializeField] private float staminaUILoosingPerSec = 40f;
+	[SerializeField] private float staminaRegenPerSec = 30f;
 	[SerializeField, Range(0f, 5f)] private float regainStaminaAfterLossTimeout = 2f;
-	[SerializeField, Range(0f, 5f)] private float staminaLoosingUIShadeTimeout = 2f; // shade on ui following stamina amount for ux effect
-	[SerializeField] private float currentTimeoutAfterStaminaLoss = 0f;
 
 	private bool regenEnabled = true;
 	private bool staminaLoosingState = false;
-	private bool staminaUIShadeLoosingState = false;
 	
 	[SerializeField, Range(0f, 100f)]
 	private float _currentStamina;
 	private float currentStamina {
-		get => Mathf.Clamp(_currentStamina, 0, maxStamina); // to be sure...
+		get => Mathf.Clamp(_currentStamina, 0, maxStamina);
 		set {
-			_currentStamina = Mathf.Clamp(value, 0, maxStamina);
-			OnStaminaChanged(_currentStamina, _staminaOnUI);
-			DevTools.Print("stamina: " + value, DevTools.DebugColor.magenta);
-		}
-	}
-	
-	[SerializeField, Range(0f, 100f)]
-	private float _staminaOnUI;
-	private float staminaOnUI {
-		get => Mathf.Clamp(_staminaOnUI, currentStamina, maxStamina); // to be sure...
-		set {
-			_currentStamina = Mathf.Clamp(value, currentStamina, maxStamina);
-			OnStaminaChanged(_currentStamina, _staminaOnUI);
+			value = Mathf.Clamp(value, 0, maxStamina);
 			
-			DevTools.Print("ui stamina: " + value, DevTools.DebugColor.green);
+			if (Mathf.Approximately(value, _currentStamina))
+				return;
+
+			_currentStamina = value;
+			OnStaminaChanged(_currentStamina);
 		}
 	}
 
@@ -60,9 +48,6 @@ public class StaminaComponent : MonoBehaviour {
 		
 		CancelInvoke(nameof(RegainStaminaRegen));
 		Invoke(nameof(RegainStaminaRegen), regainStaminaAfterLossTimeout);
-		
-		CancelInvoke(nameof(LooseStaminaOnUI));
-		Invoke(nameof(LooseStaminaOnUI), staminaLoosingUIShadeTimeout);
 	}
 
 	private void RegainStaminaRegen() {
@@ -77,20 +62,10 @@ public class StaminaComponent : MonoBehaviour {
 		if (regenEnabled) {
 			RegenStamina();
 		}
-
-		if (staminaLoosingState) {
-			LooseUIStamina();
-		}
-			
 	}
 
 	private void RegenStamina() {
 		currentStamina += Time.deltaTime * staminaRegenPerSec;
-		staminaOnUI = currentStamina;
-	}
-	
-	private void LooseUIStamina() {
-		staminaOnUI -= Time.deltaTime * staminaUILoosingPerSec;
 	}
 
 	private void Awake() {
