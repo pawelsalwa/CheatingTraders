@@ -37,10 +37,13 @@ public class DungeonGenerator : MonoBehaviour {
 
 	public void GenerateRandomRoomAndConnectIt() {
 		while (true) {
+			
+#if UNITY_EDITOR
 			if (EditorUtility.DisplayCancelableProgressBar("Dungeon Generator", $"generating room nr {roomsList.Count}...", 0f)) {
 				Debug.Log("Dungeon Generator canceled by the user");
 				break;
 			}
+#endif
 
 			var newRoom = new RoomSetup {
 				minx = Random.Range(- dungeonMaxSize / 2, dungeonMaxSize / 2),
@@ -58,8 +61,9 @@ public class DungeonGenerator : MonoBehaviour {
 				GenerateCorridor(newRoom, newRoom.GetClosestRoom(roomsList));
 			break;
 		}
-
+#if UNITY_EDITOR
 		EditorUtility.ClearProgressBar();
+#endif
 		map.ReregenerateWalls();
 	}
 
@@ -69,11 +73,13 @@ public class DungeonGenerator : MonoBehaviour {
 		roomsList.Clear();
 
 		while (roomNum != maxRoomNum) {
+#if UNITY_EDITOR
 			if (EditorUtility.DisplayCancelableProgressBar("Dungeon Generator", "generating...", 0f)) {
 				Debug.Log("Dungeon Generator canceled by the user");
 				Deregenerate();
 				break;
 			}
+#endif
 
 			var newRoom = new RoomSetup {
 				minx = Random.Range(- dungeonMaxSize / 2, dungeonMaxSize / 2),
@@ -89,8 +95,9 @@ public class DungeonGenerator : MonoBehaviour {
 			GenerateRoom(newRoom.minx, newRoom.minz, newRoom.widthx, newRoom.heightz, roomNum);
 			roomNum++;
 		}
-
+#if UNITY_EDITOR
 		EditorUtility.ClearProgressBar();
+#endif
 	}
 
 	private void GenerateRoom(int xmin, int zmin, int xwidth, int zheight, int roomIndex) {
@@ -105,16 +112,19 @@ public class DungeonGenerator : MonoBehaviour {
 
 	private void GenerateCorridors() {
 		foreach (var room in roomsList) {
+#if UNITY_EDITOR
 			if (EditorUtility.DisplayCancelableProgressBar("Dungeon Generator", "generating corridors...", 0f)) {
 				Debug.Log("Dungeon Generator canceled by the user");
 				Deregenerate();
 				break;
 			}
+#endif
 
 			GenerateCorridor(room, room.GetClosestRoom(roomsList));
 		}
-
+#if UNITY_EDITOR
 		EditorUtility.ClearProgressBar();
+#endif
 	}
 
 	private void GenerateCorridor(RoomSetup roomFrom, RoomSetup roomTo) {
@@ -157,8 +167,10 @@ public class DungeonGenerator : MonoBehaviour {
 		roomsList.Clear();
 	}
 
+	#if UNITY_EDITOR
 	[InitializeOnLoadMethod]
 	private static void xd() {
 		EditorUtility.ClearProgressBar();
 	}
+	#endif
 }
