@@ -2,7 +2,7 @@
 
 [RequireComponent(typeof(BasicUnit))]
 public class BotController : MonoBehaviour {
-	private enum MovementState { MoveA, MoveD, MoveW, MoveS, None }
+	private enum MovementState { A, D, W, S, WA, WD, SA, SD, None }
 
 	private MovementState _movementState;
 
@@ -82,10 +82,15 @@ public class BotController : MonoBehaviour {
 	}
 
 	private void InitCombatStatesWeights() {
-		movementActionsBag.AddWeightedObject(MovementState.MoveW, 7210);
-		movementActionsBag.AddWeightedObject(MovementState.MoveS, 10);
-		movementActionsBag.AddWeightedObject(MovementState.MoveA, 10);
-		movementActionsBag.AddWeightedObject(MovementState.MoveD, 10);
+		movementActionsBag.AddWeightedObject(MovementState.W, 50);
+		movementActionsBag.AddWeightedObject(MovementState.S, 20);
+//		movementActionsBag.AddWeightedObject(MovementState.A, 5);
+		movementActionsBag.AddWeightedObject(MovementState.D, 20);
+		
+		movementActionsBag.AddWeightedObject(MovementState.WA, 20);
+		movementActionsBag.AddWeightedObject(MovementState.WD, 20);
+		movementActionsBag.AddWeightedObject(MovementState.SA, 20);
+		movementActionsBag.AddWeightedObject(MovementState.SD, 20);
 	}
 
 	private void Update() {
@@ -146,7 +151,7 @@ public class BotController : MonoBehaviour {
 
 
 	private void Chase() {
-		movementState = MovementState.MoveW;
+		movementState = MovementState.W;
 	}
 
 	private void LookAtTarget() {
@@ -185,20 +190,32 @@ public class BotController : MonoBehaviour {
 
 	private void ExecuteMovementAction() {
 		switch (movementState) {
-			case MovementState.MoveW:
+			case MovementState.W:
 				if (distanceToTarget >= attackStartDistance)
 					movement.MoveW();
 				else
 					movement.DontMove();
 				break;
-			case MovementState.MoveS:
+			case MovementState.S:
 				movement.MoveS();
 				break;
-			case MovementState.MoveA:
+			case MovementState.A:
 				movement.MoveA();
 				break;
-			case MovementState.MoveD:
+			case MovementState.D:
 				movement.MoveD();
+				break;
+			case MovementState.WA:
+				movement.MoveWA();
+				break;
+			case MovementState.WD:
+				movement.MoveWD();
+				break;
+			case MovementState.SA:
+				movement.MoveSA();
+				break;
+			case MovementState.SD:
+				movement.MoveS();
 				break;
 		}
 	}

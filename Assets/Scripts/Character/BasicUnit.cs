@@ -80,7 +80,6 @@ public class BasicUnit : MonoBehaviour {
 		gameObject.name = "-- PlayerUnit --";
 		staminaComponent.OnStaminaChanged += (stamina) => OnStaminaChanged(stamina);
 		staminaComponent.OnNotEnoughStaminaForAction += () => OnNotEnoughStaminaForAction();
-		weapon.enableDebugs = true;
 	}
 
 	public void InitAsBot() {
@@ -168,6 +167,8 @@ public class BasicUnit : MonoBehaviour {
 	}
 
 	private void HandleAttack() {
+		if (!staminaComponent.AllowAttack()) return;
+		
 		animManager.SetAttackAnim();
 	}
 

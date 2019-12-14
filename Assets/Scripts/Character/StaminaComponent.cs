@@ -5,11 +5,17 @@ public class StaminaComponent : MonoBehaviour {
 
 	public event Action<float> OnStaminaChanged = (staminaChanged) => { };
 	public event Action OnNotEnoughStaminaForAction = () => { };
+
+	private float maxStamina => GM.projectConstants.unit.stamina.maxStamina;
+	private float staminaRegenPerSec => GM.projectConstants.unit.stamina.staminaRegenPerSec;
+	private float regainStaminaRegenAfterLossTimeout => GM.projectConstants.unit.stamina.regainStaminaRegenAfterLossTimeout;
+	private float dodgeCost => GM.projectConstants.unit.stamina.dodgeStaminaCost;
 	
-	float dodgeCost = 40f;
-	[SerializeField] private float maxStamina = 100f;
-	[SerializeField] private float staminaRegenPerSec = 30f;
-	[SerializeField, Range(0f, 5f)] private float regainStaminaAfterLossTimeout = 2f;
+//	[SerializeField] private float attackCost = 20f;
+//	[SerializeField] private float shieldImpactCost = 10f;
+//	[SerializeField] private float enemyShieldImpactCost = 30f;
+//	[SerializeField] private float blockCost = 1f;
+//	[SerializeField] private float sprintCost = 2f;
 
 	private bool regenEnabled = true;
 	private bool staminaLoosingState = false;
@@ -27,6 +33,10 @@ public class StaminaComponent : MonoBehaviour {
 			_currentStamina = value;
 			OnStaminaChanged(_currentStamina);
 		}
+	}
+
+	public bool AllowAttack() {
+		return true;
 	}
 
 	public bool AllowDodge() {
@@ -47,15 +57,11 @@ public class StaminaComponent : MonoBehaviour {
 		staminaLoosingState = false;
 		
 		CancelInvoke(nameof(RegainStaminaRegen));
-		Invoke(nameof(RegainStaminaRegen), regainStaminaAfterLossTimeout);
+		Invoke(nameof(RegainStaminaRegen), regainStaminaRegenAfterLossTimeout);
 	}
 
 	private void RegainStaminaRegen() {
 		regenEnabled = true;
-	}
-
-	private void LooseStaminaOnUI() {
-		staminaLoosingState = true;
 	}
 
 	private void Update() {

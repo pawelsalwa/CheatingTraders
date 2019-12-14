@@ -481,6 +481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2329566666702232150}
   - component: {fileID: 2329566666702232151}
+  - component: {fileID: 5627480827788946643}
   m_Layer: 0
   m_Name: -- GameManager --
   m_TagString: Untagged
@@ -517,15 +518,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d24d9dfbd1adae842af47747bb1cd005, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
+  timeScale: 1
   cinemachineFreeLook: {fileID: 5891543628098314001}
   mainCamera: {fileID: 3117235164719866645}
   basicUnitPrefab: {fileID: 2036131077303213700, guid: d6a26d76fcf8e514797fd03cbff8f4db,
     type: 3}
   dungeonGenerator: {fileID: 0}
   _player: {fileID: 0}
-  AiUnits: []
+  aiUnits: []
+--- !u!114 &5627480827788946643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2329566666702232148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dc65ad012fe4d6995acd456bf00e168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerLayer: 8
+  botLayer: 9
+  unit:
+    stamina:
+      maxStamina: 100
+      staminaRegenPerSec: 80
+      dodgeStaminaCost: 100
+      superAttackStaminaCost: 100
+      regainStaminaRegenAfterLossTimeout: 2
+  combatDebugs: 0
 --- !u!1 &2823691741629826164
 GameObject:
   m_ObjectHideFlags: 0

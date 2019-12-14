@@ -1,14 +1,14 @@
+using System;
 using UnityEngine;
 
 public class ProjectConstants : MonoBehaviour {
+	
 	public int playerLayer = 8;
 	public int botLayer = 9;
 
-	public float maxPlayerStamina = 100f;
-	public float playerStaminaRegenPerSec = 20f;
+	public UnitConstants unit;
 
-	public float maxBotStamina = 100f;
-	public float botStaminaRegenPerSec = 20f;
+	public bool combatDebugs = false;
 
 	public void ResetConstants() {
 		float maxPlayerStamina = 100f;
@@ -18,4 +18,23 @@ public class ProjectConstants : MonoBehaviour {
 		float botStaminaRegenPerSec = 20f;
 	}
 
+	[Serializable]
+	public class UnitConstants {
+
+		public StaminaConstants stamina;
+
+		[Serializable]
+		public class StaminaConstants {
+			public float maxStamina = 100f;
+			public float staminaRegenPerSec = 70f;
+			
+			public float dodgeStaminaCost = 90f;
+			public float superAttackStaminaCost = 100f;
+			
+			[Range(0f, 5f)] public float regainStaminaRegenAfterLossTimeout = 2f;
+		}
+		
+	}
+	
+	
 }

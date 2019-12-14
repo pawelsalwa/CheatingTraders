@@ -34,16 +34,13 @@ public class GM : MonoBehaviour {
 	public static ProjectConstants projectConstants => instance._projectConstants == null ? instance._projectConstants = instance.GetComponent<ProjectConstants>() : instance._projectConstants;
 			
 	private static bool _isGamePaused;
-
 	public static bool isGamePaused {
 		private set {
 			_isGamePaused = value;
 			Cursor.lockState = value ? CursorLockMode.None : CursorLockMode.Locked;
 			instance.cinemachineFreeLook.enabled = !value;
 		}
-		get {
-			return _isGamePaused;
-		}
+		get => _isGamePaused;
 	}
 
 	public List<BasicUnit> aiUnits = new List<BasicUnit>();

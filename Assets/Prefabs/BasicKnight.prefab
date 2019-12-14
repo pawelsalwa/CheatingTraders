@@ -1288,8 +1288,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20be3742d8084dc883cfbec68560bced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dodgeCost: 70
+  attackCost: 20
+  shieldImpactCost: 10
+  enemyShieldImpactCost: 30
+  blockCost: 1
+  sprintCost: 2
   maxStamina: 100
-  staminaRegenPerSec: 35
+  staminaRegenPerSec: 50
   regainStaminaAfterLossTimeout: 2
   _currentStamina: 100
 --- !u!1 &2657292109224698753

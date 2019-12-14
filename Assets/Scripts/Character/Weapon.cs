@@ -11,7 +11,7 @@ public class Weapon : MonoBehaviour {
     public event Action<Shield> OnEnemyShieldEncounter = (shield) => { };
 
     [SerializeField] private int damage = 10;
-    [SerializeField] public bool enableDebugs = false;
+//    [SerializeField] public bool enableDebugs = false;
 
     [Header("Should contain WeaponTarget and Shield of character wielding this weapon :)")]
     public WeaponTarget[] ignoredWeaponTargets;
@@ -24,14 +24,14 @@ public class Weapon : MonoBehaviour {
     private List<WeaponTarget> targets = new List<WeaponTarget>();
     
     public void StartDealingDamage() {
-        if (enableDebugs)
+        if (GM.projectConstants.combatDebugs)
             Debug.Log($"<color=blue>start dmg from anim {targets.Count} </color>");
         dealingDamageEnabled = true;
         DealDamageIfFoundTarget();
     }
     
     public void EndDealingDamage() {
-        if (enableDebugs)
+        if (GM.projectConstants.combatDebugs)
             Debug.Log($"<color=magenta>stop dmg from anim {targets.Count} </color>");
         dealingDamageEnabled = false;
         ResetAllTargets();
@@ -69,7 +69,7 @@ public class Weapon : MonoBehaviour {
 
         targets.Add(newWeaponTarget);
 
-        if (enableDebugs)
+        if (GM.projectConstants.combatDebugs)
             Debug.Log($"<color=orange>col entered {targets.Count} " + (dealingDamageEnabled ? @"dealing enabled" : @"dealing disabled") + "</color>\n" , newWeaponTarget.gameObject);
 
         DealDamageIfFoundTarget();
@@ -83,7 +83,7 @@ public class Weapon : MonoBehaviour {
 
         if (targets.Contains(lastWeaponTarget)) {
             targets.Remove(lastWeaponTarget);
-            if (enableDebugs)
+            if (GM.projectConstants.combatDebugs)
                 Debug.Log($"<color=green>col exited {targets.Count} </color>", lastWeaponTarget.gameObject);
         }
 
@@ -118,7 +118,7 @@ public class Weapon : MonoBehaviour {
     }
 
     private void ShieldEncountered(Shield shield) {
-        if (enableDebugs)
+        if (GM.projectConstants.combatDebugs)
             Debug.Log("shield encountered");
         OnEnemyShieldEncounter(shield);
         shield.ReceiveWeaponHit(0);
@@ -131,7 +131,7 @@ public class Weapon : MonoBehaviour {
         if (!targetToHasTakenDamage.ContainsKey(bodyTarget))
             targetToHasTakenDamage.Add(bodyTarget, true);
         
-        if (enableDebugs)
+        if (GM.projectConstants.combatDebugs)
             Debug.Log($"<color=red>dealing dmg {targets.Count} </color>");
         
         bodyTarget.ReceiveWeaponHit(damage);

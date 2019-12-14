@@ -17,6 +17,8 @@ public class HUDStamina : MonoBehaviour {
 	[SerializeField] private Color barHighlightedColor;
 	[SerializeField] private Color bgcHighlightedColor;
 	[SerializeField] private float highlightTimeoutSecs = 0.5f;
+	
+	private float maxStamina => GM.projectConstants.unit.stamina.maxStamina;
 
 	private void Awake() {
 		GM.OnPlayerSpawned += SubscribePlayerEvents;
@@ -36,7 +38,7 @@ public class HUDStamina : MonoBehaviour {
 	}
 
 	private void SetStaminaBar(float stamina) {
-		staminaBarImage.fillAmount = stamina / 100f;
+		staminaBarImage.fillAmount = stamina / maxStamina;
 		staminaShade.currentStamina = stamina;
 	}
 
