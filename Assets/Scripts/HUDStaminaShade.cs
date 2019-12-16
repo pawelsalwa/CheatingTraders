@@ -6,7 +6,7 @@ public class HUDStaminaShade : MonoBehaviour {
 
 	[SerializeField] private Image shadeImage;
 	[SerializeField] private float shadeLoosingTimeout = 1f;
-	[SerializeField, Range(0f, 3f)] private float shadeLoosingPerSec = 0.6f;
+	[SerializeField, Range(0f, 6f)] private float shadeLoosingPerSec = 0.6f;
 
 	private bool loosingShade = false;
 	

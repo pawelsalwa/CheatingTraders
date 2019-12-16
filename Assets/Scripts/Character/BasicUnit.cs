@@ -69,7 +69,7 @@ public class BasicUnit : MonoBehaviour {
 	private BotController botController => _botController == null ? _botController = GetComponent<BotController>() : _botController;
 
 	public void InitAsPlayer() {
-		hp.hp = 120;		
+		hp.hp = GM.projectConstants.unit.playerHP;
 		userInputHandler.enabled = true;
 		botController.enabled = false;
 		GM.instance.cinemachineFreeLook.m_Follow = cameraFollow;
@@ -83,7 +83,7 @@ public class BasicUnit : MonoBehaviour {
 	}
 
 	public void InitAsBot() {
-		hp.hp = 120;
+		hp.hp = GM.projectConstants.unit.botHP;
 		userInputHandler.enabled = false;
 		botController.enabled = true;
 		SetLayer(botLayer);
@@ -138,9 +138,9 @@ public class BasicUnit : MonoBehaviour {
 		combatComponent.OnEnemyShieldEncounter += HandleEncounteringEnemyShield;
 		combatComponent.OnShieldImpact += TakeShieldImpact;
 
-		animManager.staggeringEntered += movementComponent.DisableMovement;
-		animManager.staggeringEnded += movementComponent.EnableMovement;
-		animManager.OnShieldImpactEnded += () => movementComponent.SetMoveFactor(1f);
+//		animManager.staggeringEntered += movementComponent.DisableMovement;
+//		animManager.staggeringEnded += movementComponent.EnableMovement;
+//		animManager.OnShieldImpactEnded += () => movementComponent.SetMoveFactor(1f);
 	}
 	
 	private void UnsubscribeEvents() {
@@ -166,7 +166,9 @@ public class BasicUnit : MonoBehaviour {
 	}
 
 	private void HandleTakingDamage(int damage) {
-		combatComponent.DisableDealingDamage();
+		combatComponent.InterruptCombat();
+		movementComponent.SlowDownForDamage();
+		
 		hp.TakeDamage(damage);
 		
 		if (hp.isHpBelowZero) Die();
@@ -184,12 +186,12 @@ public class BasicUnit : MonoBehaviour {
 	}
 	
 	private void TakeShieldImpact() {
-		movementComponent.SetMoveFactor(0.5f);
+		movementComponent.SlowDownForDamage();
 		animManager.TakeShieldImpact();
 	}
 
 	private void HandleDodge(float yAnim, float xAnim) {
-//		if (!staminaComponent.AllowDodge()) return;
+		if (!staminaComponent.AllowDodge()) return;
 		
 		animManager.SetDodgeAnim(yAnim, xAnim);
 	}

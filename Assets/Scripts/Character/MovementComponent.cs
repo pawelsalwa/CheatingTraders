@@ -23,17 +23,19 @@ public class MovementComponent : MonoBehaviour {
 
 	private CharacterController _charController;
 	private CharacterController charController => _charController == null ? _charController = GetComponent<CharacterController>() : _charController;
-
-	public void EnableMovement() {
-		movementEnabled = true;
+	
+	public void SlowDownForDamage() {
+		SlowDown();
+		CancelInvoke(nameof(RegainSpeed));
+		Invoke(nameof(RegainSpeed), 0.3f);
 	}
 	
-	public void DisableMovement() {
-		movementEnabled = false;
+	private void RegainSpeed() {
+		moveFactor = 1f;
 	}
 
-	public void SetMoveFactor(float newMoveFactor = 1f) {
-		moveFactor = newMoveFactor;
+	private void SlowDown() {
+		moveFactor = 0.6f;
 	}
 
 	public void Move(UserInputHandler.MoveDir dir, bool running = false) {
@@ -90,7 +92,7 @@ public class MovementComponent : MonoBehaviour {
 	public void DontMove() { MoveDir(Vector3.zero, 0f, 0f); }
 
 	private void MoveDir(Vector3 dir, float xAnim, float yAnim) {
-		if (!movementEnabled) return;
+//		if (!movementEnabled) return;
 		
 		charController.Move(dir * moveFactor * Time.timeScale);
 		float currentSpeed = dir.magnitude;

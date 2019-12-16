@@ -6,9 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class UnitAnimationManager : MonoBehaviour {
 
-	public event Action staggeringEntered = () => { };
-	public event Action staggeringEnded = () => { };
-	public event Action OnShieldImpactEnded = () => { };
+//	public event Action staggeringEntered = () => { };
+//	public event Action staggeringEnded = () => { };
+//	public event Action OnShieldImpactEnded = () => { };
 
 	private Animator _animator;
 	private Animator animator => _animator == null ? _animator = GetComponent<Animator>() : _animator;
@@ -66,15 +66,15 @@ public class UnitAnimationManager : MonoBehaviour {
 	public void TakeDamageAnim() {
 		animator.SetTrigger(takeDamageTrigger);
 		animator.SetBool(isStaggeringAnimatorKey, true);
-		staggeringEntered();
-		currentStaggerDurForDebug = 0;
-		CancelInvoke("ResetStagger");
-		Invoke("ResetStagger", staggerDurationSecs);
+//		staggeringEntered();
+//		currentStaggerDurForDebug = 0;
+		CancelInvoke(nameof(ResetStagger));
+		Invoke(nameof(ResetStagger), staggerDurationSecs);
 	}
 	
 	public void TakeShieldImpact() {
 		animator.SetTrigger(shieldTakingImpactAnimKey);
-		Invoke("ShieldImpactEnded", 1f);
+//		Invoke("ShieldImpactEnded", 1f);
 	}
 
 	public void Die() {
@@ -85,14 +85,14 @@ public class UnitAnimationManager : MonoBehaviour {
 		animator.SetTrigger(enemyShieldEncounteredAnimatorKey);
 	}
 
-	private void ShieldImpactEnded() {
-		CancelInvoke("ShieldImpactEnded");
-		OnShieldImpactEnded();
-	}
+//	private void ShieldImpactEnded() {
+//		CancelInvoke("ShieldImpactEnded");
+//		OnShieldImpactEnded();
+//	}
 
 	private void ResetStagger() {
 		animator.SetBool(isStaggeringAnimatorKey, false);
-		staggeringEnded();
+//		staggeringEnded();
 	}
 
 	private void Update() {

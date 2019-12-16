@@ -541,12 +541,14 @@ MonoBehaviour:
   playerLayer: 8
   botLayer: 9
   unit:
+    playerHP: 100
+    botHP: 100
     stamina:
       maxStamina: 100
-      staminaRegenPerSec: 80
+      staminaRegenPerSec: 200
       dodgeStaminaCost: 100
       superAttackStaminaCost: 100
-      regainStaminaRegenAfterLossTimeout: 2
+      regainStaminaRegenAfterLossTimeout: 1.06
   combatDebugs: 0
 --- !u!1 &2823691741629826164
 GameObject:

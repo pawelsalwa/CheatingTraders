@@ -84,7 +84,7 @@ public class BotController : MonoBehaviour {
 	private void InitCombatStatesWeights() {
 		movementActionsBag.AddWeightedObject(MovementState.W, 50);
 		movementActionsBag.AddWeightedObject(MovementState.S, 20);
-//		movementActionsBag.AddWeightedObject(MovementState.A, 5);
+		movementActionsBag.AddWeightedObject(MovementState.A, 5);
 		movementActionsBag.AddWeightedObject(MovementState.D, 20);
 		
 		movementActionsBag.AddWeightedObject(MovementState.WA, 20);

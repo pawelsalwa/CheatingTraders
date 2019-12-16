@@ -21,6 +21,9 @@ public class ProjectConstants : MonoBehaviour {
 	[Serializable]
 	public class UnitConstants {
 
+
+		public int playerHP = 100;
+		public int botHP = 100;
 		public StaminaConstants stamina;
 
 		[Serializable]

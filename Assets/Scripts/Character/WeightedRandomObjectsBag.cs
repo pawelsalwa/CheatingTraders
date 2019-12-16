@@ -22,6 +22,22 @@ public class WeightedRandomObjectsBag<T> {
 
 	public T GetRandomWeightedObject() {
 		int randomInt = Random.Range(0, totalWeight);
-		return entries.FirstOrDefault(obj => obj.weightOfObj >= randomInt).weightedObj;
+
+		int suma = 0;
+		var returnedEntry = entries.FirstOrDefault(obj => (suma += obj.weightOfObj) > randomInt).weightedObj;
+		
+//		^shortcut for:
+//		T returnedEntry = entries[0].weightedObj;
+//		int sum = 0;
+//		foreach (var entry in entries) {
+//			sum += entry.weightOfObj;
+//			
+//			if (sum > randomInt) {
+//				returnedEntry = entry.weightedObj;
+//				break;
+//			}
+//		}
+
+		return returnedEntry;
 	}
 }

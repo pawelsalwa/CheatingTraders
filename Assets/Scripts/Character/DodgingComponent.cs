@@ -32,9 +32,9 @@ public class DodgingComponent : MonoBehaviour {
 		if (!dodgingEnabled) return;
 		
 		OnDodgeRequested(x, y);
-		dodgingEnabled = false;
-		CancelInvoke(nameof(EnableDodging));
-		Invoke(nameof(EnableDodging), dodgingCooldown);
+//		dodgingEnabled = false;
+//		CancelInvoke(nameof(EnableDodging));
+//		Invoke(nameof(EnableDodging), dodgingCooldown);
 	}
 
 	private void EnableDodging() {

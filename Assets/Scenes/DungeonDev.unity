@@ -1046,6 +1046,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicKnight
       objectReference: {fileID: 0}
+    - target: {fileID: 1564253461696300375, guid: d6a26d76fcf8e514797fd03cbff8f4db,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1564253461696141623, guid: d6a26d76fcf8e514797fd03cbff8f4db,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1422,6 +1427,16 @@ PrefabInstance:
     - target: {fileID: 2329566665434102407, guid: 38c5a04a4f5ec464e856e2e1850cc34a,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5627480827788946643, guid: 38c5a04a4f5ec464e856e2e1850cc34a,
+        type: 3}
+      propertyPath: unit.playerHP
+      value: 11112
+      objectReference: {fileID: 0}
+    - target: {fileID: 5627480827788946643, guid: 38c5a04a4f5ec464e856e2e1850cc34a,
+        type: 3}
+      propertyPath: combatDebugs
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

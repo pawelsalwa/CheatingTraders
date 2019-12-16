@@ -18,9 +18,10 @@ public static class DevTools {
 		Print(msg, null, debugCol);
 	}
 	
-	public static void Print(string msg, string col, GameObject obj = null) {
+	public static void Print(string msg, string color, GameObject obj = null) {
+		color = color.ToLower();
 		DebugColor debugColor;
-		switch (col) {
+		switch (color) {
 			case "r": debugColor = DebugColor.red; break;
 			case "g": debugColor = DebugColor.green; break;
 			case "b": debugColor = DebugColor.blue; break;
