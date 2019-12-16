@@ -69,7 +69,7 @@ public class BasicUnit : MonoBehaviour {
 	private BotController botController => _botController == null ? _botController = GetComponent<BotController>() : _botController;
 
 	public void InitAsPlayer() {
-		hp.hp = 2000;		
+		hp.hp = 120;		
 		userInputHandler.enabled = true;
 		botController.enabled = false;
 		GM.instance.cinemachineFreeLook.m_Follow = cameraFollow;
@@ -83,7 +83,7 @@ public class BasicUnit : MonoBehaviour {
 	}
 
 	public void InitAsBot() {
-		hp.hp = 5555;
+		hp.hp = 120;
 		userInputHandler.enabled = false;
 		botController.enabled = true;
 		SetLayer(botLayer);
@@ -134,7 +134,7 @@ public class BasicUnit : MonoBehaviour {
 		dodgingComponent.OnDodgeRequested += HandleDodge;
 		
 		combatComponent.OnAttackCommand += HandleAttack;
-		combatComponent.OnBlockCommand += animManager.SetBlockAnim;
+		combatComponent.OnBlockCommand += HandleBlock;
 		combatComponent.OnEnemyShieldEncounter += HandleEncounteringEnemyShield;
 		combatComponent.OnShieldImpact += TakeShieldImpact;
 
@@ -151,7 +151,14 @@ public class BasicUnit : MonoBehaviour {
 		movementComponent.OnMovementRequested -= HandleMovement;
 		dodgingComponent.OnDodgeRequested -= HandleDodge;
 		combatComponent.OnAttackCommand -= HandleAttack;
-		combatComponent.OnBlockCommand -= animManager.SetBlockAnim;
+		combatComponent.OnBlockCommand -= HandleBlock;
+	}
+
+	private void HandleBlock(bool blocking) {
+		animManager.SetBlockAnim(blocking);
+		
+		if(blocking)
+			if (!staminaComponent.AllowBlock()) return;
 	}
 
 	private void HandleMovement(float xAnim, float yAnim, float speedAnimFactor) {
@@ -182,8 +189,8 @@ public class BasicUnit : MonoBehaviour {
 	}
 
 	private void HandleDodge(float yAnim, float xAnim) {
-		if (!staminaComponent.AllowDodge()) return;
-
+//		if (!staminaComponent.AllowDodge()) return;
+		
 		animManager.SetDodgeAnim(yAnim, xAnim);
 	}
 

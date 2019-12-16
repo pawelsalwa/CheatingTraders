@@ -33,7 +33,14 @@ public class ProjectConstants : MonoBehaviour {
 			
 			[Range(0f, 5f)] public float regainStaminaRegenAfterLossTimeout = 2f;
 		}
-		
+
+		[Serializable]
+		public class MovementConstants {
+
+			public float dodge;
+
+		}
+
 	}
 	
 	

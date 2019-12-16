@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5377358, g: 0.52391523, b: 0.3221342, a: 0.48235294}
+  m_Color: {r: 0.6784314, g: 0.65882355, b: 0.28627452, a: 0.48235294}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2038,11 +2038,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9080852861316064255}
     m_Modifications:
-    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
-        type: 3}
-      propertyPath: m_Name
-      value: mainMenu
-      objectReference: {fileID: 0}
     - target: {fileID: 5516916638024894576, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2147,6 +2142,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
+        type: 3}
+      propertyPath: m_Name
+      value: mainMenu
       objectReference: {fileID: 0}
     - target: {fileID: 5516916638132918430, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
@@ -2200,11 +2200,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3677809435945180573}
     m_Modifications:
-    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
-        type: 3}
-      propertyPath: m_Name
-      value: mainmenubtn
-      objectReference: {fileID: 0}
     - target: {fileID: 5516916638024894576, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2310,6 +2305,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
+        type: 3}
+      propertyPath: m_Name
+      value: mainmenubtn
+      objectReference: {fileID: 0}
     - target: {fileID: 5516916638132918430, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
       propertyPath: m_text
@@ -2349,11 +2349,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4854661105032912068}
     m_Modifications:
-    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
-        type: 3}
-      propertyPath: m_Name
-      value: back
-      objectReference: {fileID: 0}
     - target: {fileID: 5516916638024894576, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2459,6 +2454,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
+        type: 3}
+      propertyPath: m_Name
+      value: back
+      objectReference: {fileID: 0}
     - target: {fileID: 5516916638132918430, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
       propertyPath: m_text
@@ -2491,11 +2491,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3677809435945180573}
     m_Modifications:
-    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
-        type: 3}
-      propertyPath: m_Name
-      value: 'QuitBtn '
-      objectReference: {fileID: 0}
     - target: {fileID: 5516916638024894576, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2601,6 +2596,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
+        type: 3}
+      propertyPath: m_Name
+      value: 'QuitBtn '
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa4053c46a85ff0429fb0beac9976638, type: 3}
 --- !u!224 &7770427840507362312 stripped
@@ -2628,11 +2628,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4854661105032912068}
     m_Modifications:
-    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
-        type: 3}
-      propertyPath: m_Name
-      value: hostServBtn
-      objectReference: {fileID: 0}
     - target: {fileID: 5516916638024894576, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2738,6 +2733,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
+        type: 3}
+      propertyPath: m_Name
+      value: hostServBtn
+      objectReference: {fileID: 0}
     - target: {fileID: 5516916638132918430, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
       propertyPath: m_text
@@ -2785,11 +2785,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6700691802468681828}
     m_Modifications:
-    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
-        type: 3}
-      propertyPath: m_Name
-      value: signlebtn
-      objectReference: {fileID: 0}
     - target: {fileID: 5516916638024894576, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2895,6 +2890,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
+        type: 3}
+      propertyPath: m_Name
+      value: signlebtn
+      objectReference: {fileID: 0}
     - target: {fileID: 5516916638132918430, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
       propertyPath: m_text
@@ -2947,11 +2947,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4854661105032912068}
     m_Modifications:
-    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
-        type: 3}
-      propertyPath: m_Name
-      value: joinLocalBtn
-      objectReference: {fileID: 0}
     - target: {fileID: 5516916638024894576, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3057,6 +3052,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
+        type: 3}
+      propertyPath: m_Name
+      value: joinLocalBtn
+      objectReference: {fileID: 0}
     - target: {fileID: 5516916638132918430, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
       propertyPath: m_text
@@ -3104,11 +3104,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9080852861316064255}
     m_Modifications:
-    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
-        type: 3}
-      propertyPath: m_Name
-      value: resumeBtn
-      objectReference: {fileID: 0}
     - target: {fileID: 5516916638024894576, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3214,6 +3209,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
+        type: 3}
+      propertyPath: m_Name
+      value: resumeBtn
+      objectReference: {fileID: 0}
     - target: {fileID: 5516916638132918430, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
       propertyPath: m_text
@@ -3266,11 +3266,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4854661105032912068}
     m_Modifications:
-    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
-        type: 3}
-      propertyPath: m_Name
-      value: runServBtn
-      objectReference: {fileID: 0}
     - target: {fileID: 5516916638024894576, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3376,6 +3371,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
+        type: 3}
+      propertyPath: m_Name
+      value: runServBtn
+      objectReference: {fileID: 0}
     - target: {fileID: 5516916638132918430, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
       propertyPath: m_text
@@ -3423,11 +3423,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6700691802468681828}
     m_Modifications:
-    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
-        type: 3}
-      propertyPath: m_Name
-      value: QuitBtn (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 5516916638024894576, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3532,6 +3527,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
+        type: 3}
+      propertyPath: m_Name
+      value: QuitBtn (1)
       objectReference: {fileID: 0}
     - target: {fileID: 5516916638132918430, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
@@ -3580,11 +3580,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6700691802468681828}
     m_Modifications:
-    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
-        type: 3}
-      propertyPath: m_Name
-      value: multibtn
-      objectReference: {fileID: 0}
     - target: {fileID: 5516916638024894576, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3689,6 +3684,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5516916638024894577, guid: aa4053c46a85ff0429fb0beac9976638,
+        type: 3}
+      propertyPath: m_Name
+      value: multibtn
       objectReference: {fileID: 0}
     - target: {fileID: 5516916638132918430, guid: aa4053c46a85ff0429fb0beac9976638,
         type: 3}

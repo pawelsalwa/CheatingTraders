@@ -38,6 +38,16 @@ public class StaminaComponent : MonoBehaviour {
 	public bool AllowAttack() {
 		return true;
 	}
+	
+	public bool AllowBlock() {
+//		if (currentStamina < dodgeCost) {
+//			OnNotEnoughStaminaForAction();
+//			return false;
+//		}
+
+//		LoseStamina(Time.deltaTime * 0.01f);
+		return true;
+	}
 
 	public bool AllowDodge() {
 
