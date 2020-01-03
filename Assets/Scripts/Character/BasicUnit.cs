@@ -79,6 +79,7 @@ public class BasicUnit : MonoBehaviour {
 		SetLayer(playerLayer);
 		SetTag("Player");
 		gameObject.name = "-- PlayerUnit --";
+		hp.InitAsPlayer();
 		staminaComponent.OnStaminaChanged += (stamina) => OnStaminaChanged(stamina);
 		staminaComponent.OnNotEnoughStaminaForAction += () => OnNotEnoughStaminaForAction();
 	}

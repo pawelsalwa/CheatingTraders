@@ -6,6 +6,8 @@ using System;
 public class HealthComponent : MonoBehaviour {
 
 	public event Action<float> OnHPChanged = (newHP) => { };
+
+	public HPBar hpBar;
 	
 	public bool isHpBelowZero => Mathf.Approximately( currentHP, 0f);
 
@@ -26,6 +28,7 @@ public class HealthComponent : MonoBehaviour {
 				return;
 
 			_currentHP = value;
+			hpBar.SetHpPercentage(_currentHP / maxHP);
 			OnHPChanged(_currentHP);
 		}
 	}
@@ -37,6 +40,10 @@ public class HealthComponent : MonoBehaviour {
 		
 		CancelInvoke(nameof(RegainHPRegen));
 		Invoke(nameof(RegainHPRegen), regainHPRegenAfterLossTimeout);
+	}
+
+	public void InitAsPlayer() {
+		hpBar.gameObject.SetActive(false);
 	}
 
 	private void RegainHPRegen() {
