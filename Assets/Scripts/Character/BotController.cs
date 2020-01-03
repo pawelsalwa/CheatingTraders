@@ -35,6 +35,9 @@ public class BotController : MonoBehaviour {
 
 	private MovementComponent _movement;
 	private MovementComponent movement => _movement == null ? _movement = GetComponent<MovementComponent>() : _movement;
+	
+	private DodgingComponent _dodging;
+	private DodgingComponent dodging => _dodging == null ? _dodging = GetComponent<DodgingComponent>() : _dodging;
 
 	private CombatComponent _combat;
 	private CombatComponent combat => _combat == null ? _combat = GetComponent<CombatComponent>() : _combat;
@@ -82,15 +85,15 @@ public class BotController : MonoBehaviour {
 	}
 
 	private void InitCombatStatesWeights() {
-		movementActionsBag.AddWeightedObject(MovementState.W, 50);
+		movementActionsBag.AddWeightedObject(MovementState.W, 40);
 		movementActionsBag.AddWeightedObject(MovementState.S, 20);
-		movementActionsBag.AddWeightedObject(MovementState.A, 5);
+		movementActionsBag.AddWeightedObject(MovementState.A, 4);
 		movementActionsBag.AddWeightedObject(MovementState.D, 20);
 		
-		movementActionsBag.AddWeightedObject(MovementState.WA, 20);
-		movementActionsBag.AddWeightedObject(MovementState.WD, 20);
-		movementActionsBag.AddWeightedObject(MovementState.SA, 20);
-		movementActionsBag.AddWeightedObject(MovementState.SD, 20);
+		movementActionsBag.AddWeightedObject(MovementState.WA, 10);
+		movementActionsBag.AddWeightedObject(MovementState.WD, 10);
+		movementActionsBag.AddWeightedObject(MovementState.SA, 10);
+		movementActionsBag.AddWeightedObject(MovementState.SD, 10);
 	}
 
 	private void Update() {
@@ -156,7 +159,11 @@ public class BotController : MonoBehaviour {
 
 	private void LookAtTarget() {
 		if (!currentTarget.isAlive) return;
-		rotatation.LookAt(player.position - transform.position);
+		
+		if (combatState == CombatState.Attack)
+			rotatation.LookAt(player.position - transform.position, 0.1f);
+		else 
+			rotatation.LookAt(player.position - transform.position);
 	}
 
 	private void UpdateIfInAggroMode() { // hysteresis
@@ -189,6 +196,7 @@ public class BotController : MonoBehaviour {
 	}
 
 	private void ExecuteMovementAction() {
+		
 		switch (movementState) {
 			case MovementState.W:
 				if (distanceToTarget >= attackStartDistance)

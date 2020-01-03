@@ -12,7 +12,7 @@ public class Shield : WeaponTarget {
     public SkinnedMeshRenderer meshRenderer;
     [Range(0 , 500)]
     public int materialchangeMiliseconds = 80;
-	protected override void OnHitReceived(int weaponDamage) {
+	protected override void OnHitReceived(float weaponDamage) {
 		TakeImpactFromBlock();
 	}
 

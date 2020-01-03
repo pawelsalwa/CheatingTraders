@@ -20,10 +20,10 @@ public class CharacterRotationComponent : MonoBehaviour {
 
 //    private Transform cameraRot => GM.instance.mainCamera.gameObject.transform;
 
-    public void LookAt(Vector3 targetRot) {
+    public void LookAt(Vector3 targetRot, float additionalSoothFactor = 1f) {
         Vector3 lastRot = transform.rotation.eulerAngles;
         var targetRotQua = Quaternion.LookRotation(Vector3.Normalize(new Vector3(targetRot.x, 0f, targetRot.z)));
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotQua, _rotationSmoothFactor);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotQua, _rotationSmoothFactor * additionalSoothFactor);
         Vector3 newRot = transform.rotation.eulerAngles;
 
         rotationSpeed = lastRot.y - newRot.y;

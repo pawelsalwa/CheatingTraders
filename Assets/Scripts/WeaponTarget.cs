@@ -11,13 +11,13 @@ public abstract class WeaponTarget : MonoBehaviour {
 
 	public bool isTargettable = true;
 
-	public void ReceiveWeaponHit(int weaponDamage) {
+	public void ReceiveWeaponHit(float weaponDamage) {
 		if (!isTargettable) return;
 
 		OnHitReceived(weaponDamage);
 	}
 
-	protected abstract void OnHitReceived(int weaponDamage);
+	protected abstract void OnHitReceived(float weaponDamage);
 
 	private void OnDestroy() {
 		OnDestroyCalled();

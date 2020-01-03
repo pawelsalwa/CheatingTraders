@@ -25,6 +25,7 @@ public class ProjectConstants : MonoBehaviour {
 		public int playerHP = 100;
 		public int botHP = 100;
 		public StaminaConstants stamina;
+		public HPConstants hp;
 
 		[Serializable]
 		public class StaminaConstants {
@@ -32,9 +33,18 @@ public class ProjectConstants : MonoBehaviour {
 			public float staminaRegenPerSec = 70f;
 			
 			public float dodgeStaminaCost = 90f;
+			public float blockStaminaCost = 1f;
 			public float superAttackStaminaCost = 100f;
 			
 			[Range(0f, 5f)] public float regainStaminaRegenAfterLossTimeout = 2f;
+		}
+		
+		[Serializable]
+		public class HPConstants {
+			public float maxHP = 100f;
+			public float hpRegenPerSec = 10f;
+			
+			[Range(0f, 5f)] public float regainhpRegenAfterLossTimeout = 4f;
 		}
 
 		[Serializable]

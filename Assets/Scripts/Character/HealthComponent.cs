@@ -5,16 +5,56 @@ using System;
 
 public class HealthComponent : MonoBehaviour {
 
-	public bool isHpBelowZero => hp < 0;
+	public event Action<float> OnHPChanged = (newHP) => { };
+	
+	public bool isHpBelowZero => Mathf.Approximately( currentHP, 0f);
 
-	public int hp = 100;
+	private float maxHP => GM.projectConstants.unit.hp.maxHP;
+	private float hpRegenPerSec => GM.projectConstants.unit.hp.hpRegenPerSec;
+	private float regainHPRegenAfterLossTimeout => GM.projectConstants.unit.hp.regainhpRegenAfterLossTimeout;
+
+	private bool regenEnabled = true;
+	
+	[SerializeField, Range(0f, 100f)]
+	private float _currentHP;
+	private float currentHP {
+		get => Mathf.Clamp(_currentHP, 0, maxHP);
+		set {
+			value = Mathf.Clamp(value, 0, maxHP);
+			
+			if (Mathf.Approximately(value, _currentHP))
+				return;
+
+			_currentHP = value;
+			OnHPChanged(_currentHP);
+		}
+	}
+
+	public void TakeDamage(float damage) {
+		currentHP -= damage;
+		
+		regenEnabled = false;
+		
+		CancelInvoke(nameof(RegainHPRegen));
+		Invoke(nameof(RegainHPRegen), regainHPRegenAfterLossTimeout);
+	}
+
+	private void RegainHPRegen() {
+		regenEnabled = true;
+	}
+
+	private void Update() {
+		if (regenEnabled) {
+			RegenHP();
+		}
+	}
+
+	private void RegenHP() {
+		currentHP += Time.deltaTime * hpRegenPerSec;
+	}
 
 	private void Awake() {
-//		hp = GM.projectConstants.unit.playerHP
-	} 
-	
-	public void TakeDamage(int damage) {
-		hp -= damage;
+		currentHP = maxHP;
 	}
 
 }

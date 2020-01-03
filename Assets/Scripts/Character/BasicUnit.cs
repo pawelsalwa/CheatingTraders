@@ -20,6 +20,7 @@ public class BasicUnit : MonoBehaviour {
 	public event Action OnDeath = () => { };
 	public event Action<float> OnStaminaChanged = (stamina) => { };
 	public event Action OnNotEnoughStaminaForAction = () => { };
+	public event Action<float> OnHPChanged = (currentHP) => { };
 
 	public bool isAttacking => combatComponent.m_isAttacking;
 	public bool isBlocking => combatComponent.m_isBlocking;
@@ -69,7 +70,7 @@ public class BasicUnit : MonoBehaviour {
 	private BotController botController => _botController == null ? _botController = GetComponent<BotController>() : _botController;
 
 	public void InitAsPlayer() {
-		hp.hp = GM.projectConstants.unit.playerHP;
+//		hp.hp = GM.projectConstants.unit.playerHP;
 		userInputHandler.enabled = true;
 		botController.enabled = false;
 		GM.instance.cinemachineFreeLook.m_Follow = cameraFollow;
@@ -83,7 +84,7 @@ public class BasicUnit : MonoBehaviour {
 	}
 
 	public void InitAsBot() {
-		hp.hp = GM.projectConstants.unit.botHP;
+//		hp.hp = GM.projectConstants.unit.botHP;
 		userInputHandler.enabled = false;
 		botController.enabled = true;
 		SetLayer(botLayer);
@@ -165,7 +166,7 @@ public class BasicUnit : MonoBehaviour {
 		animManager.SetMovementAnim(xAnim, yAnim, speedAnimFactor);
 	}
 
-	private void HandleTakingDamage(int damage) {
+	private void HandleTakingDamage(float damage) {
 		combatComponent.InterruptCombat();
 		movementComponent.SlowDownForDamage();
 		
@@ -186,7 +187,7 @@ public class BasicUnit : MonoBehaviour {
 	}
 	
 	private void TakeShieldImpact() {
-		movementComponent.SlowDownForDamage();
+//		movementComponent.SlowDownForDamage();
 		animManager.TakeShieldImpact();
 	}
 
@@ -198,5 +199,9 @@ public class BasicUnit : MonoBehaviour {
 
 	private void OnMenuChanged() {
 		GM.instance.cinemachineFreeLook.enabled = !UIManager.isAnyMenuOpened;
+	}
+
+	private void Awake() {
+		hp.OnHPChanged += (xd) => OnHPChanged(xd);
 	}
 }
